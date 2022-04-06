@@ -1,0 +1,186 @@
+.ishibannerblock{
+	padding: 0;
+	margin-bottom: 50px;
+	overflow: hidden;
+	@media (max-width: 991px) {
+		margin-bottom: 30px;
+	}
+	.row{
+		@media (max-width: 767px) {
+			padding: 0 15px;
+		}
+	}
+}
+.bannerblock{
+	overflow: hidden;
+	position: relative;
+	@media (max-width: 767px) {
+		margin-bottom: 30px;
+	}
+	&:last-child{
+		margin-bottom: 0;
+	}
+	@media (max-width: 543px) {
+	/* If media is below 544 */
+		width:100%;
+	}
+	.image-container{
+		&:hover{
+        	.banner-data{
+        		.banner-subtitle{
+        			-webkit-transform: rotateX(360deg);
+        			transform: rotateX(360deg);
+        		}
+        	}
+        }
+	}
+	img {
+		width: 100%;
+		max-width: 100%;
+		text-align: center;
+		margin: 0 auto;
+		-webkit-transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-o-transition: all 0.5s;
+		transition: all 0.5s;
+		@media (max-width: 543px) {
+			/* If media is below 544 */
+			width:auto;
+		}
+	}
+	a {
+		display: flex;
+		align-items: center;
+		position: relative;
+		overflow: hidden;
+		-webkit-transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-o-transition: all 0.5s;
+		transition: all 0.5s;
+		img {
+			width: 100%;
+			max-width: 100%;
+			-webkit-transition: all 0.5s;
+			-moz-transition: all 0.5s;
+			-o-transition: all 0.5s;
+			transition: all 0.5s;
+		}
+	}
+	.banner-data {
+		z-index: 1;
+		overflow: hidden;
+		color: $brand-primary;
+		position: absolute;
+	 	left: 30px;
+     	text-align: left;
+     	display: inline-block;
+     	vertical-align: middle;
+		.banner-title {
+			@media(max-width: 1300px){
+	      		font-size: 22px;
+	      		line-height: 22px;
+	      	}
+	      	@media(max-width: 1199px){
+	      		font-size: 18px;
+	      		margin-bottom:15px;
+    			line-height: 18px;
+	      	}
+	      	@media(min-width: 768px) and (max-width: 991px){
+	      		font-size:18px;
+	      	}
+	      	@media(max-width: 767px){
+      		    margin-bottom: 20px;
+			    font-size: 30px;
+			    line-height: 30px;
+	      	}
+	      	@media(max-width: 543px){
+	      		margin-bottom: 15px;
+    			font-size: 25px;
+    			line-height:25px;
+	      	}
+	      	@media(max-width: 420px){
+	      		font-size: 20px;
+	      	}
+	      	@media(max-width: 380px){
+	      		font-size:18px;
+	      	}
+			font-weight: 500;
+		    font-size: 25px;
+		    letter-spacing: 2px;
+		    line-height: 25px;
+		    color: $brand-primary;
+		    margin-bottom: 20px;
+		    -webkit-transition: all 0.7s;
+		    -moz-transition: all 0.7s;
+		    -ms-transition: all 0.7s;
+		    -o-transition: all 0.7s;
+		    transition: all 0.7s;
+		}
+	}
+	.banner-subtitle{
+		font-size: 16px;
+	    margin: 0 0 25px;
+	    font-weight:500;
+	    line-height: 16px;
+	    color: #8a8a8a;
+		-webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;	
+      	@media(max-width: 1300px){
+      		font-size: 15px;
+      	}
+	    @media(max-width: 1199px){
+	    	font-size:14px;
+	    	line-height:14px;
+	    	margin-bottom:15px;
+	    }
+	    @media(max-width: 991px){
+	    	font-size:13px;
+	    	line-height:13px;
+	    }
+      	@media(max-width: 767px){
+      		font-size: 18px;
+		    line-height: 18px;
+		    margin-bottom: 30px;
+      	}
+      	@media(max-width: 543px){
+      		font-size: 16px;
+		    line-height: 16px;
+		    margin-bottom: 25px;
+      	}
+      	@media(max-width: 420px){
+      		font-size: 12px;
+			line-height: 14px;
+      	}
+	}
+	.banner-btn {
+		display: inline-block;
+        vertical-align: middle;
+		padding: 0;
+      	background: transparent;
+      	color: $brand-primary;
+      	border: none;
+      	border-bottom: 1px solid $brand-primary;
+      	font-size: 15px;
+      	font-weight: 400; 
+      	line-height: 1;
+      	display: inline-block;
+      	vertical-align: middle;
+      	text-align: center;
+      	-webkit-transition: all 0.5s;
+      	-moz-transition: all 0.5s;
+      	-o-transition: all 0.5s;
+      	transition: all 0.5s;
+		@media(min-width: 768px) and (max-width:1199px){
+      		font-size:12px;
+      	}
+  		@media(max-width:543px){
+	      	font-size:14px;
+      	}
+		&:hover {
+			background-color: transparent;
+			color: $brand-primary;
+		}
+	}
+}

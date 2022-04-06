@@ -1,0 +1,49 @@
+.ishicategoryblock{
+	text-align: center;
+	overflow: hidden;
+	position: relative;
+	.image-container{
+		display: block;
+		position: relative;
+		overflow: hidden;
+		-webkit-transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-o-transition: all 0.5s;
+		transition: all 0.5s;
+		img{
+			max-width: 100%;
+			-webkit-transition: all 0.5s;
+			-moz-transition: all 0.5s;
+			-o-transition: all 0.5s;
+			transition: all 0.5s;			
+		}	
+		.text-container {	
+			font-size: 20px;
+			font-weight: 500;
+			position: absolute;
+			text-align: center;
+			letter-spacing: 0.3px;
+			bottom: 10px;
+			left: 10px;
+			right: 10px;
+			padding: 26px 5px;
+			background: rgba(255, 255, 255, 0.9);
+			transition: all 0.6s;
+			-webkit-transition: all 0.6s;
+			-moz-transition: all 0.6s;
+			-o-transition: all 0.6s;
+			span {
+				padding: 10px 20px;
+				color: $brand-primary;
+			}
+		}		
+		&:hover {
+			.text-container	{
+				background: #272727;
+				span {
+					color: #fff;
+				}
+			}
+		}
+	}
+}
