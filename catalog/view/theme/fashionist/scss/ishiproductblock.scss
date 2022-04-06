@@ -1,0 +1,119 @@
+/* Ishi ProductBlock */
+.ishiproductsblock {
+  text-align: center;
+  overflow: hidden;
+  .row{
+    @media (max-width: 543px) {
+      margin: 0 -10px;
+    }
+  }
+  .sub-title{
+    margin-bottom: 8px;
+  }
+  .ishiproductstab{
+    @media (max-width: 767px) {/* If media is below 768 */
+      float: none;
+    }
+    @media (max-width: 543px) {
+      margin-bottom:0;
+    }
+    position: relative;
+    border: 0;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 15px;
+
+    .nav-item { 
+      @media (max-width: 543px) {
+        margin: 0;
+      }
+      @media (max-width: 350px) {/* If media is below 544 */
+        display: block;
+        text-align: center;
+      }
+      &:last-child{
+        @media (max-width: 350px) {/* If media is below 544 */
+          margin-bottom:0px;
+        }
+      }
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 20px;
+      float: none;
+      .nav-link{
+        @media (max-width: 767px) {/* If media is below 768 */
+          padding: 8px 14px;
+        }
+        @media (max-width: 350px) {
+          padding: 3px 0px;
+        }
+        background: transparent none repeat scroll 0 0;
+        display: inline-block;
+        color: #323232;
+        letter-spacing: 0.5px;
+        font-weight:400;
+        font-size: 15px;
+        margin: 0;
+        text-transform: capitalize;
+        font-family: $primary-font;
+        outline: medium none;
+        padding: 8px 0px;
+        border-radius: 0;
+        border: 0;
+        position: relative;
+        transition: all 400ms ease-in-out 0s;
+        -webkit-transition: all 400ms ease-in-out 0s;
+        -moz-transition: all 400ms ease-in-out 0s;
+        -o-transition: all 400ms ease-in-out 0s;
+        &:after{
+          content: '';
+          width: 0;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          bottom: 0;
+          background:$brand-secondary;
+          height: 2px;
+          transition: all 400ms ease-in-out 0s;
+          -webkit-transition: all 400ms ease-in-out 0s;
+          -moz-transition: all 400ms ease-in-out 0s;
+          -o-transition: all 400ms ease-in-out 0s;
+          @media (max-width: 543px) {
+            display: none;
+          }
+        }
+        &.active, &:hover{
+          color: $brand-secondary;
+          border: 0;
+          &:after{
+            width: 100%;
+          }
+        }
+      }
+      &.active {
+        .nav-link{
+          color: $brand-secondary;
+          &:after{
+            width: 100%;
+          }
+        }
+      }
+    } 
+  }
+  .tab-content {
+    padding: 0;
+    margin-top: 10px;    
+  }
+  .owl-carousel {
+    .owl-nav {
+      margin-top: 10px;
+      @media (max-width: 543px) {
+        margin-top: 0px;
+      }
+      .owl-prev, .owl-next {
+        position: unset;
+      }
+    }
+  }
+}

@@ -1,0 +1,1312 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+    <div class="container-fluid">
+        <div class="pull-right">
+            <button type="submit" form="form" data-toggle="tooltip" title="{{ button_apply }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a onclick="$('#form').attr('action', location + '&exit=true'); $('#form').submit()" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-default"><i class="fa fa-save"></i></a>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        </div>
+
+        <h1>{{ heading_title|replace({'4.1': "4.2"}) }}</h1>
+        <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="container-fluid">
+{% if error_warning %}
+<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+<div class="panel panel-default">
+<div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+</div>
+<div class="panel-body">
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+        <li><a href="#tab-data" data-toggle="tab">{{ text_methods }}</a></li>
+        <li><a href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
+        {% if show_product_groups and groups is defined and groups|length > 0 %}
+        <li><a href="#tab-pgroups" data-toggle="tab">{{ tab_product_groups }}</a></li>
+        {% endif %}
+        <li><a href="#tab-zipcode" data-toggle="tab">{{ tab_zipcode }}</a></li>
+        <li><a href="#tab-bubble" data-toggle="tab">{{ tab_bubble }}</a></li>
+        <li><a href="#tab-backup" data-toggle="tab">{{ tab_backup }}</a></li>
+    </ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="tab-general">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_name }}">{{ entry_name }}</span></label>
+            <div class="col-sm-10">
+                {% for language in languages %}
+                    {% if language.status == 1 %}
+                        <div class="input-group pull-left"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+                        <input size="50" type="text" name="{{ name }}_name[{{ language.language_id }}]" value="{% if pochtaros_name is defined and pochtaros_name[language.language_id] is defined %}{{ pochtaros_name[language.language_id] }}{% endif %}" id="input-name{{ language.language_id }}" class="form-control" /></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
+
+            <div class="col-sm-10">
+              <div class="well well-sm" style="height: 100px; overflow: auto;">
+                {% for store in stores %}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="{{ name }}_store[]" value="{{ store.store_id }}" {% if pochtaros_store is defined and pochtaros_store[store.store_id] is defined %}checked="checked"{% endif %} />
+                        {{ store.name }}
+                    </label>
+                </div>
+                {% endfor %}
+              </div>
+              {% if error_store is defined and error_store is not empty %}
+                <div class="text-danger">{{ error_store }}</div>
+              {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-city"><span data-toggle="tooltip" title="{{ help_city }}">{{ entry_city }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_city" value="{% if pochtaros_city %}{{ pochtaros_city }}{% endif %}" id="input-city" class="form-control" />
+                {% if error_city is defined and error_city is not empty %}
+                <div class="text-danger">{{ error_city }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_zone_id" id="input-zone" class="form-control">
+                    <option value="">{{ text_select }}</option>
+                    {% for zone in zones %}
+                        {% if zone.status == 1 %}
+                            {% if zone.zone_id == pochtaros_zone_id %}
+                            <option value="{{ zone.zone_id }}" selected="selected">{{ zone.name }}</option>
+                            {% else %}
+                            <option value="{{ zone.zone_id }}">{{ zone.name }}</option>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_weight_class_id" id="input-weight-class" class="form-control">
+                    {% for weight_class in weight_classes %}
+                        {% if pochtaros_weight_class_id is defined and weight_class.weight_class_id == pochtaros_weight_class_id %}
+                            <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                        {% else %}
+                            <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-mid-weight"><span data-toggle="tooltip" title="{{ help_mid_weight }}">{{ entry_mid_weight }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_mid_weight" value="{% if pochtaros_mid_weight %}{{ pochtaros_mid_weight }}{% endif %}" id="input-mid-weight" class="form-control" />
+                {% if error_mid_weight is defined and error_mid_weight is not empty %}
+                <div class="text-danger">{{ error_mid_weight }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-pmid-weight"><span data-toggle="tooltip" title="{{ help_pmid_weight }}">{{ entry_pmid_weight }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_pmid_weight" value="{% if pochtaros_pmid_weight %}{{ pochtaros_pmid_weight }}{% endif %}" id="input-pmid-weight" class="form-control" />
+                {% if error_pmid_weight is defined and error_pmid_weight is not empty %}
+                <div class="text-danger">{{ error_pmid_weight }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-min-weight"><span data-toggle="tooltip" title="{{ help_min_weight }}">{{ entry_min_weight }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_min_weight" value="{% if pochtaros_min_weight %}{{ pochtaros_min_weight }}{% endif %}" id="input-min-weight" class="form-control" />
+                {% if error_min_weight is defined and error_min_weight is not empty %}
+                <div class="text-danger">{{ error_min_weight }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-max-weight"><span data-toggle="tooltip" title="{{ help_max_weight }}">{{ entry_max_weight }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_max_weight" value="{% if pochtaros_max_weight %}{{ pochtaros_max_weight }}{% endif %}" id="input-max-weight" class="form-control" />
+                {% if error_max_weight is defined and error_max_weight is not empty %}
+                <div class="text-danger">{{ error_max_weight }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-cost"><span data-toggle="tooltip" title="{{ help_cost }}">{{ entry_cost }}</span></label>
+            <div class="col-sm-4">
+                <input type="text" name="{{ name }}_cost" value="{% if pochtaros_cost %}{{ pochtaros_cost }}{% endif %}" id="input-cost" class="form-control" />
+                {% if error_cost is defined and error_cost is not empty %}
+                <div class="text-danger">{{ error_cost }}</div>
+                {% endif %}
+            </div>
+            <div class="col-sm-4">
+                <select name="{{ name }}_cost_type" class="form-control"><option value="+" {% if pochtaros_cost_type is defined and pochtaros_cost_type == '+' %}selected{% endif %} >{{ text_chislo }}</option><option value="%" {% if pochtaros_cost_type is defined and pochtaros_cost_type == '%' %}selected{% endif %}>%</option></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_total" value="{% if pochtaros_total %}{{ pochtaros_total }}{% endif %}" id="input-total" class="form-control" />
+                {% if error_total is defined and error_total is not empty %}
+                <div class="text-danger">{{ error_total }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-max-total"><span data-toggle="tooltip" title="{{ help_max_total }}">{{ entry_max_total }}</span></label>
+            <div class="col-sm-10">
+                <input type="text" name="{{ name }}_max_total" value="{% if pochtaros_max_total %}{{ pochtaros_max_total }}{% endif %}" id="input-max-total" class="form-control" />
+                {% if error_max_total is defined and error_max_total is not empty %}
+                <div class="text-danger">{{ error_max_total }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-upakovka"><span data-toggle="tooltip" title="{{ help_upakovka }}">{{ entry_upakovka }}</span></label>
+            <div class="col-sm-4">
+                <input type="text" name="{{ name }}_upakovka" value="{% if pochtaros_upakovka %}{{ pochtaros_upakovka }}{% endif %}" id="input-upakovka" class="form-control" />
+                {% if error_upakovka is defined and error_upakovka is not empty %}
+                <div class="text-danger">{{ error_upakovka }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-4">
+                <select name="{{ name }}_upakovka_type" class="form-control"><option value="+" {% if pochtaros_upakovka_type is defined and pochtaros_upakovka_type == '+' %}selected{% endif %} >{{ text_chislo }}</option><option value="%" {% if pochtaros_upakovka_type is defined and pochtaros_upakovka_type == '%' %}selected{% endif %}>%</option></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+            <div class="col-sm-10">
+                <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                <input type="hidden" name="{{ name }}_image" value="{{ image }}" id="input-image" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_time }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_time" class="form-control">
+                    {% for key, val in arr_show %}
+                        <option value="{{ key }}" {% if pochtaros_time is defined and pochtaros_time == key %}{{ 'selected="selected"' }}{% endif %}>{{ arr_show_test[val] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_time_more }}</label>
+            <div class="col-sm-10"><input type="text" name="{{ name }}_time_more" value="{% if pochtaros_time_more %}{{ pochtaros_time_more }}{% endif %}"  class="form-control"/>
+                {% if error_time_more is defined and error_time_more is not empty %}
+                <span class="error">{{ error_time_more }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_fragmentation }}">{{ entry_fragmentation }}</span></label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_fragmentation" value="1" {% if pochtaros_fragmentation %}checked="checked"{% endif %} />
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_zaglushka }}">{{ entry_zaglushka }}</span></label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_zaglushka" id="{{ name }}_zaglushka" value="1" {% if pochtaros_zaglushka %}checked="checked"{% endif %} />
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group slider-content hidden">
+            <label class="col-sm-2 control-label">{{ entry_zaglushka_text }}</label>
+            <div class="col-sm-10">
+                {% for language in languages %}
+                    {% if language.status == 1 %}
+                        <div class="input-group pull-left"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+                        <input size="50" type="text" name="{{ name }}_bibbtext[{{ language.language_id }}]" value="{% if pochtaros_bibbtext[language.language_id] is defined %}{{ pochtaros_bibbtext[language.language_id] }}{% endif %}" id="input-bibbtext{{ language.language_id }}" class="form-control" placeholder="{% if language.language_id == config_language_id %}{{ text_bibb }}{% endif %}" /></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group slider-content hidden">
+            <label class="col-sm-2 control-label">{{ entry_zaglushka_type }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_zaglushka_type" class="form-control">
+                    {% if pochtaros_zaglushka_type == 1 %}
+                    <option value="0">{{ text_zaglushka_type_0 }}</option>
+                    <option value="1" selected="selected">{{ text_zaglushka_type_1 }}</option>
+                    {% else %}
+                    <option value="0" selected="selected">{{ text_zaglushka_type_0 }}</option>
+                    <option value="1">{{ text_zaglushka_type_1 }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-total-value">{{ entry_value_for_total }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_total_value" id="input-total-value" class="form-control">
+                    {% if pochtaros_total_value %}
+                        {% set total_value = pochtaros_total_value %}
+                    {% else %}
+                        {% set total_value = 'sub_total' %}
+                    {% endif %}
+                    {% for key, val in totals %}
+                        <option value="{{ key }}" {% if total_value == key %}{{ 'selected="selected"' }}{% endif %}>{{ val }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-round">{{ entry_round }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_round" id="input-round" class="form-control">
+                    <option value="">{{ text_noround }}</option>
+                    <option value="digit1" {% if pochtaros_round == 'digit1' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit1 }}</option>
+                    <option value="digit1_plus" {% if pochtaros_round == 'digit1_plus' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit1_plus }}</option>
+                    <option value="digit9" {% if pochtaros_round == 'digit9' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit9 }}</option>
+                    <option value="digit10" {% if pochtaros_round == 'digit10' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit10 }}</option>
+                    <option value="digit50" {% if pochtaros_round == 'digit50' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit50 }}</option>
+                    <option value="digit100" {% if pochtaros_round == 'digit100' %}{{ 'selected="selected"' }}{% endif %}>{{ text_digit100 }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-procent-price">{{ entry_procent_price }}</label>
+            <div class="col-sm-4">
+                <input type="text" name="{{ name }}_procent_price" value="{{ pochtaros_procent_price }}" placeholder="100" id="input-procent-price" class="form-control"/>
+            </div>
+            <div class="col-sm-4">%</div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_nalozhka }}</label>
+            <div class="col-sm-10"><input type="text" name="{{ name }}_nalozhka" value="{% if pochtaros_nalozhka %}{{ pochtaros_nalozhka }}{% endif %}" class="form-control"/>
+                {% if error_nalozhka is defined and error_nalozhka is not empty %}
+                <span class="error">{{ error_nalozhka }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_nalozhka2 }}</label>
+            <div class="col-sm-10"><select name="{{ name }}_nalozhka2" class="form-control">
+                {% for key, val in arr_show %}
+                        <option value="{{ key }}" {% if pochtaros_nalozhka2 and pochtaros_nalozhka2 == key%}{{ 'selected="selected"' }}{% endif %}>{{ arr_show_test[val] }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-total-value">{{ entry_payment }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_payment" id="input-payment" class="form-control">
+                    <option value="">{{ text_none }}</option>
+                    {% if pochtaros_payment is defined %}
+                        {% set payment = pochtaros_payment %}
+                    {% else %}
+                        {% set payment = 'sub_total' %}
+                    {% endif %}
+                    {% for key, val in payments %}
+                    <option value="{{ val.payment_code }}" {% if payment == val.payment_code %}{{ 'selected="selected"' }}{% endif %}>{{ val.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-show-nalozh-size">{{ entry_show_nalozh_size }}</label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_show_nalozh_size" value="1" {% if pochtaros_show_nalozh_size %}checked="checked"{% endif %} /></td>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-zero-price">{{ entry_zero_price }}</label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_zero_price" value="1" {% if pochtaros_zero_price %}checked="checked"{% endif %} /></td>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-zaglushka-vniz">{{ entry_zaglushka_vniz }}</label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_zaglushka_vniz" value="1" {% if pochtaros_zaglushka_vniz %}checked="checked"{% endif %} /></td>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-zaglushka-vniz">{{ entry_corp_tarif }}</label>
+            <div class="col-sm-10">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="{{ name }}_corp_tarif" value="1" {% if pochtaros_corp_tarif %}checked="checked"{% endif %} /></td>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax_class }}</label>
+            <div class="col-sm-10">
+                <select name="{{ name }}_tax_class_id" id="input-tax" class="form-control">
+                    <option value="0">{{ text_none }}</option>
+                    {% for tax_class in tax_classes %}
+                    {% if tax_class.tax_class_id == pochtaros_tax_class_id %}
+                    <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                    {% else %}
+                    <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-4">
+                <input type="text" name="shipping_{{ name }}_sort_order" value="{{ shipping_pochtaros_sort_order }}" placeholder="1" id="input-sort-order" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+                <select name="shipping_{{ name }}_status" id="input-status" class="form-control">
+                    {% if shipping_pochtaros_status %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="tab-data">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="nav nav-pills nav-stacked" id="methods">
+                    {% for method in methods %}
+                    {% set is_method_on = false %}
+                        {% for language in languages %}
+                            {% if language.status == 1 %}
+                                {% if pochtaros_mstatus[method.key][language.language_id] %}
+                                    {% set is_method_on = true %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <li {% if loop.index == 1 %}{{ 'class="active"' }}{% endif %}><a href="#tab-method-{{ method.key }}" data-toggle="tab" {% if not is_method_on %}{{ 'style="color:#000000;"' }}{% endif %}><i class="fa" onclick="$('a[href=\'#tab-method-{{ method.key }}\').parent().remove(); ('#method a:first').tab('show');"></i> {% if pochtaros_title_tab[method.key] is defined and pochtaros_title_tab[method.key] is not empty %}{{ pochtaros_title_tab[method.key] }}{% else %}{{ method.title }}{% endif %}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                <div class="tab-content">
+                    {% for method in methods %}
+                    <div class="tab-pane {% if loop.index == 1 %}{{ 'active' }}{% endif %}" id="tab-method-{{ method.key }}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-title-tab">{{ entry_title_tab }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_title_tab[{{ method.key }}]" value="{% if pochtaros_title_tab[method.key] is defined %}{{ pochtaros_title_tab[method.key] }}{% endif %}" id="input-min-delivery" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-min-delivery">{{ entry_min_delivery }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_min_delivery[{{ method.key }}]" value="{% if pochtaros_min_delivery[method.key] is defined %}{{ pochtaros_min_delivery[method.key] }}{% endif %}" id="input-min-delivery" class="form-control" />
+                                {% if errorr_min_delivery[method.key] %}
+                                <div class="text-danger">{{ error_min_delivery[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_price[{{ method.key }}]" value="{% if pochtaros_price[method.key] is defined %}{{ pochtaros_price[method.key] }}{% endif %}" id="input-price" class="form-control" />
+                                {% if error_price[method.key] %}
+                                <div class="text-danger">{{ error_number }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-min-products">{{ entry_min_products }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_min_products[{{ method.key }}]" value="{% if pochtaros_min_products[method.key] is defined %}{{ pochtaros_min_products[method.key] }}{% endif %}" id="input-min-products" class="form-control" />
+                                {% if error_min_products[method.key] %}
+                                <div class="text-danger">{{ error_min_products[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-max-products">{{ entry_max_products }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_max_products[{{ method.key }}]" value="{% if pochtaros_max_products[method.key] is defined %}{{ pochtaros_max_products[method.key] }}{% endif %}" id="input-max-products" class="form-control" />
+                                {% if error_max_products[method.key] %}
+                                <div class="text-danger">{{ error_max_products[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-min-order">{{ entry_min_order }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_min_order[{{ method.key }}]" value="{% if pochtaros_min_order[method.key] is defined %}{{ pochtaros_min_order[method.key] }}{% endif %}" id="input-min-order" class="form-control" />
+                                {% if error_min_order[method.key] %}
+                                <div class="text-danger">{{ error_min_order[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-max-order">{{ entry_max_order }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_max_order[{{ method.key }}]" value="{% if pochtaros_max_order[method.key] is defined %}{{ pochtaros_max_order[method.key] }}{% endif %}" id="input-max-order" class="form-control" />
+                                {% if error_max_order[method.key] %}
+                                <div class="text-danger">{{ error_max_order[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-min-weight2">{{ entry_min_weight2 }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_min_weight2[{{ method.key }}]" value="{% if pochtaros_min_weight2[method.key] is defined %}{{ pochtaros_min_weight2[method.key] }}{% endif %}" id="input-min-weight2" class="form-control" />
+                                {% if error_min_weight2[method.key] %}
+                                <div class="text-danger">{{ error_min_weight2[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-max-weight2">{{ entry_max_weight2 }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_max_weight2[{{ method.key }}]" value="{% if pochtaros_max_weight2[method.key] is defined %}{{ pochtaros_max_weight2[method.key] }}{% endif %}" id="input-max-weight2" class="form-control" />
+                                {% if error_max_weight2[method.key] %}
+                                <div class="text-danger">{{ error_max_weight2[method.key] }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+
+                            <div class="col-sm-10">
+                                <div class="well well-sm" style="height: 100px; overflow: auto;">
+                                    {% for geo_zone in geo_zones %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="{{ name }}_geo_zone[{{ method.key }}][]" value="{{ geo_zone.geo_zone_id }}" {% if pochtaros_geo_zone[method.key] is defined and geo_zone.geo_zone_id in pochtaros_geo_zone[method.key] %}checked="checked"{% endif %} />
+                                            {{ geo_zone.name }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_customer_group }}</label>
+
+                            <div class="col-sm-10">
+                                <div class="well well-sm" style="height: 100px; overflow: auto;">
+                                    {% for customer_group in customer_groups %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="{{ name }}_customer_group[{{ method.key }}][]" value="{{ customer_group.customer_group_id }}" {% if pochtaros_customer_group[method.key] is defined and customer_group.customer_group_id in pochtaros_customer_group[method.key] %}checked="checked"{% endif %}/>
+                                            {{ customer_group.name }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-incity"><span data-toggle="tooltip" title="{{ help_incity }}">{{ entry_incity }}</span></label>
+                            <div class="col-sm-10">
+                                <textarea name="{{ name }}_incity[{{ method.key }}]" rows="5" id="input-incity" class="form-control">{% if pochtaros_incity[method.key] is defined %}{{ pochtaros_incity[method.key] }}{% endif %}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-outcity"><span data-toggle="tooltip" title="{{ help_outcity }}">{{ entry_outcity }}</span></label>
+                            <div class="col-sm-10">
+                                <textarea name="{{ name }}_outcity[{{ method.key }}]" rows="5" id="input-outcity" class="form-control">{% if pochtaros_outcity[method.key] is defined %}{{ pochtaros_outcity[method.key] }}{% endif %}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-description"><span data-toggle="tooltip" title="{{ help_description }}">{{ entry_description }}</span></label>
+                            <div class="col-sm-10">
+                                <textarea name="{{ name }}_description[{{ method.key }}]" rows="5" id="input-description" class="form-control">{% if pochtaros_description[method.key] is defined %}{{ pochtaros_description[method.key] }}{% endif %}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-description">{{ entry_show_description }}</label>
+                            <div class="col-sm-10">
+                                <input type="checkbox" name="{{ name }}_show_description[{{ method.key }}]" value="1" class="form-control" {% if pochtaros_show_description[method.key] is defined and pochtaros_show_description[method.key] == 1 %}checked="checked"{% endif %} />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-msort-order">{{ entry_sort_order }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="{{ name }}_msort_order[{{ method.key }}]" value="{% if pochtaros_msort_order[method.key] is defined %}{{ pochtaros_msort_order[method.key] }}{% else %}{{ 1 }}{% endif %}" id="input-min-delivery" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ entry_status }}</label>
+                            <div class="col-sm-10">
+                                {% for language in languages %}
+                                    {% if language.status == 1 %}
+                                    <div class="input-group pull-left"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+                                    <select name="{{ name }}_mstatus[{{ method.key }}][{{ language.language_id }}]" class="form-control">
+                                    {% if pochtaros_mstatus[method.key][language.language_id] == 1 %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                        {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                        {% endif %}
+                                    </select></div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane" id="tab-discount">
+        <table id="discount" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-left"><span data-toggle="tooltip" title="{{ help_discount_value }}">{{ column_discount_value }}</span></td>
+                <td class="text-left">{{ column_method }}</td>
+                <td class="text-left">{{ column_customer_group }}</td>
+                <td class="text-left">{{ column_geo_zone }}</td>
+                <td class="text-left">{{ column_min_cost }}</td>
+                <td class="text-left">{{ column_max_cost }}</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if pochtaros_discounts|length > 0 %}
+                {% set discount_row = pochtaros_discounts|length %}
+            {% for key, discount in pochtaros_discounts %}
+            <tr id="discount-row{{ key }}">
+                <td class="text-left">
+                    <nobr>
+                        <select name="{{ name }}_discounts[{{ key }}][prefix]" class="form-control">
+                            {% set arr_prefix = ['-', '+'] %}
+                            {% for prefix in arr_prefix %}
+                            <option {% if prefix == discount.prefix%}{{ 'selected="selected"' }} {% endif %} value="{{ prefix }}">{{ prefix }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="{{ name }}_discounts[{{ key }}][value]" value="{{ discount.value }}" size="3" class="form-control"/>
+                        <select name="{{ name }}_discounts[{{ key }}][mode]" class="form-control">
+                            {% for type, tname in discount_type %}
+                            <option {% if type == discount.mode %}{{ 'selected="selected"' }}{% endif %} value="{{ type }}">{{ tname }}</option>
+                            {% endfor %}
+                        </select>
+                    </nobr>
+                    {% if error_pochtaros_discounts[key].value %}
+                    <span class="error">{{ error_pochtaros_discounts[key].value }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for method in on_methods %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_discounts[{{ key }}][key][]" value="{{ method.key }}" {% if discount.key is defined and discount.key|length > 0 and method.key in discount.key %}{{ 'checked="checked"' }}{% endif %}/>
+                                {% if pochtaros_title_tab[method.key] is defined %}
+                                    {{ pochtaros_title_tab[method.key] }}
+                                {% else %}
+                                    {{ method.title }}
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for customer_group in customer_groups %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_discounts[{{ key }}][customer_group_id][]" value="{{ customer_group.customer_group_id }}" {% if discount.customer_group_id and discount.customer_group_id|length > 0 and customer_group.customer_group_id in discount.customer_group_id %}{{ 'checked="checked"' }}{% endif %}/>
+                                {{ customer_group.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for geo_zone in geo_zones %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_discounts[{{ key }}][geo_zone][]" value="{{ geo_zone.geo_zone_id }}" {% if discount.geo_zone and discount.geo_zone|length > 0 and geo_zone.geo_zone_id in discount.geo_zone %}{{ 'checked="checked"' }}{% endif %}/>
+                                {{ geo_zone.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_discounts[{{ key }}][min_total]" value="{% if discount.min_total %}{{ discount.min_total }}{% endif %}" size="3" class="form-control"/>
+                    {% if error_pochtaros_discounts[key].min_total %}
+                    <span class="error">{{ error_pochtaros_discounts[key].min_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_discounts[{{ key }}][max_total]" value="{% if discount.max_total %}{{ discount.max_total }}{% endif %}" size="3" class="form-control"/>
+                    {% if error_pochtaros_discounts[key].max_total %}
+                    <span class="error">{{ error_pochtaros_discounts[key].max_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left"><button type="button" onclick="$('#discount-row{{ key }}').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6"></td>
+                <td class="text-left"><button type="button" onclick="addDiscount();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+
+    {% if show_product_groups and groups and groups|length > 0 %}
+    <div class="tab-pane" id="tab-pgroups">
+        <table id="pgroup" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-left">{{ column_method }}</td>
+                <td class="text-left">{{ column_group }}</td>
+                <td class="text-left">{{ column_group_logic }}</td>
+                <td class="text-left">{{ column_min_total }}</td>
+                <td class="text-left">{{ column_max_total }}</td>
+                <td></td>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if pochtaros_pgroups|length > 0 %}
+                {% set pgroup_row = pochtaros_pgroups|length %}
+            {% for key, pgroup in pochtaros_pgroups %}
+            <tr id="pgroup-row{{ key }}">
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for method in on_methods %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_pgroups[{{ key }}][key][]" value="{{ method.key }}" {% if pgroup.key and pgroup.key|length > 0 and method.key in pgroup.key %}{{ 'checked="checked"' }}{% endif %}/>
+                                {% if pochtaros_title_tab[method.key] is defined %}
+                                    {{ pochtaros_title_tab[method.key] }}
+                                {% else %}
+                                    {{ method.title }}
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+
+                <td class="text-left">
+                    <select name="{{ name }}_pgroups[{{ key }}][filter_group_id]" class="form-control"/>
+                    <option value="0" selected="selected">{{ text_group }}</option>
+                    {% for group in groups %}
+                        {% if group.status == 1 %}
+                            <option value="{{ group.group_id }}" {% if group.group_id == pgroup.filter_group_id %}{{ "selected" }}{% endif %}>{{ group.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                    {% if error_pgroups[key].filter_group_id %}
+                    <span class="error">{{ error_pgroups[key].filter_group_id }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <select name="{{ name }}_pgroups[{{ key }}][logic]" id="{{ name }}_pgroups_{{ key }}_logic" class="form-control"/>
+                    {% for type, tname in group_logic_type %}
+                    <option {% if type == pgroup.logic %}{{ 'selected="selected"' }}{% endif %} value="{{ type }}">{{ tname }}</option>
+                    {% endfor %}
+                    </select>
+                    <input type="text" name="{{ name }}_pgroups[{{ key }}][limit]" id="{{ name }}_pgroups_{{ key }}_limit" value="{% if pgroup.limit %}{{ pgroup.limit }}{% endif %}" size="7" class="form-control"/>
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_pgroups[{{ key }}][min_total]" value="{{ pgroup.min_total }}" size="3" class="form-control"/>
+                    {% if error_pgroups[key].min_total %}
+                    <span class="error">{{ error_pgroups[key].min_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_pgroups[{{ key }}][max_total]" value="{{ pgroup.max_total }}" size="3" class="form-control"/>
+                    {% if error_pgroups[key].max_total %}
+                    <span class="error">{{ error_pgroups[key].max_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left"><button type="button" onclick="$('#pgroup-row{{ key }}').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="5"></td>
+                <td class="text-left"><button type="button" onclick="addPGroup();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                </td>
+            </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    {% endif %}
+
+    <div class="tab-pane" id="tab-zipcode" >
+        <table id="zipcode" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-left">{{ column_inzip }}</td>
+                <td class="text-left">{{ column_outzip }}</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if pochtaros_zipcode|length > 0 %}
+                {% set zipcode_row = pochtaros_zipcode|length %}
+            {% for key, zipcode in pochtaros_zipcode%}
+            <tr id="zipcode-row{{ key }}">
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_zipcode[{{ key }}][inzip]" value="{{ zipcode.inzip }}" size="50" class="form-control"/>
+                    {% if error_zipcode[key].inzip %}
+                    <span class="error">{{ error_zipcode[key].inzip }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_zipcode[{{ key }}][outzip]" value="{{ zipcode.outzip }}" size="50" class="form-control"/>
+                    {% if error_zipcode[key].outzip %}
+                    <span class="error">{{ error_zipcode[key].outzip }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left"><button type="button" onclick="$('#zipcode-row{{ key }}').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="2"></td>
+                <td class="text-left"><button type="button" onclick="addZipCode();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="tab-pane" id="tab-bubble">
+        <table id="bubble" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-left">{{ column_bubble_title }}</td>
+                <td class="text-left">{{ column_type }}</td>
+                <td class="text-left">{{ column_method }}</td>
+                <td class="text-left">{{ column_geo_zone }}</td>
+                <td class="text-left">{{ column_min_cost }}</td>
+                <td class="text-left">{{ column_max_cost }}</td>
+                <td class="text-left">{{ column_min_weight }}</td>
+                <td class="text-left">{{ column_max_weight }}</td>
+                <td class="text-left">{{ column_min_all_total }}</td>
+                <td class="text-left">{{ column_max_all_total }}</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if pochtaros_bubbles|length > 0 %}
+                {% set bubble_row = pochtaros_bubbles|length %}
+            {% for key, bubble in pochtaros_bubbles %}
+            <tr id="bubble-row{{ key }}">
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][bubble_title]" value="{% if bubble.bubble_title %}{{ bubble.bubble_title }}{% endif %}" size="20" class="form-control" />
+                    {% if error_bubbles[key].bubble_title %}
+                    <span class="error">{{ error_bubbles[key].bubble_title }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <select name="{{ name }}_bubbles[{{ key }}][logic]" id="{{ name }}_bubbles_{{ key }}_logic" class="form-control">
+                        {% for type, tname in bubble_type %}
+                        <option {% if type == bubble.logic %}{{ 'selected="selected"' }}{% endif %} value="{{ type }}">{{ tname }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if error_bubbles[key].bubble_type %}
+                    <span class="error">{{ error_bubbles[key].bubble_type }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for method in on_methods %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_bubbles[{{ key }}][key][]" value="{{ method.key }}" {% if bubble.key and bubble.key|length > 0 and method.key in bubble.key %}{{ 'checked="checked"' }}{% endif %}/>
+                                {% if pochtaros_title_tab[method.key] is defined %}
+                                    {{ pochtaros_title_tab[method.key] }}
+                                {% else %}
+                                    {{ method.title }}
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="text-left">
+                    <div class="well well-sm" style="height: 100px; overflow: auto;">
+                        {% for geo_zone in geo_zones %}
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ name }}_bubbles[{{ key }}][geo_zone][]" value="{{ geo_zone.geo_zone_id }}" {% if bubble.geo_zone and bubble.geo_zone|length > 0 and geo_zone.geo_zone_id in bubble.geo_zone %}{{ 'checked="checked"' }}{% endif %}/>
+                                {{ geo_zone.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][min_cost]" value="{% if bubble.min_cost %}{{ bubble.min_cost }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].min_cost %}
+                    <span class="error">{{ error_bubbles[key].min_cost }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][max_cost]" value="{% if bubble.max_cost %}{{ bubble.max_cost }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].max_cost %}
+                    <span class="error">{{ error_bubbles[key].max_cost }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][min_weight]" value="{% if bubble.min_weight %}{{ bubble.min_weight }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].min_weight %}
+                    <span class="error">{{ error_bubbles[key].min_weight }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][max_weight]" value="{% if bubble.max_weight %}{{ bubble.max_weight }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].max_weight %}
+                    <span class="error">{{ error_bubbles[key].max_weight }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][min_all_total]" value="{% if bubble.min_all_total %}{{ bubble.min_all_total }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].min_all_total %}
+                    <span class="error">{{ error_bubbles[key].min_all_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left">
+                    <input type="text" name="{{ name }}_bubbles[{{ key }}][max_all_total]" value="{% if bubble.max_all_total %}{{ bubble.max_all_total }}{% endif %}" size="3" class="form-control" />
+                    {% if error_bubbles[key].max_all_total %}
+                    <span class="error">{{ error_bubbles[key].max_all_total }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-left"><button type="button" onclick="$('#bubble-row{{ key }}').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10"></td>
+                <td class="text-left"><button type="button" onclick="addBubble();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <div class="tab-pane" id="tab-backup">
+
+        <label class="col-sm-2 control-label" for="button-save-backup">{{ text_backup }}</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-sm-4">
+                    <button type="button" id="button-save-backup" class="btn btn-primary" onclick="location = '{{ backup_link }}';"><i class="fa fa-save"></i> {{ button_save }}</button>
+                </div>
+            </div>
+        </div>
+
+        <br/>&nbsp;<br/>
+
+        <label class="col-sm-2 control-label" for="button-restore-backup">{{ text_restore }}</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-sm-4">
+                    <input name="restore" type="hidden" value="0" id="restore" /><input type="file" name="import" class="form-control" />&nbsp;<button type="button" id="button-save-backup" class="btn btn-primary" onclick="$('#restore').val(1);$('#form').submit();"><i class="fa fa-copy"></i> {{ button_restore }}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<input type="hidden" name="{{ name }}_license" size="50" value="{% if pochtaros_license %}{{ pochtaros_license }}{% endif %}" >
+
+</form>
+</div>
+</div>
+</div>
+
+<style>
+    .slider-content {
+
+    }
+
+    .slider-content.hidden{
+        display: none;
+    }
+</style>
+
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+
+<script type="text/javascript"><!--
+    if ($('#pochtaros_zaglushka').is(':checked')) {
+        $(".slider-content").removeClass("hidden");
+    }
+    else {
+        $(".slider-content").addClass("hidden");
+    }
+
+
+    $('#pochtaros_zaglushka').change(function () {
+        if ($('#pochtaros_zaglushka').is(':checked')) {
+            $(".slider-content").removeClass("hidden");
+        }
+        else {
+            $(".slider-content").addClass("hidden");
+        }
+    });
+
+    $('#language a:first').tab('show');
+    $('#methods a:first').tab('show');
+
+
+    var discount_row = {% if discount_row %}{{ discount_row }}{% else %}{{ '0' }}{% endif %};
+
+    function addDiscount() {
+        var html = '<tr id="discount-row' + discount_row + '">';
+
+        html += '       <td class="text-left">';
+        html += '           <select class="form-control" name="{{ name }}_discounts[' + discount_row + '][prefix]">';
+        {% set arr_prefix = ['-', '+'] %}
+        {% for prefix in arr_prefix %}
+            html += '               <option value="{{ prefix }}">{{ prefix }}</option>';
+        {% endfor %}
+        html += '           </select>';
+        html += '           <input type="text" name="{{ name }}_discounts[' + discount_row + '][value]" value="" size="3" class="form-control" />';
+        html += '           <select class="form-control" name="{{ name }}_discounts[' + discount_row + '][mode]">';
+        {% for type, tname in discount_type %}
+            html += '               <option value="{{ type }}">{{ tname }}</option>';
+        {% endfor %}
+        html += '           </select>';
+        html += '       </td>';
+
+        html += '       <td class="text-left">';
+
+        html += '           <div class="well well-sm" style="height: 100px; overflow: auto;">';
+
+        {% for method in on_methods %}
+            html += '               <div class="checkbox"><label>';
+            html += '               <input type="checkbox" name="{{ name }}_discounts[' + discount_row + '][key][]" value="{{ method.key }}" />';
+            html += '              {% if pochtaros_title_tab[method.key] is defined %}{{ pochtaros_title_tab[method.key] }}{% else %}{{ method.title }}{% endif %}';
+            html += '               </label></div>';
+        {% endfor %}
+        html += '           </div>';
+        html += '       </td>';
+        html += '       <td class="text-left">';
+        html += '           <div class="well well-sm" style="height: 100px; overflow: auto;">';
+
+        {% for customer_group in customer_groups %}
+            html += '               <div class="checkbox"><label>';
+            html += '               <input type="checkbox" name="{{ name }}_discounts[' + discount_row + '][customer_group_id][]" value="{{ customer_group.customer_group_id }}" />';
+            html += '               {{ customer_group.name }}';
+            html += '               </label></div>';
+        {% endfor %}
+        html += '           </div>';
+        html += '       </td>';
+        html += '       <td class="text-left">';
+        html += '           <div class="well well-sm" style="height: 100px; overflow: auto;">';
+
+        {% for geo_zone in geo_zones %}
+            html += '               <div class="checkbox"><label>';
+            html += '                   <input type="checkbox" name="{{ name }}_discounts[' + discount_row + '][geo_zone][]" value="{{ geo_zone.geo_zone_id }}" />';
+            html += '                   {{ geo_zone.name }}';
+            html += '               </label></div>';
+        {% endfor %}
+        html += '           </div>';
+        html += '       </td>';
+
+
+        html += '       <td class="text-left">';
+        html += '           <input type="text" name="{{ name }}_discounts[' + discount_row + '][min_total]" value="" size="3" class="form-control" />';
+        html += '       </td>';
+
+        html += '       <td class="text-left">';
+        html += '           <input type="text" name="{{ name }}_discounts[' + discount_row + '][max_total]" value="" size="3" class="form-control" />';
+        html += '       </td>';
+
+        html += '       <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+
+        html += '</tr>';
+
+        $('#discount tbody').append(html);
+
+        discount_row++;
+    }
+
+    var zipcode_row = {% if zipcode_row %}{{ zipcode_row }}{% else %}{{ '0' }}{% endif %};
+
+    function addZipCode() {
+        var html = '<tr id="zipcode-row' + zipcode_row + '">';
+
+        html += '       <td class="left">';
+        html += '       <input type="text" name="{{ name }}_zipcode[' + zipcode_row + '][inzip]" value="" size="50" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '       <input type="text" name="{{ name }}_zipcode[' + zipcode_row + '][outzip]" value="" size="50" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="text-left"><button type="button" onclick="$(\'#zipcode-row' + zipcode_row + '\').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '       </tr>';
+
+        $('#zipcode tbody').append(html);
+        zipcode_row++;
+    }
+
+    var bubble_row = {% if bubble_row %}{{ bubble_row }}{% else %}{{ '0' }}{% endif %};
+
+    function addBubble() {
+        var html = '<tr id="bubble-row' + bubble_row + '">';
+        html += '       <td class="left">';
+        html += '       <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][bubble_title]" value="" size="20" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '       <select name="{{ name }}_bubbles[' + bubble_row + '][logic]" id="{{ name }}_bubbles_' + bubble_row + '_logic" class="form-control">';
+        {% for type, tname in bubble_type %}
+            html += '       <option value="{{ type }}">{{ tname }}</option>';
+        {% endfor %}
+        html += '       </select>';
+        html += '       </td>';
+
+        html += '       <td class="text-left">';
+        html += '       <div class="well well-sm" style="height: 100px; overflow: auto;">';
+        {% for method in on_methods %}
+            html += '       <div class="checkbox">';
+            html += '       <label>';
+            html += '       <input type="checkbox" name="{{ name }}_bubbles[' + bubble_row + '][key][]" value="{{ method.key }}" />';
+            html += '       {% if pochtaros_title_tab[method.key] is defined %}{{ pochtaros_title_tab[method.key] }}{% else %}{{ method.title }}{% endif %}';
+            html += '       </label>';
+            html += '       </div>';
+        {% endfor %}
+
+        html += '       </div>';
+        html += '       </td>';
+
+
+        html += '       <td class="text-left">';
+        html += '       <div class="well well-sm" style="height: 100px; overflow: auto;">';
+        {% for geo_zone in geo_zones %}
+            html += '       <div class="checkbox">';
+            html += '       <label>';
+            html += '       <input type="checkbox" name="{{ name }}_bubbles[' + bubble_row + '][geo_zone][]" value="{{ geo_zone.geo_zone_id }}" />';
+            html += '       {{ geo_zone.name }}';
+            html += '       </label>';
+            html += '       </div>';
+        {% endfor %}
+        html += '       </div>';
+        html += '       </td>';
+
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][min_cost]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][max_cost]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][min_weight]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][max_weight]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][min_all_total]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="left">';
+        html += '           <input type="text" name="{{ name }}_bubbles[' + bubble_row + '][max_all_total]" value="" size="3" class="form-control"/>';
+        html += '       </td>';
+        html += '       <td class="text-left"><button type="button" onclick="$(\'#bubble-row' + bubble_row + '\').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '       </tr>';
+
+        $('#bubble tbody').append(html);
+
+        bubble_row++;
+    }
+
+
+    {% if show_product_groups and groups and groups|length > 0 %}
+        var group_row = {% if pgroup_row %}{{ pgroup_row }}{% else %}{{ '0' }}{% endif %};
+
+        function addPGroup() {
+            var html = '<tr id="pgroup-row' + group_row + '">';
+            html += '       <td class="text-left">';
+
+            html += '       <div class="well well-sm" style="height: 100px; overflow: auto;">';
+            {% for method in on_methods %}
+                html += '       <div class="checkbox">';
+                html += '       <label>';
+                html += '       <input type="checkbox" name="{{ name }}_pgroups[' + group_row + '][key][]" value="{{ method.key }}" />';
+                html += '{% if pochtaros_title_tab[method.key] is defined %}{{ pochtaros_title_tab[method.key] }}{% else %}{{ method.title }}{% endif %}';
+                html += '       </label>';
+                html += '       </div>';
+            {% endfor %}
+
+            html += '       </div>';
+            html += '       </td>';
+
+            html += '       <td class="text-left">';
+            html += '       <select name="{{ name }}_pgroups[' + group_row + '][filter_group_id]"  class="form-control">';
+            html += '       <option value="0" selected="selected">{{ text_group }}</option>';
+            {% for group in groups %}
+                {% if group.status == 1 %}
+                    html += '       <option value="{{ group.group_id }}">{{ group.name }}</option>';
+                {% endif %}
+            {% endfor %}
+            html += '       </select>';
+            html += '       </td>';
+            html += '       <td class="text-left">';
+            html += '       <select name="{{ name }}_pgroups[' + group_row + '][logic]" id="{{ name }}_pgroups_' + group_row + '_logic" class="form-control">';
+            {% for type, tname in group_logic_type %}
+                html += '       <option value="{{ type }}">{{ tname }}</option>';
+            {% endfor %}
+            html += '       </select>';
+            html += '       <input type="text" name="{{ name }}_pgroups[' + group_row + '][limit]" id="{{ name }}_pgroups_' + group_row + '_limit" value="" disabled size="7" class="form-control" />';
+            html += '       </td>';
+
+            html += '       <td class="text-left">';
+            html += '       <input type="text" name="{{ name }}_pgroups[' + group_row + '][min_total]" value="" size="3" class="form-control" />';
+            html += '       </td>';
+            html += '       <td class="text-left">';
+            html += '       <input type="text" name="{{ name }}_pgroups[' + group_row + '][max_total]" value="" size="3" class="form-control" />';
+            html += '       </td>';
+
+            html += '       <td class="text-left"><button type="button" onclick="$(\'#pgroup-row' + group_row + '\').remove();return false;" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+            html += '       </tr>';
+
+
+            $('#pgroup tbody').append(html);
+
+            $('#{{ name }}_pgroups_' + group_row + '_logic').change(function () {
+                if ($('#{{ name }}_pgroups_' + (group_row - 1) + '_logic').val() == 'spec_number' ||
+                    $('#{{ name }}_pgroups_' + (group_row - 1) + '_logic').val() == 'spec_number2'
+                ) {
+                    $('#{{ name }}_pgroups_' + (group_row - 1) + '_limit').prop('disabled', false);
+                }
+                else {
+                    $('#{{ name }}_pgroups_' + (group_row - 1) + '_limit').prop('disabled', true);
+                }
+            });
+
+            group_row++;
+        }
+
+        {% for i in 0..pgroup_row %}
+            $('#{{ name }}_pgroups_{{ i }}_logic').change(function () {
+                if ($('#{{ name }}_pgroups_{{ i }}_logic').val() == 'spec_number' ||
+                    $('#{{ name }}_pgroups_{{ i }}_logic').val() == 'spec_number2'
+                ) {
+                    $('#{{ name }}_pgroups_{{ i }}_limit').prop('disabled', false);
+                }
+                else {
+                    $('#{{ name }}_pgroups_{{ i }}_limit').prop('disabled', true);
+                }
+            });
+
+            if ($('#{{ name }}_pgroups_{{ i }}_logic').val() == 'spec_number' ||
+                $('#{{ name }}_pgroups_{{ i }}_logic').val() == 'spec_number2'
+            ) {
+                $('#{{ name }}_pgroups_{{ i }}_limit').prop('disabled', false);
+            }
+            else {
+                $('#{{ name }}_pgroups_{{ i }}_limit').prop('disabled', true);
+            }
+    {% endfor %}
+    {% endif %}
+
+    //--></script></div>
+
+{{ footer }}

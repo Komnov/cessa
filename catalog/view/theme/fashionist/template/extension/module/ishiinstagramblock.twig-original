@@ -1,0 +1,76 @@
+<div class="ishiinstagramblock clearfix">
+    <div class="ishiinstagram-inner">
+        <div class="home-title">
+            <a href="https://www.instagram.com/{{ username }}" target="_blank" rel="nofollow">    
+            {{ title }} <span>@{{ username }}</span>
+            </a>
+        </div>
+        <div id="ishiinstagram-carousel" class="owl-carousel">
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            var userFeed = new Instafeed({
+                get: 'user',
+                target: "ishiinstagram-carousel",
+                userId: '{{ userid }}',
+                accessToken: '{{ accesstoken }}',
+                resolution: 'standard_resolution',
+                sortBy: '{{ sortby }}',
+                limit: 6,
+                dot:false,
+                template:'<div class="item"><a href={{"{{link"}}}} target="_blank" id={{"{{id"}}}}><img src={{"{{image"}}}} /><span class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></span></a><div class="text-container"><span class="likes"><span class="likes-count">{{"{{likes"}}}}</span><i class="fa fa-heart" aria-hidden="true"></i></span><span class="comments"><span class="comments-count">{{"{{comments"}}}}</span><i class="fa fa-comments" aria-hidden="true"></i></span></div></div>',
+                links: false,
+                after: function(){
+                    $('#ishiinstagram-carousel.owl-carousel').owlCarousel({
+                        loop:true,
+                        rtl: $('html').attr('dir') == 'rtl'? true : false,
+                        autoplay:true,
+                        responsive:{
+                            0:{
+                                items:1
+                            },
+                            350:{
+                                items:2
+                            },
+                            544:{
+                                items:3
+                            },
+                            768:{
+                                items:3
+                            },
+                            992:{
+                                items:4
+                            },
+                            1200: {
+                                items:6
+                            },
+                            1500: {
+                                items:6
+                            }
+                        }
+                    });
+                    insertDummyData();
+                }
+            });
+            userFeed.run();
+        });
+        function insertDummyData() {
+
+            $("#ishiinstagram-carousel .owl-item").each(function(){
+            $(this).find(".comments-count").text(niceNumberDisplay(Math.floor((Math.random() * 10000) + 1)));
+            $(this).find(".likes-count").text(niceNumberDisplay(Math.floor((Math.random() * 100000) + 1)));
+            });
+        }
+        function niceNumberDisplay(num) {
+            var n = parseFloat(num);
+            if(n > 1000000) {
+                return Math.round(n / 1000000) + 'm';
+            } else if(n > 1000) {
+                return Math.round(n / 1000) + 'k';
+            } else {
+                return n.toFixed(0);
+            }
+        }
+    </script>
+</div> 

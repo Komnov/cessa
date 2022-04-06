@@ -1,0 +1,28 @@
+#_desktop_top_menu #top-menu > li .sub-menu ul[data-depth="1"] > li {margin-bottom:15px}
+#_desktop_top_menu #top-menu > li .sub-menu a {font-weight:400;}
+.header-nav .left-nav .contact-email{height: 30px;}
+.header-nav .left-nav .contact-email a{vertical-align: -webkit-baseline-middle;}
+.header-nav .left-nav .contact-email .email-img{display:none}
+.header-nav .left-nav .contact-email .fa-instagram{vertical-align:middle;width:16px;height:16px;}
+.header-nav .left-nav .contact-email .email-img{width:0px;display:none}
+.product-thumb .rating,.product-thumb .button-group{display:none}
+.product-thumb .btn-cart{position:relative;opacity: 1;-moz-transform:none;-webkit-transform:none;-o-transform:none;-ms-transform:none;-webkit-transition: all 0.6s;-moz-transition: all 0.6s;-o-transition: all 0.6s;transition: all 0.6s;}
+.product-thumb .caption .price{opacity: 1!important;}
+.quantity .input-group{display: table;}
+#ishiheaderblock{text-transform: none;}
+.product-thumb .caption .price,.product-thumb{margin-bottom:15px}
+.product-thumb .caption .articul {color: #171717;font-size: 12px;font-weight: 400;margin-bottom:15px;}
+.bannerblock .banner-btn{text-transform:none;color:#787878}
+.bannerblock .banner-subtitle{margin: 0 0 5px;}
+.ishibannerblock,.ishiparallaxbannerblock{margin-bottom:70px;}
+.ishiservicesblock .home-title{margin-bottom:40px;}
+#footer .footer-container .block-contact .block{margin-bottom: 0;}
+.ishiparallaxbannerblock .parallax_banner .parallax-list .parallax-subtitle,.ishiparallaxbannerblock .parallax_banner .parallax-list .parallax-desc{text-transform:none;}
+.product-thumb .stiker span{border: 1px solid #c96;border-radius: 5px;padding: 5px 7px;display: inline-block;font-size: 12px;font-weight: 400;margin: 0 3px 15px;text-align:center;}
+.product-right .stiker{margin-top:15px}
+.product-right .attribute{padding-left:10px}
+.product-right .stiker span{border: 1px solid #c96;border-radius: 5px;padding: 5px 7px;display: inline-block;font-size: 12px;font-weight: 400;margin: 0 3px 15px;text-align:center;}
+.breadcrumb a{text-shadow: 1px -2px 3px white;}
+.ras,.ras:hover{text-decoration:underline}
+.product-right .rating-wrapper{margin:50px 0}
+#information-contact .contact-location .location-title i{border: 2px solid #cc9966;color:#cc9966;vertical-align: middle;top:0}

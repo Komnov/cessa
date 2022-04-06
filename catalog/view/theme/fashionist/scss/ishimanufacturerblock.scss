@@ -1,0 +1,25 @@
+.manufacturerblock {
+	margin-bottom:40px;
+	@media (max-width: 991px) {
+		margin-bottom: 20px;
+	}
+	.home-title {
+		display: none;
+	}
+	.item {
+		text-align: center;
+		img {
+			opacity: 0.8;
+			max-width: 130px;
+			display: inline-block;
+			@media (max-width: 400px) {
+				max-width: 100px;
+			}
+		}
+		&:hover {
+			img {
+				opacity: 1;
+			}
+		}
+	}
+}

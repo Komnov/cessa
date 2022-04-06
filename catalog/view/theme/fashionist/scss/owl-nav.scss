@@ -1,0 +1,118 @@
+.owl-carousel{
+	.owl-nav {
+		text-align: center;
+		-webkit-transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-o-transition: all 0.5s;
+		transition: all 0.5s;
+		.owl-prev, .owl-next {
+			background:  $brand-secondary;
+			display: inline-block;
+			vertical-align: middle;
+			border: 1px solid $brand-secondary;
+			text-align: center;
+			position: relative;
+			margin:4px;
+			padding: 1px;
+			outline: none;
+			width: 28px;
+			height:28px;
+			-webkit-transition: all .5s;
+			-moz-transition: all .5s;
+			-o-transition: all .5s;
+			transition: all .5s;
+			&:hover {
+				background-color: $brand-primary;
+				border-color: $brand-primary;
+			}
+		}
+		i{
+			&:before {
+				color: #fff;
+				position: relative;
+				text-align: center;
+				font-size: 16px;
+				line-height: 22px;
+				font-weight: 600;
+				text-align: center;
+				margin: 0 auto;
+			}
+		}
+	}
+	.owl-dots {
+		position: absolute;
+		bottom: 15px;
+		right: 0;
+		left: 0;
+		margin: 0 auto;
+		text-align: center;
+		-webkit-transition: all 0.3s;
+		-moz-transition: all 0.3s;
+		-o-transition: all 0.3s;
+		transition: all 0.3s;
+		.owl-dot {
+			display: inline-block;
+			vertical-align: middle;
+			outline: none;
+			span {
+				width: 12px;
+				height: 12px;
+				border-radius: 50px;
+				background: $brand-secondary;
+				border: 1px solid $brand-secondary;
+				margin: 0 5px;
+				display: block;
+			}
+			&.active {
+				span {
+					background: $brand-primary;
+					border-color: $brand-primary;
+				}
+			}
+		}
+		&.ishi-style-dot1 {
+			.owl-dot {
+				span {
+					border-radius: 0;
+				}
+			}
+		}
+		&.ishi-style-dot2 {
+			.owl-dot {
+				span {
+					border-radius: 50%;
+				}
+			}
+		}
+		&.ishi-style-dot3 {
+			.owl-dot {
+				span {
+					border-radius: 0;
+					transform: rotate(45deg);
+					-ms-transform: rotate(45deg);
+					-webkit-transform: rotate(45deg);
+					-o-transform: rotate(45deg);
+					-moz-transform: rotate(45deg);
+				}
+			}
+		}
+		&.ishi-style-dot4 {
+			.owl-dot {
+				span {
+					width: 25px;
+					height: 5px;
+					border-radius: 0;
+				}
+			}
+		}
+		&.ishi-style-dot5 {
+			.owl-dot {
+				span {
+					width: 25px;
+					height: 6px;
+					border-radius: 5px;
+				}
+			}
+		}
+	}
+}
