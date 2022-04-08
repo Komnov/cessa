@@ -67,6 +67,7 @@ $(document).ready(() => {
             width: "toggle"
         });
         $('#menu_wrapper').toggleClass('active');
+        $('body').toggleClass('fixed');
     });
 
     $('#top_menu_closer i').on('click', function () {
@@ -74,6 +75,7 @@ $(document).ready(() => {
             width: "toggle"
         });
         $('#menu_wrapper').toggleClass('active');
+        $('body').toggleClass('fixed');
     });
 
     $('#menu_wrapper').on('click', function () {
@@ -81,6 +83,7 @@ $(document).ready(() => {
             width: "toggle"
         });
         $('#menu_wrapper').toggleClass('active');
+        $('body').toggleClass('fixed');
     });
     
     $('body').on('click', function () {
@@ -220,3 +223,9 @@ function toggleMobileStyles()
         });
     }
 }
+
+$(function() {
+    $('#common-home .ishiservices .services a').on('click', function (e) {
+    e.preventDefault(); //убираем переход по ссылке с блока преимуществ на главной
+    });
+});

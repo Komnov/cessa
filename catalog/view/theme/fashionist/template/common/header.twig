@@ -76,7 +76,12 @@
 		        	{{ headerbefore }}
 				</div>
 		    	<div class="col-xs-12 col-sm-4 col-md-4 right-nav">
-		      		<div class="language-selector"><a href="tel:{{ telephone|replace({' ' : '', '-' : '', '(' : '', ')' : ''}) }}" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i> {{ telephone }}</a></div>
+		      		<div class="language-selector">
+		      			<a href="https://t.me/TNKHPGY2GtA3ZTZi" target="_blank">
+		      				<i class="fa fa-telegram"></i>
+		      			</a>
+		      			<a href="tel:{{ telephone|replace({' ' : '', '-' : '', '(' : '', ')' : ''}) }}" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i> {{ telephone }}</a>
+		      		</div>
 				 </div>
 			</div>
 			</div>
@@ -85,7 +90,7 @@
 			<div class="header-top">
 				<div class="container"> 
 					<div class="row">
-				        <div class="desktop-logo col-lg-3 col-md-3 col-sm-4 col-xs-4" id="_desktop_logo">
+				        <div class="desktop-logo col-lg-2 col-md-2 col-sm-4 col-xs-4" id="_desktop_logo">
 				          <div id="logo">
 				            {% if logo %}
 				            <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
@@ -98,10 +103,10 @@
 				            {% endif %}
 				          </div>
 				        </div>
-				        <div class="header-menu col-lg-7 col-md-7 col-sm-7 col-xs-7">
+				        <div class="header-menu col-lg-9 col-md-9 col-sm-7 col-xs-7">
 				        	{{ menu }}	
 				        </div>
-						<div class="header-right col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="header-right col-lg-2 col-md-3 col-sm-3 col-xs-3">
 					        <div id="_desktop_cart">
 					          <div class="blockcart">
 					            {{ cart }}
