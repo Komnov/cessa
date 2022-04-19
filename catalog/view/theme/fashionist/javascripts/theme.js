@@ -188,10 +188,10 @@ function adjustTopMenu() {
     } else {
         $('.nav-full-width').removeClass('fixed-header');
         if ($(window).scrollTop() > headerHeight) {
-            $('.header-top').addClass('fixed-header');
+            $('.header-top, .product-right').addClass('fixed-header');
         }
         else {
-            $('.header-top').removeClass('fixed-header');
+            $('.header-top, .product-right').removeClass('fixed-header');
         }
     }   
 }
@@ -228,4 +228,13 @@ $(function() {
     $('#common-home .ishiservices .services a').on('click', function (e) {
     e.preventDefault(); //убираем переход по ссылке с блока преимуществ на главной
     });
+});
+
+$(function() {
+    let oldPrice = $('.product__info .list-unstyled.price .product-dis span').text().replace(/[^0-9]/gi, '');
+    let salePrice = $('.product-right .list-unstyled.price .product-price h2').text().replace(/[^0-9]/gi, '');
+    if ( oldPrice.length > 0 ) {
+        let checkSale = oldPrice - salePrice;
+        $('.product__info .stiker').prepend('<span>Экономия ' +checkSale+ ' руб.</span>');
+    }
 });
