@@ -238,3 +238,17 @@ $(function() {
         $('.product__info .stiker').prepend('<span>Экономия ' +checkSale+ ' руб.</span>');
     }
 });
+
+$(function() {
+    //скрываем часть контента в корзине в блоке доставка
+    if ($(window).width() > 500) {
+        let shipContainer = $('#simplecheckout_shipping .simplecheckout-block-content');
+        $('#simplecheckout_shipping').append('<div class="ship_all">Показать все</div>');
+        $('#simplecheckout_shipping .simplecheckout-block-content').toggleClass('desktop-hidden');
+        $('#simplecheckout_shipping').on('click', function() {
+            $(' #simplecheckout_shipping .simplecheckout-block-content.desktop-hidden').removeClass('desktop-hidden');
+            $('#simplecheckout_shipping .ship_all').remove();
+        })
+    }
+    $('#simplecheckout_form_0 #simplecheckout_shipping label[for="cdek.tariff_137_0"]:last').remove();
+});
