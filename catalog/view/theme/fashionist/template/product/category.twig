@@ -10,7 +10,8 @@
 <div id="product-category">
   <div class="container">
   <div class="row">
-  <div class="wrapper_container">{{ column_left }}
+  <div class="wrapper_container">
+    {{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
     {% elseif column_left or column_right %}
@@ -23,7 +24,7 @@
         {% if thumb or description %}
           <div class="category_banner">
             <div class="row">
-              <div class="col-sm-12 category-title">{{ heading_title }}</div>
+              <h1 class="col-sm-12 category-title">{{ heading_title }}</h1>
               {% if description %}
               <div class="col-sm-12 category_description">{{ description }}</div>
               {% endif %}

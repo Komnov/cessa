@@ -922,6 +922,14 @@
 	background-image: url(../img/bg-img.jpg);
 	background-size: contain;
 }
+#product-category .category_description {
+	display: none;
+}
+#product-category .category-title {
+    display: block;
+    margin: 15px 0 15px 35px!important;
+    padding: 0 0;
+}
 /*category page
 
 
