@@ -1,7 +1,5 @@
 .htaccess
 /config.php
-/admin/
-/system/
 /admin/config.php
 /robots.txt
 /sitemap.xml
