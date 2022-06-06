@@ -470,6 +470,212 @@
 	background-repeat: no-repeat;
 	background-size: contain;
 }
+
+
+.price__info_dolyame {
+	position: relative;
+	margin: 0 0 20px 0;
+}
+.price__info_dolyame .price__info_head {
+	display: inline-flex;
+    border: 1px solid #000;
+    padding: 10px 40px 10px 20px;
+    color: #000;
+    position: relative;
+    width: 330px;
+    transition: 0.3s;
+}
+
+.price__info_dolyame .price__info_head:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    transform: rotate(133deg);
+    transition: 0.3s;
+}
+.price__info_dolyame .price__info_title {
+	display: flex;
+    margin: 0 25px 0 0;
+    width: 80px;
+}
+.price__info_dolyame .price__info_title img {
+    width: 80px;
+    object-fit: contain;
+}
+.price__info_dolyame .price__info_about {
+    color: #000;
+    border: 1px solid #000;
+    max-width: 330px;
+    position: relative;
+    top: -1px;
+}
+
+
+.price__info_dolyame .price__info_about {
+	position: absolute;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 12px 20px -5px rgb(50 50 50 / 30%);
+	-moz-box-shadow: 0px 12px 20px -5px rgba(50, 50, 50, 0.3);
+	box-shadow: 0px 12px 20px 3px rgb(50 50 50 / 30%);
+	padding: 10px 10px 15px 10px;
+	left: 0px;
+	width: 100%;
+	transition: 0s;
+	cursor: pointer;
+	z-index: 60;
+	border: 1px solid #000;
+	top: 39px;
+	line-height: initial;
+	min-width: 330px;
+	line-height: initial;
+	opacity: 0;
+	z-index: -1;
+	cursor: default;
+}
+.price__info_dolyame .price__info_about .title {
+    font-size: 16px!important;
+    margin: 0 0 0 0!important;
+    display: block;
+    padding: 5px 0 5px 0!important;
+    text-transform: none!important;
+    text-align: center;
+    font-weight: 600;
+    line-height: 18px;
+}
+.price__info_dolyame .price__info_about .desc {
+	border-top: 1px solid #EDEDED;
+	margin: 10px 0 0 0;
+	padding: 10px 0 0 0;
+}
+.price__info_dolyame .price__info_about .desc .subtitle-text {
+    text-align: center;
+    display: block;
+}
+.price__info_about .dolyame-row:first-child {
+	display: flex;
+	margin: 20px 0;
+	flex-wrap: wrap;
+}
+.price__info_about .dolyame-row .dolyame-item {
+	width: 25%;
+	margin: 5px 0;
+	position: relative;
+}
+.price__info_about .dolyame-row .dolyame-price {
+	font-size: 13px;
+	text-align: center;
+}
+.price__info_about .dolyame-row .dolyame-date {
+	font-size: 11px;
+    line-height: 12px;
+    text-align: center;
+}
+.price__info_about .dolyame-row .dolyame-circle {
+	position: relative;
+	width: 100%;
+	height: 20px;
+	display: flex;
+	margin: 5px 0;
+}
+.price__info_about .dolyame-row .dolyame-circle:after {
+	content: '';
+	width: 100%;
+	height: 1px;
+	display: flex;
+	background: #c7c9cc;
+	position: absolute;
+	bottom: 8px;
+}
+.price__info_about .dolyame-row .dolyame-circle:before {
+	content: '';
+	background-image: url(/catalog/view/theme/fashionist/img/icons/dolyame-step.svg);
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	position: absolute;
+	top: 3px;
+	left: 35%;
+	z-index: 2;
+	background-color: #fff;
+}
+.price__info_about .dolyame-row .dolyame-circle.circle-1:before {
+
+}
+.price__info_about .dolyame-row .dolyame-circle.circle-2:before {
+	background-position-y: -18px;
+}
+.price__info_about .dolyame-row .dolyame-circle.circle-3:before {
+	background-position-y: -36px;
+}
+.price__info_about .dolyame-row .dolyame-circle.done:before {
+	background-position-y: -54px;
+}
+.price__info_about .dolyame-row .dolyame-item:first-child:before,
+.price__info_about .dolyame-row .dolyame-item:last-child:before {
+	content: "";
+	background: #fff;
+	width: 35%;
+	height: 1px;
+	position: absolute;
+	left: 0;
+	top: 36px;
+	z-index: 3;
+	display: flex;
+}
+.price__info_about .dolyame-row .dolyame-item:last-child:before {
+	right: 0;
+	left: initial;
+	width: 42%;
+}
+.price__info_about .dolyame-row ul {
+	margin: 0 0;
+}
+.price__info_about .dolyame-row  li {
+	font-size: 14px;
+	text-align: left;
+	list-style-type: none;
+	position: relative;
+}
+.price__info_about .dolyame-row  li:before {
+    color: #6fadaa;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: 10;
+    background-color: #6fadaa;
+    position: relative;
+    top: -2px;
+    margin: 0 6px 0 0;
+}
+.dolyame_pop_up {
+	display: flex;
+}
+.price__info_about .dolyame > span > a {
+	display: block;
+    text-align: center;
+    margin: 10px 0 0px 0;
+    color: #9d9d9d;
+}
+.price__info_about .dolyame > span > a:hover {
+	text-decoration: underline;
+	color: #c96;
+}
+.product__info .price__info_dolyame.active .price__info_about {
+	opacity: 1;
+	z-index: 1;
+	transition: 0.3s;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
 /*product page finish*/
 
 /*basket page*/
@@ -930,14 +1136,141 @@
     margin: 15px 0 15px 35px!important;
     padding: 0 0;
 }
-/*category page
+#_desktop_column_left .ishibannerblock {
+	display: none;
+}
+#product-category .product-list-js .product-layout .price {
+	margin: 0 0 0 0!important;
+}
+#product-category .product-list-js .product-layout .dolyami-category {
+	display: block;
+    color: #999999;
+    margin: 10px 0;
+}
+#product-category .product-list-js .product-layout .dolyami-category a {
+	color: #999999;
+	text-decoration: underline;
+}
+/*category page*/
 
+/*dolyami*/
+.dolyami__container {line-height: initial;}
+.dolyami__container .row:after, .dolyami__container .row:before {}
+.dolyami__container .dolyami__title h1 {
+	font-weight: 600;
+    line-height: 45px;
+}
+.dolyami__container .dolyami__subtitle {
+    font-size: 18px;
+    margin: 20px 0;
+}
+.dolyami__container a.dolyami__catalog {
+    background-color: #000;
+    color: #fff;
+    display: inline-flex;
+    padding: 15px 35px;
+    border-radius: 5px;
+    margin: 40px 0 0 0;
+}
+.dolyami__container a.dolyami__catalog:hover {
+    background-color: #c96;
+    transition: 0.3s;
+}
+.dolyami__img img {
+	display: block;
+    max-width: 100%;
+}
+.dolyami__container .dolyami-adv {
+    margin: 130px 0;
+}
+.dolyami__container .dolyami-item {
+}
+.dolyami__container .dolyami-adv .dolyami-item img {
+	width: 48px;
+	min-width: 48px;
+	height: 48px;
+	min-height: 48px;
+}
+.dolyami__container .dolyami-adv .dolyami-item .title {
+	font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin: 25px 0 15px 0;
+}
+.dolyami__container .dolyami__work .like_h2 {
+	display: flex;
+	justify-content: center;
+	font-weight: 600;
+	margin: 0 0 70px 0;
+	text-align: center;
+}
+.dolyami__container .dolyami__work .title {
+	font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    margin: 25px 0 15px 0;
+}
+.dolyami__container .dolyami__video {
+    display: flex;
+    justify-content: center;
+    margin: 130px 0;
+}
+.dolyami__container .dolyami__faq .like_h2 {
+	display: flex;
+	justify-content: center;
+	font-weight: 600;
+	margin: 0 0 70px 0;
+	text-align: center;
+}
+.dolyami__container .dolyami__faq .item-question {
+	margin: 0 0 30px 0;
+	cursor: pointer;
+}
+.dolyami__container .dolyami__faq .item-question .title {
+	font-size: 18px;
+	font-weight: 600;
+	display: flex;
+	margin: 0 0 15px 0;
+	color: #000;
+    border-bottom: 1px solid #cbcbcb;
+    padding: 0 0 10px 0;
+    position: relative;
+    transition: 0.3s;
+}
+.dolyami__container .dolyami__faq .item-question .title:after {
+	content: '';
+    width: 15px;
+    height: 15px;
+    border-top: 4px solid #000;
+    border-right: 4px solid #000;
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    transform: rotate(315deg);
+    transition: 0.3s;
+}
+.dolyami__container .dolyami__faq .item-question.active .title:after {
+	transform: rotate(132deg);
+}
+.dolyami__container .dolyami__faq .item-question:hover .title {
+	color: #c96;
+	border-bottom: 1px solid #c96;
+	transition: 0.3s;
+}
+.dolyami__container .dolyami__faq .item-question:hover .title:after {
+	border-top: 4px solid #c96;
+    border-right: 4px solid #c96;
+    transition: 0.3s;
+}
+.dolyami__faq a.help {
+	display: none;
+}
+/*dolyami*/
 
-
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
 	.container {
-	    max-width: 1400px;
-	    width: 1400px;
+	    max-width: 1400px!important;
+	    width: 1400px!important;
 	}
 }
 /*@media (min-width: 1200px)*/
@@ -957,6 +1290,16 @@
 	}
 	#product-category .product-layout .product-thumb {
 		margin: 0 0;
+	}
+	.price__info_dolyame .price__info_head:hover:after {
+		transition: 0.3s;
+	    transform: rotate(316deg);
+	    border-color: #000;
+	    top: 15px;
+	}
+	.price__info_dolyame:hover .price__info_about {
+		opacity: 1;
+		z-index: 1;
 	}
 }
 /*@media (min-width: 993px)*/
@@ -982,6 +1325,41 @@
 	}
 	#product-category .product-list-js .product-layout {
     	width: 50%;
+	}
+	.dolyame__head {
+		display: flex;
+		flex-direction: column;
+	}
+	.dolyami__img {order: 1;}
+	.dolyami__title {order: 2;}
+	.dolyami__img img {
+		width: 100%;
+		display: block;
+		object-fit: contain;
+	}
+	.dolyami__container .dolyami-adv,
+	.dolyami__container .dolyami__video {
+    	margin: 70px 0;
+	}
+	.dolyami__container .dolyami__work .like_h2,
+	.dolyami__container .dolyami__faq .like_h2 {
+		margin: 0 0 30px 0;
+	}
+	.dolyami__work .dolyami-item {
+		margin: 0 0 30px 0;
+	}
+	.dolyami__container .dolyami__work .title,
+	.dolyami__container .dolyami-adv .dolyami-item .title {
+	    margin: 15px 0 5px 0;
+	}
+	.dolyami__container .dolyami__faq .item-question {
+		padding: 0 20px;
+	}
+	.dolyami__container .dolyami__faq .item-question .title {
+	    padding: 0 40px 15px 0;
+	}
+	.dolyami-adv .dolyami-item {
+		margin: 0 0 30px 0;
 	}
 }
 /*(max-width: 993px)*/

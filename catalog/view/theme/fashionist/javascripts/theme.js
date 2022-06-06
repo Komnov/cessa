@@ -231,15 +231,14 @@ $(function() {
 });
 
 $(function() {
+    // выводим сумму экономии в карточку
     let oldPrice = $('.product__info .list-unstyled.price .product-dis span').text().replace(/[^0-9]/gi, '');
     let salePrice = $('.product-right .list-unstyled.price .product-price h2').text().replace(/[^0-9]/gi, '');
     if ( oldPrice.length > 0 ) {
         let checkSale = oldPrice - salePrice;
         $('.product__info .stiker').prepend('<span>Экономия ' +checkSale+ ' руб.</span>');
     }
-});
 
-$(function() {
     //скрываем часть контента в корзине в блоке доставка
     if ($(window).width() > 500) {
         let shipContainer = $('#simplecheckout_shipping .simplecheckout-block-content');
@@ -248,7 +247,39 @@ $(function() {
         $('#simplecheckout_shipping').on('click', function() {
             $(' #simplecheckout_shipping .simplecheckout-block-content.desktop-hidden').removeClass('desktop-hidden');
             $('#simplecheckout_shipping .ship_all').remove();
-        })
+        });
     }
     $('#simplecheckout_form_0 #simplecheckout_shipping label[for="cdek.tariff_137_0"]:last').remove();
+
+    //Аккордеоны Долями на странице описания
+    let faqAnsw = $('.dolyami__container .dolyami__faq .item-question .answer');
+    faqAnsw.hide()
+    $(document).on('click', '.dolyami__container .dolyami__faq .item-question', function() {
+        $(this).find('.answer').toggle(300);
+        $(this).toggleClass('active');
+    });
+
+    //долями в карточке товара
+    let lastPrice = $('.product__info > ul > li:first').text().replace(/[^0-9]/gi, '');
+    let dolyamiPriceGet = lastPrice/4;
+    let dolyamiPrice = Math.ceil(dolyamiPriceGet);
+    $('.product__info .price__info_dolyame .price__info_sum span').text(dolyamiPrice);
+    $('.product__info .price__info_dolyame .dolyame-price').text(dolyamiPrice + ' ₽');
+
+    //Долями в каталоге
+    $( ".product-list-js .product-layout" ).each(function() {
+        let dolyameCategory = $(this).find('.price > *:first').text().replace(/[^0-9]/gi, '');
+        let dolyameCategoryPrice = dolyameCategory/4;
+        console.log();
+        $(this).find('.dolyami-category span').text(dolyameCategoryPrice);
+    });
+});
+
+$(function() {
+    if ($(window).width() < 992) {
+        //отображаем долями в адаптиве
+        $(document).on('click', '.product__info .price__info_dolyame', function() {
+            $(this).toggleClass('active');
+        })
+    }
 });

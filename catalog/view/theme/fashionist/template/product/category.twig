@@ -209,7 +209,7 @@
                     {% if product.price %}
                       <p class="price"> 
                         {% if not product.special %}
-                        {{ product.price }}
+                        <span>{{ product.price }}</span>
                         {% else %} <span class="price-new">{{ product.special }}</span> 
                         <span class="price-old">{{ product.price }}</span> 
                         {% endif %}
@@ -218,6 +218,7 @@
                         {% endif %} 
                       </p>
                     {% endif %} 
+                        <div class="dolyami-category"><span></span> ₽ <a href="/oplata-dolyami">С Долями</a></div>
                         <div class="btn-cart">
                           <button onclick="cart.add('{{ product.product_id }}');" {% if product.stock_status %} class="sold-out" disabled{% endif %}>
                               <span class="lblcart">{{ button_cart }}</span>
