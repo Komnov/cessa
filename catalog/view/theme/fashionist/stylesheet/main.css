@@ -968,6 +968,14 @@
 #simplecheckout_form_0 #simplecheckout_shipping label[for="cdek.tariff_137_0"]:last-child {
 	/*display: none!important;*/
 }
+#simplecheckout_shipping #ozon-open-pvz-simple,
+#simplecheckout_shipping #ozon-open-postamat-simple {
+    border: 1px solid #cacaca;
+    padding: 2px 10px;
+    border-radius: 5px;
+    margin: 0px 0 10px 26px;
+    display: inline-block;
+}
 /*basket page*/
 
 /*category page*/
