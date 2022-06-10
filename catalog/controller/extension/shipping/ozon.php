@@ -121,7 +121,7 @@ class ControllerExtensionShippingOzon extends Controller
         $params['length'] = $dimansions['length'];
         $params['width'] = $dimansions['width'];
         $params['height'] = $dimansions['height'];
-        $params['warehouse_id'] = $this->config->get($this->code .' _warehouse_id');
+        $params['warehouse_id'] = $this->config->get($this->code .'_warehouse_id');
 
         $cacheShort = 'ozon.shipping.deliveryVariantsForShipmentShort.' . md5(implode('', $params));
 
@@ -337,7 +337,7 @@ class ControllerExtensionShippingOzon extends Controller
         $params['length'] = $dimansions['length'];
         $params['width'] = $dimansions['width'];
         $params['height'] = $dimansions['height'];
-        $params['warehouse_id'] = $this->config->get($this->code .' _warehouse_id');
+        $params['warehouse_id'] = $this->config->get($this->code .'_warehouse_id');
 
         $cacheShort = 'ozon.shipping.deliveryVariantsForShipmentShort.' . md5(implode('', $params));
 
@@ -547,7 +547,7 @@ class ControllerExtensionShippingOzon extends Controller
 
             # Калькуляция
             if (!$amount = $this->cache->get($cache)) {
-                $calculate = $app->deliveryCalculateForShipment($this->request->post['id'], $shipment, $this->config->get($this->code .' _warehouse_id'));
+                $calculate = $app->deliveryCalculateForShipment($this->request->post['id'], $shipment, $this->config->get($this->code .'_warehouse_id'));
 
                 if ($calculate->getResponse()->getSuccess() == false) {
                     $this->log->write($calculate);
