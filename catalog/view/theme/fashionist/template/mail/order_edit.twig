@@ -1,4 +1,4 @@
-{{ text_order_id }} {{ order_id }}
+<!--{{ text_order_id }} {{ order_id }}
 {{ text_date_added }} {{ date_added }}
 
 {{ text_order_status }}
@@ -19,3 +19,143 @@
 {% else %} 
 {{ text_footer }}
 {% endif %}
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
+
+<table align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;width:100%; background-color: #F6F6F6;">
+   <tbody>
+      <tr>
+         <td align="center" style="margin:0;padding:0">
+            <table align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border:1px solid #f6f6f6;border-collapse:collapse;border-spacing:0px;width:750px">
+               <tbody>
+                  <tr class="img">
+                     <td align="left" style="margin:0;padding:0">
+                        <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                           <tbody>
+                              <tr>
+                                 <td align="center" valign="top" style="margin:0;padding:0;width:750px">
+                                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                                       <tbody>
+                                          <tr>
+                                             <td align="center" style="font-size:0px;margin:0;padding:0"><img alt="cessa-shoes order" src="https://dev.cessa-shoes.ru/catalog/view/theme/fashionist/img/banners/mail-order.jpg" title="cessa-shoes order" width="750" style="border:0;font-size:12px;text-decoration:none"></td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr class="welc">
+                    <td align="left" style="margin:0;padding:0 0px 40px 20px">
+                      <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                        <tbody>
+                          <tr>
+                            <td align="center" valign="top" style="margin:0;padding:0;width:750px">
+                              <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                                <tbody>
+                                  <tr>
+                                    <td align="left" style="margin:0;padding:40px 0 7px 0px">
+                                                <h1 style="color:#8a9992;font-family:'verdana' , 'geneva' , sans-serif;font-size:18px;font-style:normal;font-weight:bold;line-height:22px;margin:0"><strong>Благодарим за интерес к товарам Cessa-shoes.ru</strong></h1>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" style="margin:0;padding:0 0px 0 0px">
+                                                <p style="color:#8a9992;font-family:'verdana' , 'geneva' , sans-serif;font-size:14px;line-height:21px;margin:0">Рады сообщить, что ваш заказ № {{ order_id }}
+{{ text_date_added }} {{ date_added }} <br>обновлен со следующим статусом: <b>{{ order_status }}</b> <br><br>
+                                                {{ comment }}
+                                                </p>
+                                      </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                    <tr class="footer-txt">
+                    <td align="left" style="margin:0;padding: 40px 20px 30px 20px">
+                      <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                        <tbody>
+                          <tr>
+                            <td align="center" valign="top" style="margin:0;padding:0;width:750px">
+                              <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <p style="color:#8a9992;font-family:'verdana' , 'geneva' , sans-serif;font-size:14px;line-height:21px;margin:0;"><b>Спасибо, что выбрали нас! </b><br>{{ text_footer }}</p>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="footer-links">
+                    <td align="left" style="margin:0;padding:0px 20px 30px 20px">
+                      <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                        <tbody>
+                          <tr>
+                            <td align="center" valign="top" style="margin:0;padding:0;width:750px">
+                              <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0px">
+                                <tbody>
+                                  <tr>
+                                    <td style="width: 200px; text-align: center;">
+                                      <a href="tel:+7 925-113-66-48" style="color: #8a9992; font-size: 14px;">+7 925-113-66-48</a>
+                                    </td>
+                                    <td style="width: 200px; text-align: center;">
+                                      <a href="mailto:cessashoes@gmail.com" style="color: #8a9992; font-size: 14px;">cessashoes@gmail.com</a>
+                                    </td>
+                                    <td style="width: 85px;">
+                                      <a href="https://t.me/CessaShoesBot" style="width: 32px; height: 32px; display: block; margin-left: auto;">
+                                        <img src="https://dev.cessa-shoes.ru/catalog/view/theme/fashionist/img/icons/tg.jpg" alt="cessa-tg" title="cessa-tg"  style="width: 32px; height: 32px;">
+                                      </a>
+                                    </td>
+                                    <td style="width: 85px;">
+                                      <a href="whatsapp://send/?phone=79251136648" style="width: 32px; height: 32px; display: block; margin-left: auto;">
+                                        <img src="https://dev.cessa-shoes.ru/catalog/view/theme/fashionist/img/icons/wa.jpg" alt="cessa-wa" title="cessa-wa"  style="width: 32px; height: 32px;">
+                                      </a>
+                                    </td>
+                                    <td style="width: 85px;">
+                                      <a href="https://vk.com/cessa_shoes" style="width: 32px; height: 32px; display: block; margin-left: auto;">
+                                        <img src="https://dev.cessa-shoes.ru/catalog/view/theme/fashionist/img/icons/vk.jpg" alt="cessa-vk" title="cessa-vk"  style="width: 32px; height: 32px;">
+                                      </a>
+                                    </td>
+                                    <td style="width: 85px;">
+                                      <a href="https://instagram.com/cessa_shoes?igshid=YmMyMTA2M2Y=" style="width: 32px; height: 32px; display: block; margin-left: auto;">
+                                        <img src="https://dev.cessa-shoes.ru/catalog/view/theme/fashionist/img/icons/inst.jpg" alt="cessa-inst" title="cessa-inst" style="width: 32px; height: 32px;">
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+
+    </tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
