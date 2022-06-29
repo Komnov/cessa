@@ -1,0 +1,21 @@
+{% if show_similar %}
+{% if not show_in_tab %}
+<h3>{{ heading_title }}</h3>
+<div>
+{% endif %}
+	<style scoped type="text/css">.sp-l,.sp-o{background-color:#fff}.sp-c{position:relative;width:100%;overflow:hidden}.sp-o-c{width:100%;height:100%;position:absolute;top:0;left:0;z-index:1000;display:none}.sp-o{width:100%;height:100%;position:absolute;top:0;left:0;color:#ccc;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-flex-wrap:nowrap;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-content:stretch;-ms-flex-line-pack:stretch;align-content:stretch;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.sp-ul{z-index:999}.sp-ll{z-index:998}.sp-o .fa{font-size:48px}</style>
+	<div id="sp-c{{ mid }}" class="sp-c"{{ lazy_load ? ' style="height:300px"' : '' }}>
+		<div id="sp-o{{ mid }}" class="sp-o-c">
+			<div class="sp-o">
+				<i class="fa fa-spin fa-refresh"></i>
+			</div>
+		</div>
+		<div class="sp-ll sp-l" id="sp-p{{ mid }}" data-mid="{{ mid }}">{{ products }}</div>
+	</div>
+{% if not show_in_tab %}
+</div>
+{% endif %}
+<script type="text/javascript"><!--
+!function(p,e,o){p.texts=e.extend({},p.texts,{error_ajax_request:"{{ error_ajax_request }}"}),p.column_left_selector="{{ column_left_selector }}",p.column_right_selector="{{ column_right_selector }}"{% if lazy_load %},e(function(){p.sp_wp_modules.push("{{ mid }}"),new Waypoint({element:document.getElementById("sp-p{{ mid }}"),handler:function(){var e=p.sp_wp_modules.indexOf("{{ mid }}");p.sp_get_products("index.php?route=extension/module/similar_products/get&pid={{ product_id }}&mid={{ mid }}&pos={{ position }}{{ path }}","{{ mid }}"),e>-1&&p.sp_wp_modules.splice(e,1),this.destroy()},offset:"100%"})}){% endif %}}(window.bull5i=window.bull5i||{},jQuery);
+//--></script>
+{% endif %}
