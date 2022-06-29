@@ -1329,6 +1329,18 @@
 }
 /*похожие товары similar product*/
 
+/*Reviews отзывы*/
+#review-extended .image-crop {
+    left: initial!important;
+    object-fit: contain;
+}
+
+
+/*Reviews отзывы*/
+
+
+
+
 @media (min-width: 1200px) {
 	.container {
 	    max-width: 1400px!important;
