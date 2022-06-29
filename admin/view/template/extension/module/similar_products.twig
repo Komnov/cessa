@@ -1,0 +1,1650 @@
+{% macro alert_icon(type) %}{% spaceless %}
+		{% if type == 'error' %}
+			fa-times-circle
+		{% elseif type == 'warning' %}
+			fa-exclamation-triangle
+		{% elseif type == 'success' %}
+			fa-check-circle
+		{% elseif type == 'info' %}
+			fa-info-circle
+		{% else %}
+		{% endif %}
+{% endspaceless %}{% endmacro %}
+{{ header }}
+<div class="modal fade" id="legal_text" tabindex="-1" role="dialog" aria-labelledby="legal_text_label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="legal_text_label">{{ text_terms }}</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default cancel" data-dismiss="modal"><i class="fa fa-times"></i> {{ button_close }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				{% if update_pending %}<button type="button" data-toggle="tooltip" data-container="body" data-placement="bottom" title="{{ button_upgrade }}" class="btn btn-info" id="btn-upgrade" data-url="{{ upgrade }}" data-form="#sForm" data-context="#content" data-overlay="#page-overlay" data-loading-text="<i class='fa fa-spinner fa-spin'></i> <span class='visible-lg-inline'>{{ text_upgrading }}</span>"><i class="fa fa-arrow-circle-up"></i> <span class="visible-lg-inline">{{ button_upgrade }}</span></button>{% endif %}
+				<button type="button" data-toggle="tooltip" data-container="body" data-placement="bottom" title="{{ button_apply }}" class="btn btn-success" id="btn-apply" data-url="{{ save }}" data-form="#sForm" data-context="#content" data-vm="ExtVM" data-overlay="#page-overlay" data-loading-text="<i class='fa fa-spinner fa-spin'></i>"{% if update_pending %} disabled{% endif %}><i class="fa fa-check"></i></button>
+				<button type="submit" data-toggle="tooltip" data-container="body" data-placement="bottom" title="{{ button_save }}" class="btn btn-primary" id="btn-save" data-url="{{ save }}" data-form="#sForm" data-context="#content" data-overlay="#page-overlay" data-loading-text="<i class='fa fa-spinner fa-spin'></i>"{% if update_pending %} disabled{% endif %}><i class="fa fa-save"></i></button>
+				<a href="{{ cancel }}" data-toggle="tooltip" data-container="body" data-placement="bottom" title="{{ button_cancel }}" class="btn btn-default" id="btn-cancel" data-loading-text="<i class='fa fa-spinner fa-spin'></i>"><i class="fa fa-reply"></i></a>
+			</div>
+			<h1><i class="fa fa-files-o fa-fw ext-icon"></i> {{ heading_title }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="alerts">
+		<div class="container-fluid" id="alerts">
+			{% for type, _alerts in alerts %}
+				{% for alert in _alerts %}
+					{% if alert %}
+			<div class="alert alert-{% if type == "error" %}danger{% else %}{{ type }}{% endif %} fade in">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<i class="fa {{ _self.alert_icon(type) }}"></i>{{ alert }}
+			</div>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="container-fluid bull5i-content bull5i-container">
+		<div id="page-overlay" class="bull5i-overlay fade in">
+			<div class="page-overlay-progress"><i class="fa fa-refresh fa-spin fa-5x text-muted"></i></div>
+		</div>
+
+		<ul class="nav nav-tabs bull5i-nav-tabs">
+			<li class="active"><a href="#settings" data-toggle="tab"><!-- ko if: general_errors() --><i class="fa fa-exclamation-circle text-danger hidden" data-bind="css:{'hidden': !general_errors()}"></i> <!-- /ko -->{{ tab_settings }}</a></li>
+			<li><a href="#modules" data-toggle="tab"><!-- ko if: module_errors() --><i class="fa fa-exclamation-circle text-danger hidden" data-bind="css:{'hidden': !module_errors()}"></i> <!-- /ko -->{{ tab_modules }}</a></li>
+			<li><a href="#ext-support" data-toggle="tab">{{ tab_support }}</a></li>
+			<li><a href="#about-ext" data-toggle="tab">{{ tab_about }}</a></li>
+		</ul>
+
+		<form action="{{ save }}" method="post" enctype="multipart/form-data" id="sForm" class="form-horizontal" role="form">
+			<div class="tab-content">
+				<div class="tab-pane active" id="settings">
+					<div class="panel panel-default">
+						<div class="panel-heading"><h3 class="panel-title"><i class="fa fa-cog fa-fw"></i> {{ tab_settings }}</h3></div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<fieldset>
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_status">{{ entry_extension_status }}</label>
+											<div class="col-sm-2 fc-auto-width">
+												<select name="module_similar_products_status" id="module_similar_products_status" data-bind="value: status" class="form-control">
+													<option value="1">{{ text_enabled }}</option>
+													<option value="0">{{ text_disabled }}</option>
+												</select>
+												<input type="hidden" name="module_similar_products_installed" value="1" />
+												<input type="hidden" name="module_similar_products_installed_version" value="{{ installed_version }}" />
+												<input type="hidden" name="module_similar_products_as" data-bind="value: as" />
+											</div>
+										</div>
+										<div class="form-group" data-bind="css: {'has-error': column_left_selector.hasError}">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_column_left_selector">{{ entry_column_left_selector }}</label>
+											<div class="col-sm-4 col-md-3">
+												<input name="module_similar_products_column_left_selector" id="module_similar_products_column_left_selector" data-bind="value: column_left_selector" class="form-control" />
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_column_left_selector }}</span>
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 error-container" data-bind="visible: column_left_selector.hasError && column_left_selector.errorMsg">
+												<span class="help-block" data-bind="text: column_left_selector.errorMsg"></span>
+											</div>
+										</div>
+										<div class="form-group" data-bind="css: {'has-error': column_right_selector.hasError}">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_column_right_selector">{{ entry_column_right_selector }}</label>
+											<div class="col-sm-4 col-md-3">
+												<input name="module_similar_products_column_right_selector" id="module_similar_products_column_right_selector" data-bind="value: column_right_selector" class="form-control" />
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_column_right_selector }}</span>
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 error-container" data-bind="visible: column_right_selector.hasError && column_right_selector.errorMsg">
+												<span class="help-block" data-bind="text: column_right_selector.errorMsg"></span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_remove_sql_changes0">{{ entry_remove_sql_changes }}</label>
+											<div class="col-sm-9 col-md-10">
+												<label class="radio-inline">
+													<input type="radio" name="module_similar_products_remove_sql_changes" id="module_similar_products_remove_sql_changes1" value="1" data-bind="checked: remove_sql_changes"> {{ text_yes }}
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="module_similar_products_remove_sql_changes" id="module_similar_products_remove_sql_changes0" value="0" data-bind="checked: remove_sql_changes"> {{ text_no }}
+												</label>
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_remove_sql_changes }}</span>
+											</div>
+										</div>
+										<!-- ko if: _sas() == 1 -->
+										<div class="form-group">
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-6 col-md-5 col-lg-4">
+												<select class="form-control" data-bind="selectedOptions: _as" multiple>
+													{% for store_id, store in stores %}
+													<option value="{{ store_id }}">{{ store.name }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+										<!-- /ko -->
+									</fieldset>
+									<fieldset id="sp-mass-change">
+										<legend>{{ text_change_product_settings }}</legend>
+										<div class="row">
+											<div class="col-sm-12 help-container">
+												<span class="help-block help-text">{{ help_change_product_settings }}</span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_auto_select">{{ entry_auto_select }}</label>
+											<div class="col-sm-2 fc-auto-width">
+												<select name="module_similar_products_auto_select" id="module_similar_products_auto_select" data-bind="value: auto_select" class="form-control">
+													<option value="0">{{ text_off }}</option>
+													<option value="1">{{ text_category }}</option>
+													<option value="2">{{ text_name_fragment }}</option>
+													<option value="3">{{ text_model_fragment }}</option>
+													<option value="4">{{ text_name_custom_string }}</option>
+													<option value="5">{{ text_model_custom_string }}</option>
+													<option value="6">{{ text_tags }}</option>
+													<option value="7">{{ text_manufacturer }}</option>
+													<option value="8">{{ text_category_manufacturer }}</option>
+												</select>
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_auto_select }}</span>
+											</div>
+										</div>
+										<!-- ko if: auto_select() == '1' || auto_select() == '8' -->
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_leaves_only">{{ entry_leaves_only }}</label>
+											<div class="col-sm-2 fc-auto-width">
+												<select name="module_similar_products_leaves_only" id="module_similar_products_leaves_only" data-bind="value: leaves_only" class="form-control">
+													<option value="1">{{ text_yes }}</option>
+													<option value="0">{{ text_no }}</option>
+												</select>
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_leaves_only }}</span>
+											</div>
+										</div>
+										<!-- /ko -->
+										<!-- ko if: auto_select() != '1' && auto_select() != '8' -->
+										<input type="hidden" name="module_similar_products_leaves_only" data-bind="value: leaves_only">
+										<!-- /ko -->
+										<!-- ko if: auto_select() == '2' || auto_select() == '3' -->
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_substr_start">{{ entry_substr_start }}</label>
+											<div class="col-sm-2 col-md-1">
+												<input name="module_similar_products_substr_start" id="module_similar_products_substr_start" data-bind="value: substr_start" class="form-control text-right">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_substr_length">{{ entry_substr_length }}</label>
+											<div class="col-sm-2 col-md-1">
+												<input name="module_similar_products_substr_length" id="module_similar_products_substr_length" data-bind="value: substr_length" class="form-control text-right">
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_name_fragment }}</span>
+											</div>
+										</div>
+										<!-- /ko -->
+										<!-- ko if: auto_select() != '2' && auto_select() != '3' -->
+										<input type="hidden" name="module_similar_products_substr_start" data-bind="value: substr_start">
+										<input type="hidden" name="module_similar_products_substr_length" data-bind="value: substr_length">
+										<!-- /ko -->
+										<!-- ko if: auto_select() == '4' || auto_select() == '5' -->
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_custom_string">{{ entry_custom_string }}</label>
+											<div class="col-sm-4 col-md-3">
+												<input name="module_similar_products_custom_string" id="module_similar_products_custom_string" data-bind="value: custom_string" class="form-control">
+											</div>
+											<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 help-container">
+												<span class="help-block help-text">{{ help_custom_string }}</span>
+											</div>
+										</div>
+										<!-- /ko -->
+										<!-- ko if: auto_select() != '4' && auto_select() != '5' -->
+										<input type="hidden" name="module_similar_products_custom_string" data-bind="value: custom_string">
+										<!-- /ko -->
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="module_similar_products_product_sort_order">{{ entry_product_sort_order }}</label>
+											<div class="col-sm-2 fc-auto-width">
+												<select name="module_similar_products_product_sort_order" id="module_similar_products_product_sort_order" data-bind="value: product_sort_order" class="form-control">
+													<option value="0">{{ text_sort_order }}</option>
+													<option value="1">{{ text_model }}</option>
+													<option value="2">{{ text_name }}</option>
+													<option value="3">{{ text_quantity }}</option>
+													<option value="4">{{ text_most_viewed }}</option>
+													<option value="5">{{ text_date_added }}</option>
+													<option value="6">{{ text_date_modified }}</option>
+													<option value="7">{{ text_random }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 col-md-2 control-label" for="apply_to_null">{{ entry_products }}</label>
+											<div class="col-sm-9 col-md-10">
+												<label class="radio">
+													<input type="radio" value="" name="module_similar_products_apply_to[products]" id="apply_to_null" data-bind="checked: products"> {{ text_no_products }}
+												</label>
+												<label class="radio">
+													<input type="radio" value="0" name="module_similar_products_apply_to[products]" id="apply_to_all" data-bind="checked: products"> {{ text_all_products }}
+												</label>
+												<label class="radio">
+													<input type="radio" value="1" name="module_similar_products_apply_to[products]" id="apply_to_category" data-bind="checked: products"> {{ text_all_category_products }}
+												</label>
+												<div class="row">
+													<div class="col-sm-12">
+														<select name="module_similar_products_apply_to[category]" data-bind="disable: products() != '1', value: category" class="form-control fc-auto-width">
+															{% for cat in categories %}
+															<option value="{{ cat.category_id }}">{{ cat.name }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+												<label class="radio">
+													<input type="radio" value="2" name="module_similar_products_apply_to[products]" id="apply_to_manufacturer" data-bind="checked: products"> {{ text_all_manufacturer_products }}
+												</label>
+												<div class="row">
+													<div class="col-sm-12">
+														<select name="module_similar_products_apply_to[manufacturer]" data-bind="disable: products() != '2', value: manufacturer" class="form-control fc-auto-width">
+															{% for manuf in manufacturers %}
+															<option value="{{ manuf.manufacturer_id }}">{{ manuf.name }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+												<label class="radio">
+													<input type="radio" value="3" name="module_similar_products_apply_to[products]" id="module_similar_products_apply_to_selected" data-bind="checked: products"> {{ text_selected_products }}
+												</label>
+												<div class="row">
+													<div class="col-sm-6 col-md-5 col-lg-4">
+														<input class="form-control typeahead products" placeholder="{{ text_autocomplete }}" autocomplete="off" data-method="addSelected" data-bind="typeahead: { options:{ autoSelect: true }, datasets: $root.ta_dataset}">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-12 col-md-8 col-lg-6 multi-row">
+														<div class="well well-sm well-scroll-box form-control" data-bind="css: {disabled: products() != '3'}">
+														<!-- ko foreach: selected -->
+															<div>
+																<button type="button" data-bind="click: $parent.removeSelected, tooltip: {container:'body'}" class="btn btn-link btn-xs" data-original-title="{{ text_remove }}"><i class="fa fa-minus-circle text-danger"></i></button>
+																<!-- ko text: name --><!-- /ko -->
+																<input type="hidden" data-bind="attr: {name: 'module_similar_products_apply_to[selected][' + $index() + '][product_id]'}, value: id" />
+																<input type="hidden" data-bind="attr: {name: 'module_similar_products_apply_to[selected][' + $index() + '][name]'}, value: name" />
+																<input type="hidden" data-bind="attr: {name: 'module_similar_products_apply_to[selected][' + $index() + '][model]'}, value: model" />
+															</div>
+														<!-- /ko -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="modules">
+					<div class="panel panel-default" id="sp-modules">
+						<div class="panel-heading">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#modules-navbar-collapse">
+									<span class="sr-only">{{ text_toggle_navigation }}</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<h3 class="panel-title"><i class="fa fa-puzzle-piece fa-fw"></i> {{ tab_modules }}</h3>
+							</div>
+							<div class="collapse navbar-collapse" id="modules-navbar-collapse">
+								<ul class="nav navbar-nav navbar-right">
+									<li><button type="button" class="btn btn-primary add-module" data-toggle="tooltip" data-container="body" data-placement="left" title="{{ button_add_module }}"><i class="fa fa-plus-circle"></i> <span class="visible-lg-inline visible-xs-inline">{{ button_add_module }}</span></button></li>
+								</ul>
+							</div>
+						</div>
+						<!-- ko if: modules().length == 0 -->
+						<div class="panel-body">
+							<p>{{ text_no_modules }}</p>
+						</div>
+						<!-- /ko -->
+						<!-- ko if: modules().length > 0 -->
+						<div class="alert alert-info panel-margin">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<i class="fa fa-info-circle"></i> {{ text_product_layout }}
+						</div>
+						<!-- /ko -->
+						<ul class="list-group">
+							<!-- ko foreach: modules -->
+							<li class="list-group-item" data-bind="css: {'list-group-item-disabled': !parseInt(status()) }">
+								<fieldset>
+									<div class="row">
+										<div class="col-sm-2 col-xs-4">
+											<h2 class="no-margin"># <!-- ko text: module_id() ? module_id() : '?' --><!-- /ko --></h2>
+											<input type="hidden" data-bind="attr: {name: 'modules[' + $index() + '][name]'}, value: name() + (show_in_tab() == '1' ? ' (Tab)' : '')">
+											<input type="hidden" data-bind="attr: {name: 'modules[' + $index() + '][module_id]'}, value: module_id">
+										</div>
+										<div class="col-sm-10 col-xs-8">
+											<button type="button" class="btn btn-danger remove-module pull-right" data-toggle="tooltip" data-container="body" data-placement="left" title="{{ button_remove }}" data-bind="tooltip: {}"><i class="fa fa-minus-circle"></i> <span class="visible-lg-inline visible-xs-inline">{{ button_remove }}</span></button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 col-md-4 col-lg-3">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $parent.index + '_name{{ default_language }}'}, css: {'has-error': names.hasError}">{{ entry_name }}</label>
+												<!-- ko foreach: names -->
+												<div data-bind="css: {'multi-row': $index() != 0, 'has-error': name.hasError}">
+													<div class="input-group">
+														<span class="input-group-addon" data-bind="attr: {title: $root.languages[language_id()].name}, tooltip: {title:$root.languages[language_id()].name}"><img data-bind="attr: {src: $root.languages[language_id()].flag, title: $root.languages[language_id()].name}" /></span>
+														<input data-bind="attr: {name: 'modules[' + $parentContext.$index() + '][names][' + language_id() + ']', id: 'module_similar_products_' + $parentContext.$index() + '_name' + language_id()}, value: name" class="form-control">
+													</div>
+												</div>
+												<div class="has-error" data-bind="visible: name.hasError && name.errorMsg">
+													<span class="help-block" data-bind="text: name.errorMsg"></span>
+												</div>
+												<!-- /ko -->
+											</div>
+										</div>
+										<div class="col-sm-3 col-md-2 col-lg-2">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_show_in_tab'}, tooltip:{}" data-toggle="tooltip" data-original-title="{{ help_show_in_tab }}">{{ entry_show_in_tab }} <i class="fa fa-question-circle text-info"></i></label>
+												<select data-bind="attr: {name: 'modules[' + $index() + '][show_in_tab]', id: 'module_similar_products_' + $index() + '_show_in_tab'}, value: show_in_tab" class="form-control">
+													<!-- ko if: !$root.tabPositionUsed() || show_in_tab() == '1' --><option value="1">{{ text_yes }}</option><!-- /ko -->
+													<option value="0">{{ text_no }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-3 col-md-3 col-lg-2">
+											<div class="form-group no-margin" data-bind="css: {'has-error': products_per_page.hasError}">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_per_page'}">{{ entry_products_per_page }}</label>
+												<input data-bind="attr: {name: 'modules[' + $index() + '][products_per_page]', id: 'module_similar_products_' + $index() + '_per_page'}, value: products_per_page" class="form-control text-right">
+												<div class="has-error" data-bind="visible: products_per_page.hasError && products_per_page.errorMsg">
+													<span class="help-block" data-bind="text: products_per_page.errorMsg"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 col-md-1 col-lg-1">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_limit'}">{{ entry_limit }}</label>
+												<input data-bind="attr: {name: 'modules[' + $index() + '][limit]', id: 'module_similar_products_' + $index() + '_limit'}, value: limit" class="form-control text-right">
+											</div>
+										</div>
+										<div class="col-sm-2 col-md-2 col-lg-2">
+											<div class="form-group no-margin" data-bind="css: {'has-error': image_width.hasError}">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_image_width'}">{{ entry_image_width }}</label>
+												<input data-bind="attr: {name: 'modules[' + $index() + '][image_width]', id: 'module_similar_products_' + $index() + '_image_width'}, value: image_width" class="form-control text-right">
+												<div class="has-error" data-bind="visible: image_width.hasError && image_width.errorMsg">
+													<span class="help-block" data-bind="text: image_width.errorMsg"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2 col-md-2 col-lg-2">
+											<div class="form-group no-margin" data-bind="css: {'has-error': image_height.hasError}">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_image_height'}">{{ entry_image_height }}</label>
+												<input data-bind="attr: {name: 'modules[' + $index() + '][image_height]', id: 'module_similar_products_' + $index() + '_image_height'}, value: image_height" class="form-control text-right">
+												<div class="has-error" data-bind="visible: image_height.hasError && image_height.errorMsg">
+													<span class="help-block" data-bind="text: image_height.errorMsg"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_stock_only'}">{{ entry_stock_only }} <i class="fa fa-question-circle text-info" data-toggle="tooltip" data-original-title="{{ help_stock_only }}"></i></label>
+												<select data-bind="attr: {name: 'modules[' + $index() + '][stock_only]', id: 'module_similar_products_' + $index() + '_stock_only'}, value: stock_only" class="form-control">
+													<option value="1">{{ text_yes }}</option>
+													<option value="0">{{ text_no }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_lazy_load'}">{{ entry_lazy_load }} <i class="fa fa-question-circle text-info" data-toggle="tooltip" data-original-title="{{ help_lazy_load }}"></i></label>
+												<select data-bind="attr: {name: 'modules[' + $index() + '][lazy_load]', id: 'module_similar_products_' + $index() + '_lazy_load'}, value: lazy_load" class="form-control">
+													<option value="1">{{ text_yes }}</option>
+													<option value="0">{{ text_no }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-3 col-md-2 col-lg-2">
+											<div class="form-group no-margin">
+												<label class="control-label" data-bind="attr: {for: 'module_similar_products_' + $index() + '_status'}">{{ entry_status }}</label>
+												<select data-bind="attr: {name: 'modules[' + $index() + '][status]', id: 'module_similar_products_' + $index() + '_status'}, value: status" class="form-control">
+													<option value="1">{{ text_enabled }}</option>
+													<option value="0">{{ text_disabled }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</li>
+							<!-- /ko -->
+						</ul>
+					</div>
+				</div>
+				<div class="tab-pane" id="ext-support">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#support-navbar-collapse">
+									<span class="sr-only">{{ text_toggle_navigation }}</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<h3 class="panel-title"><i class="fa fa-phone fa-fw"></i> {{ tab_support }}</h3>
+							</div>
+							<div class="collapse navbar-collapse" id="support-navbar-collapse">
+								<ul class="nav navbar-nav">
+									<li class="active"><a href="#general" data-toggle="tab">{{ tab_general }}</a></li>
+									<li><a href="#faq" data-toggle="tab" title="{{ text_faq }}">{{ tab_faq }}</a></li>
+									<li><a href="#services" data-toggle="tab">{{ tab_services }}</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="tab-content">
+								<div class="tab-pane active" id="general">
+									<div class="row">
+										<div class="col-sm-12">
+											<h3>Getting support</h3>
+											<p>We consider support a priority of ours, so if you need any help with your purchase you can contact us in one of the following ways:</p>
+											<ul>
+												<li>Send an email to <a href="mailto:{{ ext_support_email }}?subject='{{ text_support_subject }}'">{{ ext_support_email }}</a></li>
+												<li>Use OpenCart <a href="{{ ext_support_link }}" target="_blank">Get Support</a> form</li>
+											</ul>
+											<p>We usually reply within a few hours, but can take up to 36 hours.</p>
+											<p>Please note that all support is free if it is an issue with the product. Only issues due conflicts with other third party extensions/modules or custom front end theme are the exception to free support. Resolving such conflicts, customizing the extension or doing additional bespoke work will be provided with the hourly rate of <span id="hourly_rate">USD 60</span>.</p>
+
+											<h4>Things to note when asking for help</h4>
+											<p>Please describe your problem in as much detail as possible. When contacting, please provide the following information:</p>
+											<ul>
+												<li>The OpenCart version you are using: <strong>{{ oc_version }}</strong></li>
+												<li>The PHP version you are using: <strong>{{ php_version }}</strong></li>
+												<li>The extension name and version: <strong>{{ ext_name }} v{{ ext_version }}</strong></li>
+												<li>Your OpenCart order ID / Invoice Nr</li>
+												<li>If you got any error messages, please include them in the message.</li>
+												<li>In case the error message is generated by a VQMod or OCMOD cached file, please also attach that file.</li>
+											</ul>
+											<p>Any additional information that you can provide about the issue is greatly appreciated and will make problem solving much faster.</p>
+
+											<h3 class="page-header">Happy with {{ ext_name }}?</h3>
+											<p>We would appreciate it very much if you could rate the extension on OpenCart website under your <em>Account &gt; Purchases &gt; <a href="{{ ext_rate_url }}" target="_blank">Rate your Downloads</a></em> page once you've had a chance to try it out. Why not tell everybody how great this extension is by <a href="{{ ext_store_url }}" target="_blank">leaving a comment</a> as well.</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="alert alert-info">
+												<p>{{ text_other_extensions }}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="faq">
+									<h3>{{ text_faq }}</h3>
+									<ul class="media-list" id="faqs">
+										<li class="media">
+											<div class="pull-left">
+												<i class="fa fa-question-circle fa-4x media-object"></i>
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">Why isn't the module showing in store front end?</h4>
+
+												<p class="short-answer">Verify that you have updated the modification cache. If you are using a custom theme please make sure you have properly integrated the extension with your theme. Check for any <a href="#" class="external-tab-link" data-target="#about-ext">license issues</a>.</p>
+
+												<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#not_working" data-parent="#faqs">Show the full answer</button>
+												<div class="collapse full-answer" id="not_working">
+													<p>There may be several causes due to which the module may not appear to be working in the store front end.</p>
+
+													<ol>
+														<li>
+															<p>Verify that the {{ ext_name }} modification script (<em>Extensions -&gt; <a href="{{ modifications }}" target="_blank">Modifications</a></em>) is enabled, modification cache has been refreshed and none of the {{ ext_name }} modification script files are reporting any errors in the modification log.</p>
+															<p>If modification log contains errors related to the {{ ext_name }} extension then these must be addressed.</p>
+														</li>
+
+														<li>
+															<p>If you are using a custom theme which uses a modified <em>product.twig</em> template file then please make sure you have properly integrated the extension with your theme. See <a href="#theme_integration" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="theme_integration">"How to integrate the extension with a custom theme?"</a> FAQ below.</p>
+														</li>
+
+														<li>
+															<p>If you have a multi store installation, you need to verify that proper amount of licenses have been purchased. Check the <a href="#" class="external-tab-link" data-target="#about-ext">About tab</a> License section to see whether {{ ext_name }} is activated on all of your stores.</p>
+															<p>In case {{ ext_name }} is inactive on some of your stores, you will need to purchase additional licenses for each inactive store you wish to enable the extension on.</p>
+														</li>
+													</ol>
+
+													<p>In case none of the above helped you to get the extension working please contact me on the support email given on the <a href="#" class="external-tab-link" data-target="#general">General Support</a> section.</p>
+												</div>
+											</div>
+										</li>
+										<li class="media">
+											<div class="pull-left">
+												<i class="fa fa-question-circle fa-4x media-object"></i>
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">How to translate the extension to another language?</h4>
+
+												<p class="short-answer">Copy the extension language files <em>admin/language/en-gb/extension/module/similar_products.php</em> and <em>catalog/language/en-gb/extension/module/similar_products.php</em> to your language folder and translate the string inside the copied files.</p>
+
+												<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#translation" data-parent="#faqs">Show the full answer</button>
+												<div class="collapse full-answer" id="translation">
+													<h5 class="text-muted no-top-margin">Translating <strong>admin</strong> panel module files</h5>
+													<ol>
+														<li>
+															<p><strong>Copy</strong> the following language file <strong>to YOUR_LANGUAGE folder</strong> under the appropriate location as shown below:</p>
+															<div class="btm-mgn">
+																<em class="text-muted"><small>FROM:</small></em>
+																<ul class="list-unstyled">
+																	<li>admin/language/en-gb/extension/module/similar_products.php</li>
+																</ul>
+																<em class="text-muted"><small>TO:</small></em>
+																<ul class="list-unstyled">
+																	<li>admin/language/YOUR_LANGUAGE/extension/module/similar_products.php</li>
+																</ul>
+															</div>
+														</li>
+
+														<li>
+															<p><strong>Open</strong> the copied <strong>language file</strong> with a text editor such as <a href="http://www.sublimetext.com/">Sublime Text</a> or <a href="http://notepad-plus-plus.org/">Notepad++</a> and <strong>make the required translations</strong>. You can also leave the files in English.</p>
+															<p><span class="label label-info">Note</span> You only need to translate the parts that are to the right of the equal sign.</p>
+														</li>
+													</ol>
+
+													<h5 class="text-muted">Translating <strong>store front end</strong> module files</h5>
+													<ol>
+														<li>
+															<p><strong>Copy</strong> the following language file <strong>to YOUR_LANGUAGE folder</strong> under the appropriate location as shown below:</p>
+															<div class="btm-mgn">
+																<em class="text-muted"><small>FROM:</small></em>
+																<ul class="list-unstyled">
+																	<li>catalog/language/en-gb/extension/module/similar_products.php</li>
+																</ul>
+																<em class="text-muted"><small>TO:</small></em>
+																<ul class="list-unstyled">
+																	<li>catalog/language/YOUR_LANGUAGE/extension/module/similar_products.php</li>
+																</ul>
+															</div>
+														</li>
+
+														<li>
+															<p><strong>Open</strong> the copied <strong>language file</strong> with a text editor such as <a href="http://www.sublimetext.com/">Sublime Text</a> or <a href="http://notepad-plus-plus.org/">Notepad++</a> and <strong>make the required translations</strong>. You can also leave the files in English.</p>
+															<p><span class="label label-info">Note</span> You only need to translate the parts that are to the right of the equal sign.</p>
+														</li>
+
+													</ol>
+												</div>
+											</div>
+										</li>
+										<li class="media">
+											<div class="pull-left">
+												<i class="fa fa-question-circle fa-4x media-object"></i>
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">How to integrate the extension with a custom theme?</h4>
+
+												<p class="short-answer">If the look and feel of the products displayed by this module does not fit your theme then you will have to customize the module specific template files <em>catalog/view/theme/default/template/extension/module/similar_products.twig</em> and <em>catalog/view/theme/default/template/extension/module/similar_products_products.twig</em>.</p>
+
+												<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#theme_integration" data-parent="#faqs">Show the full answer</button>
+												<div class="collapse full-answer" id="theme_integration">
+													<p>If you are trying to display the Similar Products inside the tab position and the tab does not appear then your custom theme must be using a customized <em>product.twig</em> template file. In this case you need to get the <em>SP_custom_theme_patch.ocmod.zip</em> package from the <em>Additional</em> folder. It contains a sample theme integration script for the default theme. Inside the archive is an OCMOD based modification script named <em>install.xml</em>. Extract the archive and open the <em>install.xml</em> file with a text editor such as <a href="http://www.sublimetext.com/">Sublime Text</a> or <a href="http://notepad-plus-plus.org/">Notepad++</a> and change the theme name from 'custom_theme' to your actual custom theme (folder name) for the block that edits the <em>product.twig</em> template file.</p>
+													<p>After this tailor the modification search &amp; replace/insert patterns for the <em>product.twig</em> template file to deal with the structural peculiarities of your custom theme. Please see the comments in the modification script file to better understand the meaning of each modification.</p>
+													<p>As due to the very nature of a custom theme there does not exist a universal solution. Custom themes may have a different way of displaying things. Take a look at the changes made to the default theme and work out adjustments to the search &amp; replace patterns to suit your theme.</p>
+													<p>Once all the needed changes have been made to the <em>install.xml</em> file, create a new ZIP archive from the file and name the archive <em>SP_&lt;YOUR_THEME&gt;_theme_patch.ocmod.zip</em>. Note that it is very important that the archive name ends with <em>ocmod.zip</em>, otherwise OpenCart <a href="{{ extension_installer }}" target="_blank">Extension Installer</a> will not allow you to upload the patch. Finally upload the patch archive using <a href="{{ extension_installer }}" target="_blank">Extension Installer</a> and then refresh the modification cache on the <a href="{{ modifications }}" target="_blank">Modifications</a> page.</p>
+													<p>If you do not know how the OpenCart built in OCMOD modification system works, I kindly suggest you read about it from the Github <a href="https://github.com/opencart/opencart/wiki/Modification-System" target="_blank">wiki pages</a>. Modification log (<em>Extensions &gt; Modifications</em> under the <em>Log</em> tab) are helpful for debugging. It will tell you where the script fails (meaning which search line it does not find in the referenced file), so you need to adjust that part of the script.</p>
+													<p>In case the products displayed by the {{ ext_name }} extension do not have a natural look and feel for your theme you need to copy the <em>catalog/view/theme/default/template/extension/module/similar_products.twig</em> and <em>catalog/view/theme/default/template/extension/module/similar_products_products.twig</em> template files to the appropriate location under your custom theme folder. After the template files have been copied they need to be custom tailored to the peculiarities of your theme.</p>
+													<p>As {{ ext_name }} displays a list of products it may be helpful to see how modules such as Bestsellers, Featured, Latest and/or Specials have been integrated with your theme and use the analogy from those modules.</p>
+													<p>Should you find yourself in trouble with the changes I can offer commercial custom theme integration service. Please refer to the <a href="#" class="external-tab-link" data-target="#services">Services</a> section.</p>
+												</div>
+											</div>
+										</li>
+										<li class="media">
+											<div class="pull-left">
+												<i class="fa fa-question-circle fa-4x media-object"></i>
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">How to upgrade the extension?</h4>
+												<p class="short-answer">Back up your system, disable the extension, upload new extension files, refresh modification cache and click Upgrade on the extension settings page. After upgrade is complete enable the extension again.</p>
+
+												<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#upgrade" data-parent="#faqs">Show the full answer</button>
+												<div class="collapse full-answer" id="upgrade">
+													<ol>
+														<li>
+															<p><strong>Back up your system</strong> before making any upgrades or changes.</p>
+															<p><span class="label label-info">Note</span> Although {{ ext_name }} does not overwrite any OpenCart core files, it is always a good practice to create a system backup before making any changes to the system.</p>
+															<p><span class="label label-danger">Important</span> If the previous {{ ext_name }} extension is a VQMod version then delete the vqmod\xml\similar_products.xml file and clear VQMod cache.</p>
+														</li>
+														<li><strong>Disable</strong> {{ ext_name }} <strong>extension</strong> on the module settings page (<em>Extensions > Extensions > Modules > {{ ext_name }}</em>) by changing <em>Extension status</em> setting to "Disabled".</li>
+
+														<li>
+															<p><strong>Upload</strong> the <strong>extension archive</strong> <em>SimilarProducts-x.x.x.ocmod.zip</em> using the <a href="{{ extension_installer }}" target="_blank">Extension Installer</a>.</p>
+															<p><span class="label label-info">Note</span> Do not worry, no OpenCart core files will be replaced! Only the previously installed {{ ext_name }} files will be overwritten.</p>
+															<p><span class="label label-danger">Important</span> If you have done custom modifications to the extension (for example customized it for your theme) then back up the modified files and re-apply the modifications after upgrade. To see which files have changed, please take a look at the <a href="#" class="external-tab-link" data-target="#changelog,#about-ext">Changelog</a>.</p>
+														</li>
+
+														<li>
+															<p><strong>Navigagte to</strong> the <strong>Modifications page</strong> <small>(<em>Extensions > Modifications</em>)</small> and <strong>rebuild the modification cache</strong> by clicking on the 'Refresh' button.</p>
+														</li>
+
+														<li>
+															<p><strong>Open</strong> the {{ ext_name }} <strong>module settings page</strong> <small>(<em>Extensions > Extensions > Modules > {{ ext_name }}</em>)</small> and <strong>refresh the page</strong> by pressing <em>Ctrl + F5</em> twice to force the browser to update the css changes.</p>
+														</li>
+
+														<li><p>You should see a notice stating that new version of extension files have been found. <strong>Upgrade the extension</strong> by clicking on the 'Upgrade' button.</p></li>
+
+														<li>After the extension has been successfully upgraded <strong>enable the extension</strong> by changing <em>Extension status</em> setting to "Enabled".</li>
+													</ol>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="tab-pane" id="services">
+									<h3>Premium Services<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="tooltip" data-container="body" data-placement="bottom" title="{{ button_refresh }}" id="btn-refresh-services" data-loading-text="<i class='fa fa-refresh fa-spin'></i> <span class='visible-lg-inline visible-xs-inline'>{{ text_loading }}</span>"><i class="fa fa-refresh"></i> <span class="visible-lg-inline visible-xs-inline">{{ button_refresh }}</span></button></h3>
+									<div id="service-container">
+										<p data-bind="visible: service_list_loading()">Loading service list ... <i class="fa fa-refresh fa-spin"></i></p>
+										<p data-bind="visible: service_list_loaded() && services().length == 0">There are currently no available services for this extension.</p>
+										<table class="table table-hover">
+											<tbody data-bind="foreach: services">
+												<tr class="srvc">
+													<td>
+														<h4 class="service" data-bind="html: name"></h4>
+														<span class="help-block">
+															<p class="description" data-bind="visible: description != '', html: description"></p>
+															<p data-bind="visible: turnaround != ''"><strong>Turnaround time</strong>: <span class="turnaround" data-bind="html: turnaround"></span></p>
+															<span class="hidden code" data-bind="html: code"></span>
+														</span>
+													</td>
+													<td class="nowrap text-right top-pad"><span class="currency" data-bind="html: currency"></span> <span class="price" data-bind="html: price"></span></td>
+													<td class="text-right"><button type="button" class="btn btn-sm btn-primary purchase"><i class="fa fa-shopping-cart"></i> Buy Now</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="about-ext">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#about-navbar-collapse">
+									<span class="sr-only">{{ text_toggle_navigation }}</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<h3 class="panel-title"><i class="fa fa-info fa-fw"></i> {{ tab_about }}</h3>
+							</div>
+							<div class="collapse navbar-collapse" id="about-navbar-collapse">
+								<ul class="nav navbar-nav">
+									<li class="active"><a href="#ext_info" data-toggle="tab">{{ tab_extension }}</a></li>
+									<li><a href="#changelog" data-toggle="tab">{{ tab_changelog }}</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="tab-content">
+								<div class="tab-pane active" id="ext_info">
+									<div class="row">
+										<div class="col-sm-12">
+											<h3>{{ text_extension_information }}</h3>
+
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_extension_name }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static">{{ ext_name }}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_installed_version }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static"><strong>{{ installed_version }}</strong></p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_extension_compatibility }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static">{{ ext_compatibility }}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_extension_store_url }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static"><a href="{{ ext_store_url }}" target="_blank">{{ ext_store_url|escape }}</a></p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_copyright_notice }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static">&copy; 2011 - {{ "now"|date("Y") }} OpenCart.ee</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10">
+													<p class="form-control-static"><a href="#legal_text" id="legal_notice" data-toggle="modal">{{ text_terms }}</a></p>
+												</div>
+											</div>
+
+											{% if installed_extensions and installed_extensions is iterable %}
+											<h3 class="page-header">{{ text_installed_addons }}</h3>
+												{% for ext in installed_extensions %}
+											<div class="form-group">
+												<label class="col-sm-3 col-md-2 control-label">{{ ext.name }}</label>
+												<div class="col-sm-9 col-md-10">
+													{% if ext.version %}<p class="form-control-static">Version <strong>{{ ext.version }}</strong></p>{% endif %}
+													{% if ext.author %}<p class="form-control-static">Author <strong>{{ ext.author }}</strong></p>{% endif %}
+													{% if ext.compatibility %}<p class="form-control-static">Compatibility <strong>{{ ext.compatibility }}</strong></p>{% endif %}
+												</div>
+											</div>
+												{% endfor %}
+											{% endif %}
+
+											<h3 class="page-header">{{ text_license }}</h3>
+											<p>{{ text_license_text }}</p>
+
+											<div class="form-group has-success">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_active_on }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static" data-bind="text: asn"></p>
+												</div>
+											</div>
+											<div class="form-group has-error" data-bind="visible: iasn() != ''">
+												<label class="col-sm-3 col-md-2 control-label">{{ entry_inactive_on }}</label>
+												<div class="col-sm-9 col-md-10">
+													<p class="form-control-static" data-bind="text: iasn"></p>
+												</div>
+												<div class="col-sm-offset-3 col-md-offset-2 col-sm-9 col-md-10 error-container">
+													<span class="help-block error-text">{{ help_purchase_additional_licenses }}</span>
+													<a href="{{ ext_purchase_url }}" class="btn btn-sm btn-danger" target="_blank"><i class="fa fa-shopping-cart"></i> {{ button_purchase_license }}</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="changelog">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="release">
+												<h3>Version 4.1.14 <small class="release-date text-muted">29 Jun 2021</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Copied product loses similar product items &amp; configuration</li>
+														<li><em class="text-success">Fixed:</em> Newer MySQL support</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/model/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>system/config/sp.php</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.13 <small class="release-date text-muted">12 Feb 2021</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Product page error when modification script is disabled</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>catalog/controller/extension/module/similar_products.php</li>
+														<li>system/config/sp.php</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.12 <small class="release-date text-muted">27 Jul 2020</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Compatibility with OpenCart 3.0.3.6</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>system/config/sp.php</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.11 <small class="release-date text-muted">18 Feb 2019</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Language add &amp: remove hooks</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>system/config/sp.php</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.10 <small class="release-date text-muted">21 Jan 2019</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Pagination issue</li>
+														<li><em class="text-success">Fixed:</em> HTML entity encoding in store names</li>
+														<li><em class="text-info">Changed:</em> Improved error detection</li>
+														<li><em class="text-info">Changed:</em> Alert display</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/language/en-gb/extension/module/similar_products.php</li>
+														<li>admin/view/stylesheet/sp/custom.min.css</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>catalog/controller/extension/module/similar_products.php</li>
+														<li>system/config/sp.php</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/template/extension/module/similar_products_error.twig</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.9 <small class="release-date text-muted">26 Oct 2018</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> HTML entity encoding in module names</li>
+														<li><em class="text-info">Changed:</em> Display installed add-ons</li>
+														<li><em class="text-info">Changed:</em> Improved extension upgrade process</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/language/en-gb/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>admin/view/template/extension/module/similar_products_module.twig</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>system/config/sp.php</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.8 <small class="release-date text-muted">02 Aug 2017</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Support for OpenCart 3.0</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/language/en-gb/extension/module/similar_products.php</li>
+														<li>admin/model/extension/module/similar_products.php</li>
+														<li>admin/view/javascript/sp/custom.min.js</li>
+														<li>admin/view/stylesheet/sp/custom.min.css</li>
+														<li>catalog/controller/extension/module/similar_products.php</li>
+														<li>catalog/language/en-gb/extension/module/similar_products.php</li>
+														<li>catalog/view/javascript/sp/custom.min.js</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/template/extension/module/similar_products.twig</li>
+														<li>admin/view/template/extension/module/similar_products_module.twig</li>
+														<li>admin/view/template/extension/module/static/bull5i_sp_extension_terms.htm</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products.twig</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products_products.twig</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>admin/view/static/bull5i_sp_extension_terms.htm</li>
+														<li>admin/view/template/extension/module/similar_products.tpl</li>
+														<li>admin/view/template/extension/module/similar_products_module.tpl</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products.tpl</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.7 <small class="release-date text-muted">09 Feb 2017</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-info">Changed:</em> Improved the display of multiple modules on a single page</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products.tpl</li>
+														<li>catalog/controller/extension/module/similar_products.php</li>
+														<li>catalog/view/javascript/sp/custom.min.js</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.6 <small class="release-date text-muted">27 Jul 2016</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Support for OpenCart 2.3.0.0</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/controller/extension/module/similar_products.php</li>
+														<li>admin/language/en-gb/extension/module/similar_products.php</li>
+														<li>admin/model/extension/module/similar_products.php</li>
+														<li>admin/view/template/extension/module/similar_products*.tpl</li>
+														<li>catalog/controller/extension/module/similar_products.php</li>
+														<li>catalog/language/en-gb/extension/module/similar_products.php</li>
+														<li>catalog/model/extension/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/extension/module/similar_products*.tpl</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/en-gb/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/model/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products*.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/language/en-gb/module/similar_products.php</li>
+														<li>catalog/language/english/module/similar_products.php</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products*.tpl</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.5 <small class="release-date text-muted">24 Apr 2016</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Undefined method error on product edit page</li>
+														<li><em class="text-success">Fixed:</em> Minor UI bugs</li>
+														<li><em class="text-info">Changed:</em> Upgraded Waypoints library</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/model/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/view/javascript/sp/custom.min.js</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.4 <small class="release-date text-muted">05 Mar 2016</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Support for OpenCart 2.2.0.0</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/model/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>admin/view/template/module/similar_products_module.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/language/en-gb/module/similar_products.php</li>
+														<li>catalog/language/en-gb/module/similar_products.php</li>
+													</ul>
+
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.3 <small class="release-date text-muted">06 Dec 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Applying Similar Products settings to all products</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.2 <small class="release-date text-muted">01 Sep 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Module displayed in one of the column positions reserves unnecessary space if empty</li>
+														<li><em class="text-success">Fixed:</em> Total count when limit was set to 0</li>
+														<li><em class="text-success">Fixed:</em> Loading icon centering on Safari</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/javascript/sp/custom.min.js</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>catalog/view/javascript/sp/custom.min.js</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>system/helper/sp.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.1 <small class="release-date text-muted">12 Aug 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Related products deletion</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.1.0 <small class="release-date text-muted">02 Jul 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Fully OCMOD compatible</li>
+														<li><em class="text-primary">New:</em> Options to select similar products by the same Manufacturer or by Manufacturer &amp; Category</li>
+														<li><em class="text-primary">New:</em> Option to mass-apply changes to all products by the selected Manufacturer</li>
+														<li><em class="text-info">Changed:</em> Minor UI fixes</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/model/module/similar_products.php</li>
+														<li>admin/view/javascript/sp/custom.min.js</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>admin/view/template/module/similar_products_module.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>system/helper/sp.php</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/stylesheet/sp/custom.min.css</li>
+														<li>system/similar_products.ocmod.xml</li>
+														<li>system/similar_products_default_theme_patch.ocmod.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>admin/view/stylesheet/sp/css/custom.min.css</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.5 <small class="release-date text-muted">24 Apr 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> PHP notices when module is initialized without parameters</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.4 <small class="release-date text-muted">24 Jan 2015</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Undefined index 'status' notice in store front</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/stylesheet/sp/css/custom.min.css</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.3 <small class="release-date text-muted">21 Dec 2014</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Similar products autoselect if category was present</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/javascript/sp/custom.min.js</li>
+														<li>admin/view/stylesheet/sp/css/custom.min.css</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>system/helper/sp.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/template/module/similar_products_module.tpl</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.2 <small class="release-date text-muted">31 Aug 2014</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Extension status on modules page</li>
+														<li><em class="text-info">Changed:</em> Improved lazy initialization</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>catalog/language/english/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>catalog/view/theme/default/image/loading_similar.gif</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.1 <small class="release-date text-muted">09 May 2014</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Product Name sort order SQL error</li>
+														<li><em class="text-success">Fixed:</em> Auto select by Custom String in Product Model SQL error</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/stylesheet/sp/css/custom.min.css</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 4.0.0 <small class="release-date text-muted">05 Mar 2014</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Revamped admin interface</li>
+														<li><em class="text-primary">New:</em> Date Added and Date Modified sort options</li>
+														<li><em class="text-primary">New:</em> Autoselect by product tags, product model fragment or custom string in name or model</li>
+														<li><em class="text-primary">New:</em> Multiple 'product/product' layouts supported</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/static/bull5i_sp_extension_terms.htm</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>catalog/view/theme/default/template/module/similar_products_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/model/module/similar_products.php</li>
+														<li>admin/view/javascript/sp/custom.min.js</li>
+														<li>admin/view/stylesheet/sp/*</li>
+														<li>catalog/model/module/similar_products.php</li>
+														<li>catalog/view/javascript/sp/custom.min.js</li>
+														<li>system/helper/sp.php</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>admin/view/image/spm/extension_logo.png</li>
+														<li>admin/view/static/bull5i_sp_extension_help.htm</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.2.2 <small class="release-date text-muted">06 Apr 2013</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Automatic 'product/product' route layout detection</li>
+														<li><em class="text-info">Changed:</em> Minor page load improvements</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.2.1 <small class="release-date text-muted">12 Jan 2013</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Error displaying</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.2.0 <small class="release-date text-muted">27 Jan 2013</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-info">Changed:</em> Improved module height resizing on pagination</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/static/bull5i_sp_extension_help.htm</li>
+														<li>admin/view/static/bull5i_sp_extension_terms.htm</li>
+													</ul>
+
+													<h4><i class="fa fa-minus text-danger"></i> Files removed:</h4>
+
+													<ul>
+														<li>admin/view/static/rmg_extension_help.htm</li>
+														<li>admin/view/static/rmg_extension_terms.htm</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.1.2 <small class="release-date text-muted">30 Oct 2013</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Compatibility with AQE &amp; AQE PRO extensions</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.1.1 <small class="release-date text-muted">27 Sep 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> SQL error that appeared with negative limit value</li>
+														<li><em class="text-success">Fixed:</em> Incorrect Similar Product count in certain cases</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.1.0 <small class="release-date text-muted">18 May 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Option to automatically select similar products based on beginning fragment of product name</li>
+														<li><em class="text-success">Fixed:</em> A module display issue</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 3.0.0 <small class="release-date text-muted">26 Mar 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Option to sort by product quantity</li>
+														<li><em class="text-primary">New:</em> Lazy loading</li>
+														<li><em class="text-primary">New:</em> Pagination</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>catalog/language/english/module/similar_products.php</li>
+														<li>catalog/view/theme/default/template/module/similar_products.tpl</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>catalog/view/theme/default/image/loading_similar.gif</li>
+														<li>catalog/view/theme/default/template/module/similar_products_products.tpl</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.2.0 <small class="release-date text-muted">14 Feb 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Option to display only products currently in stock</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>admin/language/english/module/similar_products.php</li>
+														<li>admin/view/template/module/similar_products.tpl</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+
+													<h4><i class="fa fa-plus text-success"></i> Files added:</h4>
+
+													<ul>
+														<li>admin/view/view/image/spm/extension_logo.png</li>
+														<li>admin/view/view/static/rmg_extension_help.htm</li>
+														<li>admin/view/view/static/rmg_extension_terms.htm</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.1.3 <small class="release-date text-muted">18 Jan 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Errors due to which the module would not show up</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.1.2 <small class="release-date text-muted">11 Jan 2012</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Issue where leaf categories were not found and thus no similar products were shown</li>
+													</ul>
+
+													<h4><i class="fa fa-pencil text-primary"></i> Files changed:</h4>
+
+													<ul>
+														<li>admin/controller/module/similar_products.php</li>
+														<li>catalog/controller/module/similar_products.php</li>
+														<li>vqmod/xml/similar_products.xml</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.1.1 <small class="release-date text-muted">29 Dec 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> Issue with product copy</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.1.0 <small class="release-date text-muted">21 Dec 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Option to choose products only from leaf categories</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 2.0.0 <small class="release-date text-muted">16 Dec 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Option to automatically select similar products from the current category</li>
+														<li><em class="text-primary">New:</em> Option to sort similar products by name, model, sort order, most viewed or random order</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 1.1.1 <small class="release-date text-muted">31 Oct 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-success">Fixed:</em> An undefined function call during extension installation</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 1.1.0 <small class="release-date text-muted">06 Oct 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li><em class="text-primary">New:</em> Module positions - Content Top, Content Bottom, Column Left, Column Right</li>
+														<li><em class="text-primary">New:</em> Adjustable image size</li>
+													</ul>
+												</blockquote>
+											</div>
+
+											<div class="release">
+												<h3>Version 1.0.0 <small class="release-date text-muted">05 Oct 2011</small></h3>
+
+												<blockquote>
+													<ul class="list-unstyled">
+														<li>Initial release</li>
+													</ul>
+												</blockquote>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript"><!--
+!function(e,t,o){var s,r={module_id:"{{ module_similar_products_m_module_id|addslashes() }}",names:[],show_in_tab:parseInt("{{ module_similar_products_m_show_in_tab * 1 }}"),products_per_page:parseInt("{{ module_similar_products_m_products_per_page * 1 }}"),limit:parseInt("{{ module_similar_products_m_limit * 1 }}"),image_width:parseInt("{{ default_image_width * 1 }}"),image_height:parseInt("{{ default_image_height * 1 }}"),stock_only:parseInt("{{ module_similar_products_m_stock_only * 1 }}"),lazy_load:parseInt("{{ module_similar_products_m_lazy_load * 1 }}"),status:parseInt("{{ module_similar_products_m_status * 1 }}")},a={{ errors|json_encode() }},i={{ modules|json_encode()|html_entity_decode() }},n={{ languages|json_encode() }},l={{ module_similar_products_apply_to.selected|cast_to_array|json_encode() }},d={{ stores|json_encode()|html_entity_decode() }};e.texts=t.extend({},e.texts,{error_ajax_request:"{{ error_ajax_request|addslashes() }}",error_module_name:"{{ error_module_name|addslashes() }}",error_positive_integer:"{{ error_positive_integer|addslashes() }}",default_name:"{{ text_default_module_name|addslashes() }}"});var _=new Bloodhound({remote:{url:'{{ autocomplete|replace({"%TYPE%": "product"}) }}',wildcard:"%QUERY"},datumTokenizer:Bloodhound.tokenizers.obj.whitespace("value"),queryTokenizer:Bloodhound.tokenizers.whitespace,identify:function(e){return e.id},sufficient:10});_.initialize(),e.user_token="{{ user_token }}",e.load_service_list=function(e){var e=e!==o?1*e:0,r=t.Deferred();return s.service_list_loaded()&&!e||s.service_list_loading()?r.reject():(s.service_list_loading(!0),t.when(t.ajax({url:"{{ services }}",data:{force:e},dataType:"json"})).then(function(e){s.service_list_loaded(!0),s.service_list_loading(!1),s.clearServices(),e.services&&t.each(e.services,function(e,t){var o=t.code,r=t.name,a=t.description||"",i=t.currency,n=t.price,l=t.turnaround;s.addService(o,r,a,i,n,l)}),e.rate&&t("#hourly_rate").html(e.rate),r.resolve()},function(e,t,o){s.service_list_loaded(!0),s.service_list_loading(!1),r.reject(),window.console&&window.console.log&&window.console.log("Failed to load services list: "+o)})),r.promise()};var u=function(e){isNaN(parseInt(e))||this.hasOwnProperty("minValue")&&parseInt(e)<this.minValue||this.hasOwnProperty("maxValue")&&parseInt(e)>this.maxValue?(this.target.hasError(!0),this.target.errorMsg(this.message)):(this.target.hasError(!1),this.target.errorMsg(""))},c=function(e,t,o,s,r,a){this.code=e,this.name=t,this.description=o,this.currency=s,this.price=r,this.turnaround=a},m=function(e,t,o){this.id=e,this.name=t,this.flag=o},h=function(e,t,o){this.id=e,this.name=t,this.model=o},p=function(t,o,s){var r=this;this.language_id=ko.observable(t),this.name=ko.observable(o).extend({required:{message:e.texts.error_module_name,context:r}}),this.hasError=ko.computed(this.hasError,this)};p.prototype=new e.observable_object_methods;var v=function(o,s,r,a,i,n,l,d,_,c,m){var h=this,v={};t.each(m.languages,function(t,o){s.hasOwnProperty(o.id)?v[o.id]=s[o.id]:v[o.id]=e.texts.default_name}),this.module_id=ko.observable(o),this.names=ko.observableArray(t.map(v,function(e,t){return new p(t,e,h)})).withIndex("language_id").extend({hasError:{check:!0,context:h},applyErrors:{context:h},updateValues:{context:h}}),this.name=ko.computed(function(){return h.names.findByKey("{{ default_language }}").name()}),this.show_in_tab=ko.observable(r),this.limit=ko.observable(a).extend({numeric:{precision:0,context:h}}),this.image_width=ko.observable(i).extend({numeric:{precision:0,context:h},validate:{message:e.texts.error_positive_integer,context:h,method:u,minValue:0}}),this.image_height=ko.observable(n).extend({numeric:{precision:0,context:h},validate:{message:e.texts.error_positive_integer,context:h,method:u,minValue:0}}),this.products_per_page=ko.observable(l).extend({numeric:{precision:0,context:h},validate:{message:e.texts.error_positive_integer,context:h,method:u,minValue:0}}),this.status=ko.observable(d),this.stock_only=ko.observable(_),this.lazy_load=ko.observable(c),this.hasError=ko.computed(this.hasError,this)};v.prototype=new e.observable_object_methods;var g=function(){var o=this;this.languages={},t.each(n,function(e,t){o.languages[e]=new m(t.language_id,t.name,t.hasOwnProperty("image")&&t.image?"view/image/flags/"+t.image:"language/"+t.code+"/"+t.code+".png")}),this.default_language="{{ default_language }}",this.status=ko.observable("{{ module_similar_products_status }}"),this.column_left_selector=ko.observable("{{ module_similar_products_column_left_selector }}").extend({required:{message:e.texts.error_required,context:o}}),this.column_right_selector=ko.observable("{{ module_similar_products_column_right_selector }}").extend({required:{message:e.texts.error_required,context:o}}),this.remove_sql_changes=ko.observable("{{ module_similar_products_remove_sql_changes }}"),this._sas=ko.observable(0),this._as=ko.observableArray(JSON.parse(atob("{{ module_similar_products_as }}"))),this.as=ko.computed(function(){return btoa(JSON.stringify(o._as()))}),this.asn=ko.computed(function(){var e=[];return ko.utils.arrayForEach(o._as(),function(t){d.hasOwnProperty(t)&&e.push(d[t].name)}),e.join(", ")}),this.iasn=ko.computed(function(){var e=[];return t.map(d,function(t,s){-1==o._as().indexOf(s.toString())&&e.push(t.name)}),e.join(", ")}),this.general_errors=ko.computed(function(){return!1}),this.auto_select=ko.observable("{{ module_similar_products_auto_select }}"),this.product_sort_order=ko.observable("{{ module_similar_products_product_sort_order }}"),this.leaves_only=ko.observable("{{ module_similar_products_leaves_only }}"),this.substr_start=ko.observable("{{ module_similar_products_substr_start }}"),this.substr_length=ko.observable("{{ module_similar_products_substr_length }}"),this.custom_string=ko.observable("{{ module_similar_products_custom_string }}"),this.products=ko.observable("{{ module_similar_products_apply_to.products }}"),this.category=ko.observable("{{ module_similar_products_apply_to.category }}"),this.manufacturer=ko.observable("{{ module_similar_products_apply_to.manufacturer }}"),this.selected=ko.observableArray(ko.utils.arrayMap(l,function(e){return new h(e.product_id,e.name,e.model)})),this.modules=ko.observableArray(t.map(i,function(e){return new v(e.hasOwnProperty("module_id")?e.module_id:r.module_id,e.hasOwnProperty("names")?e.names:r.names,e.hasOwnProperty("show_in_tab")?e.show_in_tab:r.show_in_tab,e.hasOwnProperty("limit")?e.limit:r.limit,e.hasOwnProperty("image_width")?e.image_width:r.image_width,e.hasOwnProperty("image_height")?e.image_height:r.image_height,e.hasOwnProperty("products_per_page")?e.products_per_page:r.products_per_page,e.hasOwnProperty("status")?e.status:r.status,e.hasOwnProperty("stock_only")?e.stock_only:r.stock_only,e.hasOwnProperty("lazy_load")?e.lazy_load:r.lazy_load,o)})).extend({hasError:{check:!0,context:o},applyErrors:{context:o},updateValues:{context:o}}),this.module_errors=ko.computed(function(){return o.modules.hasError()}),this.tabPositionUsed=ko.computed(function(){var e=!1;return ko.utils.arrayForEach(o.modules(),function(t){"1"==t.show_in_tab()&&(e=!0)}),e}),o.service_list_loaded=ko.observable(!1),o.service_list_loading=ko.observable(!1),o.services=ko.observableArray([]),this.ta_dataset={name:"product",limit:10,display:"value",source:_,templates:{notFound:['<div class="tt-no-suggestion">{{ text_no_records_found|addslashes() }}</div>'].join("\n"),pending:['<div class="tt-no-suggestion"><i class="fa fa-spin fa-refresh"></i> {{ text_loading|addslashes() }}</div>'].join("\n"),suggestion:Handlebars.compile(['{% verbatim %}<p><span class="tt-nowrap">{{value}}<span class="tt-secondary-right">{{model}}</span></span></p>{% endverbatim %}'].join(""))}},this.addService=function(e,t,s,r,a,i){o.services.push(new c(e,t,s,r,a,i))},o.clearServices=function(){o.services.removeAll()},this.addModule=function(){o.modules.push(new v("",[],r.show_in_tab,r.limit,r.image_width,r.image_height,r.products_per_page,r.status,r.stock_only,r.lazy_load,o))},this.deleteModule=function(e){e&&o.modules.remove(e)},this.removeSelected=function(e){o.selected.remove(e)},this.addSelected=function(e,s,r){var a=!1;"3"==o.products()&&(t.each(o.selected(),function(t,o){return o.id==e?void(a=!0):void 0}),a||o.selected.push(new h(e,s,r)))},this.checkErrors=function(){for(var e in o)ko.isObservable(o[e])&&"function"==typeof o[e].checkErrors&&o[e].checkErrors()}};g.prototype=new e.observable_object_methods,t(function(){var o=window.location.hash,r=o.split("?")[0];s=e.view_model=new g,e.view_models=t.extend({},e.view_models,{ExtVM:e.view_model}),s.checkErrors(),s.applyErrors(a),ko.applyBindings(s,t("#content")[0]),t("#legal_text .modal-body").load("view/template/extension/module/static/bull5i_sp_extension_terms.htm?v={{ installed_version }}"),t("body").on("shown.bs.tab","a[data-toggle='tab'][href='#ext-support'],a[data-toggle='tab'][href='#services']",function(t){e.load_service_list()}).on("keydown","#module_similar_products_status",function(e){if(e.altKey&&e.shiftKey&&e.ctrlKey&&83==e.keyCode){var t=ko.dataFor(this);t._sas(0==t._sas()?1:0)}}).on("typeahead:select",".typeahead",function(e,o){var s=(ko.contextFor(this),ko.dataFor(this)),r=t(this).data("method");r&&(s[r](o.id,o.value,o.model),t(this).typeahead("val",""))}),e.onComplete(t("#page-overlay"),t("#content")).done(function(){e.activateTab(r)})})}(window.bull5i=window.bull5i||{},jQuery);
+//--></script>
+{{ footer }}

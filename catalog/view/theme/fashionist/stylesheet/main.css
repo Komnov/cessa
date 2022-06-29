@@ -1275,6 +1275,60 @@
 }
 /*dolyami*/
 
+/*похожие товары similar product*/
+.card_bootom_container h3 {
+	position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-weight: 500;
+    font-family: 'Poppins', Helvetica, sans-serif;
+    color: #171717;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.card_bootom_container h3:before {
+	content: '';
+    flex: 0.4;
+    height: 2px;
+    background-color: #f2f2f2;
+    display: block!important;
+}
+.card_bootom_container h3:after {
+	content: '';
+    flex: 0.4;
+    height: 2px;
+    background-color: #f2f2f2;
+    display: block!important;
+}
+.card_bootom_container .product-thumb {
+	border: 1px solid #e9e9e9;
+}
+.card_bootom_container .product-thumb h4 a {
+	white-space: normal;
+}
+.card_bootom_container .product-thumb .price-new {
+	font-size: 18px;
+}
+.card_bootom_container .row {
+	display: flex;
+}
+.card_bootom_container .product-layout {
+    display: flex;
+}
+.card_bootom_container .row > .text-right {
+	display: none;
+}
+.card_bootom_container .row > .text-left.sp-nbm {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+/*похожие товары similar product*/
+
 @media (min-width: 1200px) {
 	.container {
 	    max-width: 1400px!important;
@@ -1513,6 +1567,12 @@
 	}
 	#product-category .product-layout .price .price-old {
 		font-size: 11px;
+	}
+	.card_bootom_container .row {
+		flex-wrap: wrap;
+	}
+	.card_bootom_container .product-thumb .caption p:not(.price) {
+		display: none;
 	}
 }
 /*max-width: 770px*/
