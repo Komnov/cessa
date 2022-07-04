@@ -1349,7 +1349,7 @@ div#ex-reviews {
 #review-extended .image-crop,
 #ex-reviews .store-image-crop {
     left: initial!important;
-    object-fit: contain;
+    object-fit: cover;
 }
 #ex-reviews .col-xs-12.col-md-4.bottom-10.col-rl {
 	display: none;
@@ -1383,7 +1383,7 @@ div#ex-reviews {
 	padding: 15px 0;
 }
 #ex-reviews .carousel-reviews-store-reviews > .owl-wrapper-outer > .owl-wrapper .owl-item {
-	height: 300px;
+	height: 240px;
     transform: scale(0.98);
 }
 #ex-reviews .owl-item:hover {
@@ -1452,6 +1452,49 @@ div#ex-reviews {
     height: 2px;
     background-color: #f2f2f2;
     display: block!important;
+}
+#ex-reviews .owl-carousel .owl-buttons div {
+	opacity: 1;
+    top: initial;
+    bottom: -8px;
+    background-color: transparent;
+}
+.all-review-box-mod.owl-carousel .owl-buttons .owl-next {
+    right: 3%!important;
+}
+.all-review-box-mod.owl-carousel .owl-buttons .owl-prev {
+	left: 0!important;
+}
+#review-extended .fa-stack-2x {
+    font-size: 16px;
+}
+#ex-store-reviews .review__page_link {
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    top: -10px;
+}
+#ex-store-reviews .review__page_link .write_rev {
+    display: flex;
+    flex-direction: column;
+}
+#ex-store-reviews .review__page_link .write_rev a {
+	text-decoration: underline;
+    display: block;
+    margin: 10px 0 0 0;
+}
+.all_rev a {
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px 40px;
+}
+.all_rev a:hover {
+	transition: 0.3s;
+	background-color: #c96;
+	border: 1px solid #c96;
 }
 /*Reviews отзывы*/
 
@@ -1702,6 +1745,24 @@ div#ex-reviews {
 	}
 	.card_bootom_container .product-thumb .caption p:not(.price) {
 		display: none;
+	}
+	#ex-store-reviews .review__page_link {
+		flex-direction: column;
+	}
+	#ex-store-reviews .all_rev a {
+		display: block;
+		text-align: center;
+		margin: 15px 0 0 0;
+	}
+	#ex-reviews .carousel-reviews-store-reviews > .owl-wrapper-outer > .owl-wrapper .owl-item {
+		height: 280px;
+	}
+	#ex-reviews .owl-carousel .owl-buttons div {
+		display: none;
+	}
+	#ex-reviews p {
+	    max-height: 72px;
+	    overflow: hidden;
 	}
 }
 /*max-width: 770px*/
