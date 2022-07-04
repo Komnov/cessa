@@ -1327,7 +1327,136 @@
     width: 100%;
     justify-content: center;
 }
+.card_bootom_container .product-thumb .caption p:not(.price) {
+		display: none;
+}
+.card_bootom_container .product-thumb:hover {
+	transition: 0.3s;
+    transform: scale(1.03);
+    box-shadow: 3px 2px 9px 1px #00000082;
+}
+
 /*похожие товары similar product*/
+
+/*Reviews отзывы*/
+div#ex-reviews {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 0px;
+    top: -10px;
+    position: relative;
+}
+#review-extended .image-crop,
+#ex-reviews .store-image-crop {
+    left: initial!important;
+    object-fit: contain;
+}
+#ex-reviews .col-xs-12.col-md-4.bottom-10.col-rl {
+	display: none;
+}
+#ex-reviews .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+#ex-reviews .col-xs-12.col-md-3.text-center.bottom-10.col-rl {
+    width: 100%;
+    order: 2;
+    display: none;
+}
+
+#ex-reviews .col-xs-12.col-md-5.col-rl {
+	width: 100%!important;
+}
+#ex-reviews, #ex-reviews .review-box-wrapper {
+	box-shadow: none!important;
+}
+#ex-reviews .review-rating-change-buttons {
+	display: none;
+}
+#ex-reviews .carousel-reviews-store-reviews > .owl-wrapper-outer > .owl-wrapper > .owl-item > .item {
+	border-radius: 10px;
+    box-shadow: 0px 0px 4px 1px #00000082;
+    display: block;
+    height: 100%;
+}
+#ex-reviews .carousel-reviews-store-reviews > .owl-wrapper-outer > .owl-wrapper {
+	padding: 15px 0;
+}
+#ex-reviews .carousel-reviews-store-reviews > .owl-wrapper-outer > .owl-wrapper .owl-item {
+	height: 300px;
+    transform: scale(0.98);
+}
+#ex-reviews .owl-item:hover {
+	transition: 0.3s;
+    transform: scale(1.03);
+}
+#ex-reviews .mod-desc-reviews {
+	max-height: initial!important;
+}
+#ex-reviews button.btn.btn-light.btn-review-more {
+	display: none;
+}
+#ex-reviews .info-header-review-mod {
+	border-radius: 10px;
+}
+#ex-reviews .review-media-container {
+    max-height: 90px;
+    margin: -15px 0 0 22px;
+}
+#ex-reviews p {
+	color: #000;
+}
+#ex-reviews div[id^="review_box"] {
+	padding: 10px 15px;
+}
+#ex-reviews .owl-prev {
+	width: 30px;
+    height: 30px;
+}
+#ex-reviews .rev-author {
+    color: #000;
+    width: initial;
+}
+#ex-reviews .rev-rating {
+	width: initial;
+	margin: 0 0 0 20px;
+}
+#ex-reviews .rev-date-add {
+	float: right;
+}
+#ex-store-reviews h3 {
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-weight: 500;
+    font-family: 'Poppins', Helvetica, sans-serif;
+    color: #171717;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 30px 0 20px 0;
+}
+#ex-store-reviews h3:before {
+    content: '';
+    flex: 0.4;
+    height: 2px;
+    background-color: #f2f2f2;
+    display: block!important;
+}
+#ex-store-reviews h3:after {
+    content: '';
+    flex: 0.4;
+    height: 2px;
+    background-color: #f2f2f2;
+    display: block!important;
+}
+/*Reviews отзывы*/
+
+
+
 
 @media (min-width: 1200px) {
 	.container {
