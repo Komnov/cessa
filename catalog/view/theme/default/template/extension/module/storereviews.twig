@@ -201,13 +201,14 @@
 $(document).ready(function() {
 $('.carousel-reviews-store-{{ module }}').owlCarousel({
 	responsiveBaseWidth: ".carousel-reviews-store-{{ module }}",
-	items : 1,
+	items : 2,
 	{% if (autoplay is defined) %}
 	autoPlay: {{ autoplay_speed }},
 	{% endif %}
 	stopOnHover : true,
 	navigation: true,
-	singleItem: true,
+	loop: true,
+	singleItem: false,
 	pagination: false,
 	navigationText: ['<div class="btn btn-carousel-module next-prod"><i class="fa fa-angle-left arrow"></i></div>', '<div class="btn btn-carousel-module prev-prod"><i class="fa fa-angle-right arrow"></i></div>']
 });
