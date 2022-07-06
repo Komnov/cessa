@@ -1502,6 +1502,89 @@ div#ex-reviews {
 }
 /*Reviews отзывы*/
 
+/*Личный кабинет ЛК*/
+
+.user__cabinet > .a-link-list.hide {
+	display: none!important;
+}
+.user__cabinet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.user__cabinet > .a-link-list {
+	width: 48%;
+	position: relative;
+}
+.user__cabinet .a-link-list .a-link-heading {
+	background-color: #F5F5F5!important;
+	padding: 5px 25px!important;
+	font-size: 17px!important;
+}
+#account-account .user__cabinet .a-link-list {
+	padding: 0 0;
+	border-radius: 10px;
+}
+#account-account .user__cabinet .a-link-list .a-link-content ul {
+    padding: 100px 60px 60px 40px;
+}
+#account-account .user__cabinet .a-link-list.lk:before {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-image: url(../img/other/lk.jpg);
+	background-size: cover;
+	display: inline-block;
+	background-repeat: no-repeat;
+	z-index: -1;
+	opacity: 0.6;
+	border-radius: 10px;
+}
+#account-account .user__cabinet .a-link-list.orders:before {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-image: url(../img/other/orders.jpg);
+	background-size: cover;
+	display: inline-block;
+	background-repeat: no-repeat;
+	z-index: -1;
+	opacity: 0.6;
+	border-radius: 10px;
+}
+#account-account .a-link-list .a-link-content ul li a {
+    color: #888;
+    line-height: 24px;
+    padding: 10px 20px;
+    background-color: #fff6;
+    margin: 0 0 15px 0;
+    display: block;
+}
+#account-account .user__cabinet .a-link-list:hover {
+	transition: 0.3s;
+	transform: scale(1.03);
+	box-shadow: 3px 2px 9px 1px #00000082;
+}
+#account-account .user__cabinet .a-link-list:hover:before{
+	opacity: 1;
+	transition: 0.3s;
+}
+#account-account .user__cabinet .a-link-list:hover ul li a {
+	background-color: #fff;
+	color: #000;
+}
+#account-account .a-link-list .a-link-content ul li a:hover {
+	background-color: #000;
+	color: #fff;
+	transition: 0.3s;
+}
+/*Личный кабинет ЛК*/
 
 
 
@@ -1767,6 +1850,9 @@ div#ex-reviews {
 	#ex-reviews p {
 	    max-height: 72px;
 	    overflow: hidden;
+	}
+	.user__cabinet > .a-link-list {
+		width: 100%;
 	}
 }
 /*max-width: 770px*/

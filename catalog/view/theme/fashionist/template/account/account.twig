@@ -19,8 +19,8 @@
     {% else %}
     {% set class = 'col-sm-12' %}
     {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
-      <div class="a-link-list">
+    <div id="content" class="{{ class }} user__cabinet">{{ content_top }}
+      <div class="a-link-list lk">
         <div class="a-link-heading"><h2>{{ text_my_account }}</h2></div>
         <div class="a-link-content">
           <ul class="list-unstyled">
@@ -43,7 +43,7 @@
         </div>
       </div>
       {% endif %}
-      <div class="a-link-list">
+      <div class="a-link-list orders">
         <div class="a-link-heading"><h2>{{ text_my_orders }}</h2></div>
         <div class="a-link-content">
           <ul class="list-unstyled">
@@ -58,7 +58,7 @@
           </ul>
         </div>
       </div>
-      <div class="a-link-list">
+      <div class="a-link-list hide">
         <div class="a-link-heading"><h2>{{ text_my_affiliate }}</h2></div>
         <div class="a-link-content">
           <ul class="list-unstyled">
@@ -71,7 +71,7 @@
           </ul>
         </div>
       </div>
-      <div class="a-link-list">
+      <div class="a-link-list hide">
         <div class="a-link-heading"><h2>{{ text_my_newsletter }}</h2></div>
         <div class="a-link-content">
           <ul class="list-unstyled">
