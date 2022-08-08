@@ -28,7 +28,9 @@
 #information-contact .contact-location .location-title i{border: 2px solid #cc9966;color:#cc9966;vertical-align: middle;top:0}
 
 
-
+body {
+	overflow-x: hidden;
+}
 /*header*/
 #top-menu > li > a {
 	font-size: 18px;
@@ -61,6 +63,31 @@
 .breadcrumb a {white-space:  normal;}
 
 /*Главная страница*/
+#common-home #flexslider .flex-direction-nav a:before {
+    font-size: 27px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    left: 3px;
+}
+#common-home #flexslider .flex-direction-nav a {
+    background-color: #c96;
+    border-radius: 50%;
+}
+#common-home #flexslider .flex-direction-nav .flex-prev:before {
+	left: -2px;
+}
+#common-home #flexslider .flex-control-paging li a.flex-active {
+	background: #c91;
+	border-color: #c91;
+}
+#common-home #flexslider .flex-control-paging li a {
+	background: #fff;
+    border: 1px solid #000;
+}
+#common-home #flexslider .flex-control-paging li a:hover {
+    background: transparent;
+}
 .ishislider {
 	margin: 0 0;
 }
@@ -1456,7 +1483,7 @@ div#ex-reviews {
 #ex-reviews .owl-carousel .owl-buttons div {
 	opacity: 1;
     top: initial;
-    bottom: -8px;
+    bottom: -9px;
     background-color: transparent;
 }
 .all-review-box-mod.owl-carousel .owl-buttons .owl-next {
@@ -1474,6 +1501,8 @@ div#ex-reviews {
     justify-content: space-between;
     position: relative;
     top: -10px;
+    margin: 0 auto;
+    max-width: 1400px;
 }
 #ex-store-reviews .review__page_link .write_rev {
     display: flex;
@@ -1835,6 +1864,7 @@ div#ex-reviews {
 	}
 	#ex-store-reviews .review__page_link {
 		flex-direction: column;
+	    padding: 0 15px
 	}
 	#ex-store-reviews .all_rev a {
 		display: block;
@@ -1853,6 +1883,12 @@ div#ex-reviews {
 	}
 	.user__cabinet > .a-link-list {
 		width: 100%;
+	}
+	#common-home #flexslider .flex-direction-nav {
+		display: none;
+	}
+	#ex-store-reviews .row {
+		margin: 0!important;
 	}
 }
 /*max-width: 770px*/
