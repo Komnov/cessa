@@ -488,6 +488,11 @@
                   {% endif %}
                 {% endfor %}
                 <a class="review-count" href="" onclick="customclick(); return false;">{{ reviews }}</a> / <a class="write-review" href="" onclick="customclick(); return false;"><i class="fa fa-pencil"></i> {{ text_write }}</a>
+                <div class="product__share">
+                  <div class="txt">/  Поделиться</div>
+                  <script src="https://yastatic.net/share2/share.js"></script>
+                  <div class="ya-share2" data-curtain data-shape="round" data-limit="0" data-more-button-type="short" data-services="vkontakte,odnoklassniki,telegram,whatsapp"></div>
+                </div>
               </div>
               {% endif %}
             </div>
