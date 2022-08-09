@@ -440,10 +440,32 @@ body {
 }
 .product__info .rating-wrapper {
 	margin: 20px 0 0 0;
+    display: flex;
+    align-items: center;
 }
 .product__info .rating-wrapper a {
 	color:  #000!important;;
 }
+.product__info .rating-wrapper .product__share {
+    display: flex;
+    align-items: center;
+    color: #000;
+}
+.product__info .rating-wrapper .product__share .txt {
+    margin: 0 10px 0 0;
+}
+.product__info .rating-wrapper .ya-share2__popup {
+    position: absolute;
+    top: initial!important;
+    bottom: -43px;
+    right: -196px;
+}
+.product__info .rating-wrapper .ya-share2__popup ul {
+    display: inline-flex;
+}
+.product__info .rating-wrapper {}
+.product__info .rating-wrapper {}
+.product__info .rating-wrapper {}
 .product_carousel .carousel-container {
 	box-shadow: 0px 0px 9px 0px #00000040;
 }
@@ -1890,6 +1912,32 @@ div#ex-reviews {
 	#ex-store-reviews .row {
 		margin: 0!important;
 	}
+	.product__info .rating-wrapper {
+		width: 100vw;
+	}
+	.product__info .rating-wrapper * {
+		font-size: 12px;
+	}
+	.product__info .rating-wrapper .product__share .txt {
+		display: none;
+	}
+	.product__info .rating-wrapper .product__share .ya-share2__popup_visible {
+		position: absolute;
+        left: -283px;
+	    width: 92vw;
+	    bottom: 8px;
+	}
+	.product__info .rating-wrapper .product__share .ya-share2__popup-content {
+		position: relative!important;
+	}
+	.product__info .rating-wrapper .product__share .ya-share2__icon {
+		width: 20px;
+		height: 20px;
+	}
+	.product__info .rating-wrapper .write-review {
+		margin: 0 5px;
+	}
+	.product__info .rating-wrapper .product__share {}
 }
 /*max-width: 770px*/
 
