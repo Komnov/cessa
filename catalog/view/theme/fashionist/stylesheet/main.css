@@ -308,6 +308,11 @@ body {
 .ishiservicesblock .ishiservices .services .service-block .service-title {
     font-weight: 600;
 }
+.index_bottom .flexslider .slides img {
+	height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
 /*index services*/
 .ishiinstagramblock .home-title a {
 	text-transform: none;
