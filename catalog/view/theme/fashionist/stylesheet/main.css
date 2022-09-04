@@ -1642,6 +1642,45 @@ div#ex-reviews {
 }
 /*Личный кабинет ЛК*/
 
+/*Blog Блог*/
+.smartblog_block {
+	width: 100%;
+    padding: 0 0;
+    border: none;
+}
+.smartblog_block .owl-wrapper-outer {
+	border: none;
+    box-shadow: none;
+}
+.smartblog_block .owl-wrapper {
+	width: 100%!important;
+}
+.smartblog_block .owl-item {
+	width: 25%!important;
+}
+.smartblog_block .blog_post .news_module_image_holder img {    
+	min-width: 100%;
+    object-fit: cover;
+    transform: scale(1.4);}
+.single-blog .blog-desc {
+    padding: 30px 0 0 0;
+    width: 100%;
+    text-align: left;
+    color: #000;
+}
+.single-blog .blog-desc p {
+	color: #000;
+}
+.single-blog .blog-desc h3 {
+	margin: 20px 0 20px 0;
+}
+.single-blog .blog-desc li {
+	margin: 0 0 10px 20px;
+}
+.blog-content .comment-wrapper {
+	display: none!important;
+}
+/*Blog Блог*/
 
 
 @media (min-width: 1200px) {
@@ -1737,6 +1776,20 @@ div#ex-reviews {
 	}
 	.dolyami-adv .dolyami-item {
 		margin: 0 0 30px 0;
+	}
+	.smartblog_block .owl-wrapper {
+	    width: 100%!important;
+	    display: flex!important;
+	    flex-wrap: wrap;
+	}
+	.smartblog_block .owl-item {
+    	width: 50%!important;
+	}
+	.smartblog_block .owl-wrapper > div:nth-child(n + 3) {
+		display: none;
+	}
+	.smartblog_block .date-time {
+		display: none;
 	}
 }
 /*(max-width: 993px)*/

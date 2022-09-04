@@ -1,15 +1,15 @@
 <?php
 // Heading
-$_['heading_title']       = 'Blogs';
+$_['heading_title']       = 'Блог Cessa-Shoes';
 
 // Text
-$_['text_blogs']          = 'Blogs';
-$_['text_success']        = 'Comment Added successfully!';
+$_['text_blogs']          = 'Блог Cessa-Shoes';
+$_['text_success']        = 'Комментарий успешно добавлен';
 $_['text_approval']       = 'Your comment is awaiting approval! It will be available after administrator\'s approval';
-$_['text_no_blogs']       = 'No blogs added!';
-$_['text_read_more']      = 'Read more';
+$_['text_no_blogs']       = 'Блог отсутствует';
+$_['text_read_more']      = 'Подробнее';
 $_['text_date_added']     = 'Date Added';
-$_['text_login_required'] = 'You must <a href="%s">login</a> to add a comment. If you do not have an account, you may <a href="%s">register</a> for one. Registration is free!';
+$_['text_login_required'] = 'Вам необходимо <a href="%s">авторизоваться</a>, чтобы добавить комментацрий. Если аккаунт отсутствует, можете <a href="%s">зарегистрироваться</a>';
 $_['text_your_comments']  = 'Your Comments';
 $_['text_leave_comment']  = 'Leave Comment';
 $_['text_error']       	  = 'Blog not found!';

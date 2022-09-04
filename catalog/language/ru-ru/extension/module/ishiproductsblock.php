@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['heading_featured']      = 'Весна/лето';
+$_['heading_featured']      = 'Осень/Зима';
 $_['heading_bestseller']      = 'Хиты продаж';
 $_['heading_new']      = 'Новинки';
 $_['heading_special']      = 'Акция';
