@@ -249,7 +249,6 @@ $(function() {
             $('#simplecheckout_shipping .ship_all').remove();
         });
     }
-    $('#simplecheckout_form_0 #simplecheckout_shipping label[for="cdek.tariff_137_0"]:last').remove();
 
     //Аккордеоны Долями на странице описания
     let faqAnsw = $('.dolyami__container .dolyami__faq .item-question .answer');
