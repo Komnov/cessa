@@ -1,0 +1,298 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-credit" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-info"><i class="fa fa-reply"></i></a></div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if (error_warning) %}
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-credit" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_status">
+                            {{ entry_status }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="total_discounts_total_status" class="form-control">
+                                {% if (total_discounts_total_status) %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_sort_order">
+                            {{ entry_sort_order }}
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="total_discounts_total_sort_order" value="{{ total_discounts_total_sort_order }}" size="1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_min_total">
+                            {{ entry_min_total }}
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="total_discounts_total_min_total" value="{{ total_discounts_total_min_total }}"  />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_order_status_id">
+                            {{ entry_order_status }}
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                {% for order_status in order_statuses %}
+                                    <div class="checkbox">
+                                        <label>
+                                            {% if (order_status.order_status_id in total_discounts_total_order_status_id) %}
+                                                <input type="checkbox" name="total_discounts_total_order_status_id[]" value="{{ order_status.order_status_id }}" checked="checked" />
+                                                {{ order_status.name }}
+                                            {% else %}
+                                                <input type="checkbox" name="total_discounts_total_order_status_id[]" value="{{ order_status.order_status_id }}" />
+                                                {{ order_status.name }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if (error_complete_status) %}
+                                <div class="text-danger">{{ error_complete_status }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_manufacturer">
+                            {{ entry_manufacturer }}
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                {% for manufacturer in manufacturers %}
+                                    <div class="checkbox">
+                                        <label>
+                                            {% if (manufacturer.manufacturer_id in total_discounts_total_manufacturer_id) %}
+                                                <input type="checkbox" name="total_discounts_total_manufacturer_id[]" value="{{ manufacturer['manufacturer_id'] }}" checked="checked" />
+                                                {{ manufacturer['name'] }}
+                                            {% else %}
+                                                <input type="checkbox" name="total_discounts_total_manufacturer_id[]" value="{{ manufacturer['manufacturer_id'] }}" />
+                                                {{ manufacturer['name'] }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if (error_manufacturer) %}
+                                <div class="text-danger">{{ error_manufacturer }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_manufacturer">
+                            {{ entry_customer_group }}
+                        </label>
+                        <div class="well well-sm" style="height: 150px; overflow: auto;">
+                            {% for customer_group in customer_groups %}
+                                <div class="checkbox">
+                                    <label>
+                                        {% if (customer_group.customer_group_id in total_discounts_total_customer_groups) %}
+                                            <input type="checkbox" name="total_discounts_total_customer_groups[]" value="{{ customer_group['customer_group_id'] }}" checked="checked" />
+                                            {{ customer_group['name'] }}
+                                        {% else %}
+                                            <input type="checkbox" name="total_discounts_total_customer_groups[]" value="{{ customer_group['customer_group_id'] }}" />
+                                            {{ customer_group['name'] }}
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_last_days">
+                            {{ entry_last_days }}
+                        </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="total_discounts_total_last_days" value="{{ total_discounts_total_last_days }}"  />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_calc_type_id">
+                            {{ entry_calc_type }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="total_discounts_total_calc_type_id" class="form-control">
+                                {% for i,ct in calc_types %}
+                                    {% if (i == total_discounts_total_calc_type_id) %}
+                                        <option value="{{ i }}" selected="selected">{{ ct }}</option>
+                                    {% else %}
+                                        <option value="{{ i }}">{{ ct }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_calc_total_summa">
+                            {{ entry_calc_total_summa }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="total_discounts_total_calc_total_summa" class="form-control">
+                                {% for i,ct in calc_total_summa %}
+                                    {% if (i == total_discounts_total_calc_total_summa) %}
+                                        <option value="{{ i }}" selected="selected">{{ ct }}</option>
+                                    {% else %}
+                                        <option value="{{ i }}">{{ ct }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_sum_cart">
+                            {{ entry_sum_cart }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="total_discounts_total_sum_cart" class="form-control">
+                                {% if (total_discounts_total_sum_cart) %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="total_discounts_total_coupon_reward_no_discount">
+                            {{ entry_coupon_reward_no_discount }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select name="total_discounts_total_coupon_reward_no_discount" class="form-control">
+                                {% if (total_discounts_total_coupon_reward_no_discount) %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            {{ entry_discounts_table }}
+                        </label>
+                        <div class="col-sm-10">
+                            <table id='total_discounts_total_discounts_table_list'>
+                                {% for key,value in discounts_table %}
+                                    <tr class="total_discounts_total_discounts_table_row" id="total_discounts_total_discounts_table_row_{{ key }}">
+                                        <td>{{ entry_discounts_group }}<br />
+                                            <select class="total_discounts_total_discounts_table" name="total_discounts_total_discounts_table[{{ key }}][group]" >
+                                                <option value="0">Все</option>
+                                                {% for customer_group in customer_groups %}
+                                                    {% if (value['group'] == customer_group['customer_group_id']) %}
+                                                        <option selected value="{{ customer_group['customer_group_id'] }}">{{ customer_group['name'] }}</option>
+                                                    {% else %}
+                                                        <option value="{{ customer_group['customer_group_id'] }}">{{ customer_group['name'] }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>{{ entry_discounts_name }}<br /><input class="total_discounts_total_discounts_table" type="text" name="total_discounts_total_discounts_table[{{ key }}][name]" value="{{ value['name'] }}" /></td>
+                                        <td>{{ entry_discounts_from }}<br /><input class="total_discounts_total_discounts_table" type="text" name="total_discounts_total_discounts_table[{{ key }}][summ]" value="{{ value['summ'] }}" /></td>
+                                        <td>{{ entry_discounts_discount }}<br /><input class="total_discounts_total_discounts_table" type="text" name="total_discounts_total_discounts_table[{{ key }}][value]" value="{{ value['value'] }}" /></td>
+                                        <td>&nbsp;<br /><a class="btn btn-info total_discounts_total_discounts_table_del"><span>{{ entry_discounts_delete }}</span></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div style='text-align: left'>
+                            <a class="btn btn-info" href="#" id='total_discounts_total_discounts_table_insert'>{{ entry_discounts_add }}</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="note">
+                    {{ note }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#total_discounts_total_discounts_table_insert').click(function() {
+            var list = $(this).attr('id').replace('insert', 'list');
+            var name = $(this).attr('id').replace('_insert', '');
+            var row_id = $('.' + name).toArray().length;
+
+            var html = '';
+            html += '<tr class="' + name + '_row" id="' + name + '_row_' + row_id + '">';
+            html += '<td>{{ entry_discounts_group }}<br />';
+            html += '<select class="' + name + '" name="' + name + '[' + row_id + '][group]" >';
+            html += '<option value="0">Все</option>';
+            {% for customer_group in customer_groups %}
+            html += '<option value="{{ customer_group['customer_group_id'] }}">{{ customer_group['name'] }}</option>';
+            {% endfor %}
+            html += '</select>';
+            html += '</td>';
+            html += '<td>{{ entry_discounts_name }}<br /><input class="' + name + '" type="text" name="' + name + '[' + row_id + '][name]" /></td>';
+            html += '<td>{{ entry_discounts_from }}<br /><input class="' + name + '" type="text" name="' + name + '[' + row_id + '][summ]" /></td><td>{{ entry_discounts_discount }}<br /><input type="text" name="' + name + '[' + row_id + '][value]" /></td><td>&nbsp;<br /><a class="btn btn-info ' + name + '_del"><span>{{ entry_discounts_delete }}</span></a></td></tr>';
+            $('#' + list).append(html);
+
+            return false;
+        })
+
+        $('.total_discounts_total_discounts_table_del').click(function() {
+            $(this).parent().parent().remove();
+        });
+    })
+</script>
+
+<style>
+    .total_discounts_total_discounts_table {
+        height:22px;
+    }
+    .total_discounts_total_discounts_table_row td {
+        padding-left:10px;
+    }
+</style>
+
+{{ footer }}

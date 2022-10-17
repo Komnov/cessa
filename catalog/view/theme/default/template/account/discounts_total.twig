@@ -1,0 +1,76 @@
+{{ header }}
+<div class="container">
+    <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="row">{{ column_left }}
+        {% if (column_left and column_right) %}
+            {% set class = 'col-sm-6' %}
+        {% elseif (column_left or column_right) %}
+            {% set class = 'col-sm-9' %}
+        {% else %}
+            {% set class = 'col-sm-12' %}
+        {% endif %}
+        <div id="content" class="{{ class }}">{{ content_top }}
+            <h1>{{ heading_title }}</h1>
+
+            <table class="table table-bordered discount-total">
+                <tr><td><strong>{{ entry_orders_total }}</strong></td><td>{{ discounts['total_orders'] }}</td></tr>
+                <tr><td><strong>{{ entry_discount }}</strong></td><td>{{ discounts['discount']~'%' }}</td></tr>
+                {% if (discounts['next'] != '') %}
+                    <tr><td><strong>{{ entry_next_level }}</strong></td><td>{{ discounts['next'] }}</td></tr>
+                {% endif %}
+                {% if (discounts['next2'] != '') %}
+                    <tr><td><strong>{{ entry_next2_level }}</strong></td><td>{{ discounts['next2'] }}</td></tr>
+                {% endif %}
+                {% if (discounts['date_max'] != '') %}
+                    <tr><td><strong>{{ entry_date_max }}</strong></td><td>{{ discounts['date_max'] }}</td></tr>
+                {% endif %}
+                {% if (discounts['date_diff'] != '') %}
+                    <tr><td><strong>{{ entry_date_diff }}</strong></td><td>{{ discounts['date_diff'] }}</td></tr>
+                {% endif %}
+
+                {% if (discounts['discounts_table']|length) %}
+                <tr><td><strong>{{ entry_discount_table }}</strong></td>
+                    <td>
+                        <div class="table-responsive">
+                            <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    {% if (use_name) %}
+                                        <td class="text-right"><strong>{{ column_name }}</strong></td>
+                                    {% endif %}
+                                    <td class="text-right"><strong>{{ column_total }}</strong></td>
+                                    <td class="text-left"><strong>{{ column_discount }}</strong></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for d in discounts['discounts_table'] %}
+                                    <tr>
+                                        {% if (use_name) %}
+                                            <td class="text-left">{{ d['name'] }}</td>
+                                        {% endif %}
+                                        <td class="text-right">{{ text_from }} {{ d['summ_str'] }}</td>
+                                        <td class="text-left">{{ d['value'] }} %</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="2"><strong>{{ text_empty }}</strong></td>
+                    {% endif %}
+            </table>
+
+
+            <div class="buttons clearfix">
+                <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+            </div>
+            {{ content_bottom }}</div>
+        {{ column_right }}</div>
+</div>
+{{ footer }}

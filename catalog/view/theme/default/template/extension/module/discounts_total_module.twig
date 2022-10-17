@@ -1,0 +1,43 @@
+<h3>{{ heading_title }}</h3>
+<div>
+    {% if (discounts['discount']>0) %}
+    <table class="table table-bordered discount-total">
+        <tr><td><strong>{{ entry_orders_total }}</strong></td><td style="white-space:nowrap;">{{ discounts['total_orders'] }}</td></tr>
+        <tr><td><strong>{{ entry_discount }}</strong></td><td style="white-space:nowrap;">{{ discounts['discount']~'%' }}</td></tr>
+        {% if (discounts['next'] != '') %}
+        <tr><td><strong>{{ entry_next_level }}</strong></td><td style="white-space:nowrap;">{{ discounts['next'] }}</td></tr>
+        {% endif %}
+        {% if (discounts['next2'] != '') %}
+        <tr><td><strong>{{ entry_next2_level }}</strong></td><td>{{ discounts['next2'] }}</td></tr>
+        {% endif %}
+        {% if (discounts['date_max'] != '') %}
+        <tr><td><strong>{{ entry_date_max }}</strong></td><td>{{ discounts['date_max'] }}</td></tr>
+        {% endif %}
+        {% if (discounts['date_diff'] != '') %}
+        <tr><td><strong>{{ entry_date_diff }}</strong></td><td>{{ discounts['date_diff'] }}</td></tr>
+        {% endif %}
+
+    </table>
+    {% endif %}
+    {% if (discounts['discounts_table_count']>0) %}
+    <table class="table table-bordered ">
+        <tr>
+            {% if (use_name) %}
+            <td class="text-right"><strong>{{ column_name }}</strong></td>
+            {% endif %}
+            <td class="text-right"><strong>{{ column_total }}</strong></td>
+            <td class="text-left"><strong>{{ column_discount }}</strong></td>
+        </tr>
+        {% for d in discounts['discounts_table'] %}
+        <tr>
+            {% if (use_name) %}
+            <td class="text-left">{{ d['name'] }}</td>
+            {% endif %}
+            <td class="text-right">{{ text_from }} {{ d['summ_str'] }}</td>
+            <td class="text-left">{{ d['value'] }} %</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+

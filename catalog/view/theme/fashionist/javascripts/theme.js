@@ -275,6 +275,9 @@ $(function() {
 
     //ссылка на стр с отзывами
     $('#ex-store-reviews').append('<div class="review__page_link"><div class="write_rev">Нам очень важно ваше мнение о нашем магазине, мы будем рады, если вы оставите отзыв о нас <a href="/otzyvy#form-review">Написать отзыв</a></div><div class="all_rev"><a href="/otzyvy">Все отзывы</a></div></div>')
+
+    //ссылка о накопительных баллах в лк
+    $('.user__cabinet .a-link-list ul').append('<li><a href="https://cessa-shoes.ru/index.php?route=account/discounts_total">Накопительная скидка</a></li>')
 });
 
 $(function() {
