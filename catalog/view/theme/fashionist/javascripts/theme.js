@@ -289,4 +289,33 @@ $(function() {
     }
 });
 
+$(function(){
+    if ($(window).width() < 500){
+        var observer = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                //let productSize = $('#item__buy_info label.active.in-stock-item-js span').text();
+                let productPrice = $('.product__info .product-price').text();
+                //let productBuyBtn = $('.product__info_buy #product').html();
 
+                let createFixBlock = '<div class="product__fix_container"><div class="price">' + productPrice + '</div>' + '<div class="btn_txt">Добавить в корзину</div> </div>';
+              if(entry.isIntersecting) {
+                $(entry.target).removeClass('fix__buy_block');
+                $('body .product__fix_container').remove();
+              } else {
+                $(entry.target).addClass('fix__buy_block');
+                $('body').append(createFixBlock);
+                console.log('non visible');
+                $(".product__fix_container").click(function () {
+                    $("html, body").animate({ scrollTop: $(".product__info").offset().top }, 500);
+                    return true;
+                });
+              }
+            });
+          }, {threshold: 0.1});
+          $('.product__info_buy #product').each(function(){
+            observer.observe(this);
+          });
+
+          
+    }
+});
