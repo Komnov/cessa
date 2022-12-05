@@ -286,6 +286,10 @@ $(function() {
         $(document).on('click', '.product__info .price__info_dolyame', function() {
             $(this).toggleClass('active');
         })
+
+        //видео фон
+        $('body').prepend('<div class="mobile__video"> <div class="mobile__video_overlay"></div> <video class="mobile__video_video" id="" autoplay="" playsinline="" muted="" loop="" poster="/catalog/view/theme/fashionist/img/other/poster_theme.jpg"> <source src="/catalog/view/theme/fashionist/img/other/video1.mp4" type="video/mp4"> <source src="/catalog/view/theme/fashionist/img/other/video1.webm" type="video/webm"> </video> </div>');
+
     }
 });
 
