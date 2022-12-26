@@ -202,6 +202,9 @@
                           </button>
                         </div>
                     </div>-->  
+                    {% if product.ean %}
+                      <div class="sticker last_size">{{ product.ean }}</div>
+                    {% endif %} 
                   </div>
                   <div class="caption"> 
                     <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>

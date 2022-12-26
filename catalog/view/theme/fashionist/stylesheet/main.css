@@ -729,8 +729,33 @@ body {
 	top: 0;
 	left: 0;
 }
+.product_carousel .product-image .sticker.last_size {
+    position: absolute;
+    top: 20px;
+    background-color: #CC9966;
+    color: #fff;
+    padding: 3px 10px 3px 35px;
+    font-size: 14px;
+    left: 34px;
+    max-height: 26px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.product_carousel .product-image .sticker.last_size::before {
+	content: '';
+	background-image: url(/catalog/view/theme/fashionist/img/icons/sale_custom_icon.svg);
+    width: 42px;
+    height: 25px;
+    background-size: contain;
+    display: inline-block;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -15px;
+    top: -0.7px;
+}
 
-/*product page finish*/
+/*product page finish карточка товара*/
 
 /*basket page*/
 #account-forgotten .breadcrumb {
@@ -1214,7 +1239,32 @@ body {
 	color: #999999;
 	text-decoration: underline;
 }
-/*category page*/
+.product-container .sticker.last_size {
+    position: absolute;
+    bottom: 4px;
+    background-color: #CC9966;
+    color: #fff;
+    padding: 0px 10px 0px 20px;
+    font-size: 8px;
+    left: 17px;
+    max-height: 26px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.product-container .sticker.last_size::before {
+	content: '';
+	background-image: url(/catalog/view/theme/fashionist/img/icons/sale_custom_icon.svg);
+    width: 32px;
+    height: 25px;
+    background-size: contain;
+    display: inline-block;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -15px;
+    top: -0.7px;
+}
+/*category page каталог категория*/
 
 /*dolyami*/
 .dolyami__container {line-height: initial;}
@@ -2348,7 +2398,22 @@ div#ex-reviews {
 	.price__info_dolyame .price__info_head {
 		width: 100%;
 	}
-
+	.product-container .sticker.last_size {
+		padding: 0px 5px 0px 23px;
+		font-size: 7px;
+		max-height: 19px;
+	}
+	.product-container .sticker.last_size::before {
+		width: 32px;
+    	height: 19px;
+	    left: -15px;
+	}
+	.product-image.thumbnails_horizontal {
+		position: relative;
+	}
+	.product_carousel .product-image .sticker.last_size {
+		left: 20px;
+	}
 }
 /*(max-width: 450px)*/
 

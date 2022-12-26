@@ -109,6 +109,9 @@
                   </div>  
                 {% else %}
                   <div class="product-image thumbnails_horizontal">
+                    {% if ean %}
+                    <div class="sticker last_size">{{ ean }}</div>
+                    {% endif %}
                     {% if thumb %}
                       <div class="carousel-container">
                         <a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}">

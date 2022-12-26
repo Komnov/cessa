@@ -242,6 +242,7 @@ class ControllerProductProduct extends Controller {
 			$data['manufacturer'] = $product_info['manufacturer'];
 			$data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
+			$data['ean'] = $product_info['ean'];
 			$data['isbn'] = $product_info['isbn'];
 			$data['mpn'] = $product_info['mpn'];
 			$data['jan'] = $product_info['jan'];
