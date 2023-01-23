@@ -1,6 +1,6 @@
 <div id="_mobile_column_left" class="container"></div>
 <div id="_mobile_column_right" class="container"></div>
-<footer id="footer" class="{{ ishome }}">
+<footer id="footer" class="{{ ishome }} footer">
   <div class="footer-before">    
     <div class="container"> 
       <div class="row">
@@ -11,18 +11,11 @@
       <div class="footer-container">
         <div class="container">
           <div class="row">
-            <div id="_mobile_block_newsletter"></div>
-            <div id="_mobile_social"></div>
-            <div id="_mobile_blockcontact"></div>
-            <section class="information col-lg-3 col-md-3 col-sm-12 footer-block">
-                <div class="footer-title clearfix  hidden-lg hidden-md collapsed" data-target="#information-container" data-toggle="collapse">
-                  <span class="h3">{{ text_information }}</span>
-                  <span class="navbar-toggler collapse-icons">
-                    <i class="fa fa-angle-down add"></i>
-                    <i class="fa fa-angle-up remove"></i>
-                  </span>
-                </div>
-                {% if informations %}
+
+            <div class="col-lg-3 col-md-3 col-sm-12 item__block">
+              {% if informations %}
+              <div class="title">Справочная информация</div>
+              <div class="item__block_list">
                 <div id="information-container" class="collapse footer-dropdown">    
                   <ul class="list-unstyled">
                    {% for information in informations %}
@@ -30,86 +23,46 @@
                     {% endfor %}
                   </ul>
                 </div>
-                {% endif %}
-            </section>
-            <section class="extras col-lg-3 col-md-3 col-sm-12 footer-block">
-                <div class="footer-title clearfix  hidden-lg hidden-md collapsed" data-target="#extras-container" data-toggle="collapse">
-                  <span class="h3">Каталог</span>
-                  <span class="navbar-toggler collapse-icons">
-                    <i class="fa fa-angle-down add"></i>
-                    <i class="fa fa-angle-up remove"></i>
-                  </span>
-                </div>
-                <div id="extras-container" class="collapse footer-dropdown">
-                  <ul class="list-unstyled">
+              </div>
+              {% endif %}
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 item__block">
+              <div class="title">Популярные разделы</div>
+              <div class="item__block_list">
+                <ul class="list-unstyled">
                     <li><a href="http://cessa-shoes.ru/novinki">Новинки</a></li>
                     <li><a href="http://cessa-shoes.ru/sale">Sale</a></li>
                     <li><a href="http://cessa-shoes.ru/predzakaz">Предзаказ</a></li>
                   </ul>
-                </div>
-            </section>
-            <section class="account col-lg-3 col-md-3 col-sm-12 footer-block">
-                <div class="footer-title clearfix  hidden-lg hidden-md collapsed" data-target="#account-container" data-toggle="collapse">
-                  <span class="h3">{{ text_account }}</span>
-                  <span class="navbar-toggler collapse-icons">
-                    <i class="fa fa-angle-down add"></i>
-                    <i class="fa fa-angle-up remove"></i>
-                  </span>
-                </div>
-                <div id="account-container" class="collapse footer-dropdown">
-                  <ul class="list-unstyled">
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 item__block">
+              <div class="title">Покупателю</div>
+              <div class="item__block_list">
+                <ul class="list-unstyled">
                   <li><a href="{{ account }}">{{ text_account }}</a></li>
                     <li><a href="{{ order }}">{{ text_order }}</a></li>
                     <li><a href="{{ contact }}">{{ text_contact }}</a></li>
                   </ul>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 item__block">
+              <div class="title">Присоединяйтесь</div>
+              <div class="item__block_list social">
+                <div class="social__list">
+                  <div class="item"><a href="https://vk.com/cessa_shoes" target="_blank"><img src="/catalog/view/theme/fashionist/img/icons/vk_icon.svg" alt=""></a></div>
+                  <div class="item"><a href="https://www.instagram.com/cessa_shoes/" target="_blank"><img src="/catalog/view/theme/fashionist/img/icons/insta_icon.svg" alt=""></a></div>
+                  <div class="item"><a href="https://t.me/TNKHPGY2GtA3ZTZi" target="_blank"><img src="/catalog/view/theme/fashionist/img/icons/tg_icon.svg" alt=""></a></div>
+                  <div class="item"><a href="https://wa.clck.bar/79251136648" target="_blank"><img src="/catalog/view/theme/fashionist/img/icons/wa_icon.svg" alt=""></a></div>
                 </div>
-            </section>
-            <div id="_desktop_blockcontact">
-              <div class="block-contact col-lg-3 col-md-3 col-sm-12">
-                  <div class="footer-title clearfix  hidden-lg hidden-md collapsed" data-target="#contact-info-container" data-toggle="collapse">
-                  <span class="h3">{{ text_contact }}</span>
-                  <span class="navbar-toggler collapse-icons">
-                    <i class="fa fa-angle-down add"></i>
-                    <i class="fa fa-angle-up remove"></i>
-                  </span>
+                <div class="call"><a href="tel:+7 925-113-66-48">
+                  <img src="/catalog/view/theme/fashionist/img/icons/phone_black.svg" alt="">+7 925-113-66-48</a></div>
+                <div class="call"><a href="mailto:cessashoes@gmail.com">
+                  <img src="/catalog/view/theme/fashionist/img/icons/mail_black.svg" alt="">cessashoes@gmail.com</a></div>
+                <div class="footer__logo">
+                  <a href="/"><img src="https://dev.cessa-shoes.ru/image/catalog/logo-cessa-shoes.png" alt=""></a>
                 </div>
-                  <div id="contact-info-container" class="collapse footer-dropdown">
-                      {% if storeaddress %}
-                      <div class="block address col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="icon"><i class="fa fa-map-marker"></i></span>
-                        <div class="content">{{ storeaddress }}</div>
-                      </div>
-                      {% endif %}
-                      {% if storetelephone %}
-                      <div class="block phone col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="icon phone"><i class="fa fa-phone"></i></span>
-                        <div class="content">
-                          <a href="tel:{{ storetelephone }}">{{ storetelephone }}</a>
-                        </div>
-                      </div>
-                      {% endif %}
-                      {% if storefax %}
-                      <div class="block fax col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="icon"><i class="fa fa-fax"></i></span>
-                        <div class="content">{{ storefax }}</div>
-                      </div>
-                      {% endif %}
-                      {% if storeemail %}
-                      <div class="block email col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="icon"><i class="fa fa-envelope"></i></span>
-                        <div class="content">
-                          <a href="mailto:{{ storeemail }}">{{ storeemail }}</a>
-                        </div>
-                      </div>
-                      {% endif %}
-					  <div class="block email col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="icon"><i class="fa fa-instagram" aria-hidden="true"></i></span>
-                        <div class="content">
-                          <a href="https://www.instagram.com/cessa_shoes/" target="_blank">@cessa_shoes</a>
-                        </div>
-                      </div>
-                  </div>
-              </div> 
+              </div>
             </div>
             {{ footermiddle }}  
         </div>
@@ -118,10 +71,10 @@
   <div class="footer-after">
     <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p class="footer-aftertext">{{ powered }}</p>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">{{ footerafter }}</div>
+          <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">{{ footerafter }}</div> -->
         </div>
     </div>
   </div>
