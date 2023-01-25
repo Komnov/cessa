@@ -31,7 +31,7 @@
 body {
 	overflow-x: hidden;
 }
-/*header*/
+/*header шапка*/
 #top-menu > li > a {
 	font-size: 18px;
 }
@@ -59,7 +59,18 @@ body {
 #_desktop_cart .icon {
 	transform: scale(1.2);
 }
-/*header*/
+.search-logo.active .search__icon {
+	display: none;
+}
+.search-logo:not(.active) .search__icon_close {
+	display: none;
+}
+.search-logo .search__icon_close {
+    width: 21px;
+}
+
+/*header шапка */
+
 .breadcrumb a {white-space:  normal;}
 
 /*Главная страница*/
@@ -1855,6 +1866,23 @@ div#ex-reviews {
 	.price__info_dolyame:hover .price__info_about {
 		opacity: 1;
 		z-index: 1;
+	}
+	#_desktop_search_widget {
+		position: initial!important;
+	}
+	.header-top .header-right {
+		position: initial!important;
+	}
+	.header-top .search-widget form {
+	    left: 0;
+	    top: 55px;
+	    width: 100%;
+	}
+	.search-widget form input[type="text"] {
+		min-width: 768px;
+    	width: 100%;
+    	background: #d6d6d6;
+	    box-shadow: 5px 5px 8px -3px #33333380;
 	}
 }
 /*@media (min-width: 993px)*/
