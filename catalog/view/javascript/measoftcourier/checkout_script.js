@@ -85,7 +85,21 @@ var quotePvz = function (e) {
     });
 };
 
+
 function mapint() {
+
+  cityto_value = '';
+  if ($("#input-shipping-city").length) {
+    cityto_value = "input-shipping-city";
+  } else if ($("#shipping_address_city").length) {
+    cityto_value = "shipping_address_city";
+  }
+
+  if (!cityto_value) {    
+    window.setTimeout(mapint, 100);
+    return;
+  }
+	
   $.ajax({
     type: "get",
     url: "/index.php?route=extension/shipping/measoft/getSettings",

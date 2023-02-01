@@ -16,8 +16,8 @@ class ModelExtensionShippingMeasoftcouriershipping extends Model
             
             $quote_data = array();
 
-            $html = "<input type='hidden' name='pvz_id' class='pvzcode'><input type='text' readonly name='pvz_name' id='pvzname' placeholder='Нажмите кнопку справа для выбора ПВЗ'>";
-            $html .= "<input type='hidden' readonly name='pvz_city' id='pvz_city'>";
+            $html = "<input type='hidden' name='pvz_id' class='pvzcode' value='".(isset($_POST['shipping_method_current']) && $_POST['shipping_method_current']=='measoftcouriershipping.standard' ? htmlspecialchars($_POST['pvz_id']) : '')."'><input value='".(isset($_POST['shipping_method_current']) && $_POST['shipping_method_current']=='measoftcouriershipping.standard' ? htmlspecialchars($_POST['pvz_name']) : '')."' type='text' readonly name='pvz_name' id='pvzname' placeholder='Нажмите кнопку справа для выбора ПВЗ'>";
+            $html .= "<input type='hidden' readonly value='".(isset($_POST['shipping_method_current']) && $_POST['shipping_method_current']=='measoftcouriershipping.standard' ? htmlspecialchars($_POST['pvz_city']) : '')."' name='pvz_city' id='pvz_city'>";
             // $html .= "<button type='button' id='ks2008_clean_pvz' class='btn clearPvz' title='Очистить ПВЗ'><img style='width:10px' src='/admin/view/image/measoftcourier/cross.png'></button>";
 
             $cost = 0;
@@ -122,13 +122,19 @@ class ModelExtensionShippingMeasoftcouriershipping extends Model
         }
 
         $weight = $this->getWeight();
-
-        $result = $measoft->calculatorRequest([
+		
+		$req=[
             'townto' => $town,
             'townfrom' => $this->config->get('shipping_measoftcourier_city'),
             'mass' => $weight,
             'zipcode' => isset($address['postcode']) ? $address['postcode'] : '',
-        ]);
+        ];
+		
+		
+		if(isset($_POST['shipping_method_current']) && $_POST['shipping_method_current']=='measoftcouriershipping.standard'){
+			$req['pvzid']=(int)$_POST['pvz_id'];
+		}
+        $result = $measoft->calculatorRequest($req);
 
         if ($result) {
             $cost = (double)$result->price

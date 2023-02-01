@@ -197,7 +197,7 @@ class Measoft
 
         $level++;
         $xml .= $this->makeXMLNode('auth', '', $level, 'extra="'.$this->extra.'" login="'.$this->login.'" pass="'.$this->password.'"');
-        $xml .= $this->makeXMLNode('calc', '', $level, 'townfrom="'.$order['townfrom'].'" townto="'.$order['townto'].'" mass="'.$order['mass'].'" service="'.$service_mode.'"');
+        $xml .= $this->makeXMLNode('calc', '', $level, 'townfrom="'.$order['townfrom'].'" townto="'.$order['townto'].'" mass="'.$order['mass'].'" service="'.$service_mode.'" addressto="'.$order['addressto'].'"');
         $level--;
 
         $xml .= $this->makeXMLNode('calculator', '', $level, '', 2);
