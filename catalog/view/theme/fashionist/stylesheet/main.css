@@ -1832,6 +1832,39 @@ div#ex-reviews {
 }
 /*footer футер подвал сайта*/
 
+/*slider*/
+#owlCarousel-index video {
+	width: 30%;
+    object-fit: cover;
+    position: relative;
+}
+#owlCarousel-index .video_slider img {
+ 	left: 0;
+    top: 0;
+    position: absolute;
+    z-index: -1;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+ }
+ #owlCarousel-index .owl-dots {
+ 	position: relative;
+    bottom: -5px;
+ }
+#owlCarousel-index video::after {
+	content: '';
+	background-image: url(/catalog/view/theme/fashionist/img/icons/gradient-white.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+	width: 20px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+/*slider*/
+
 
 @media (min-width: 1200px) {
 	.container {
@@ -1883,6 +1916,9 @@ div#ex-reviews {
     	width: 100%;
     	background: #d6d6d6;
 	    box-shadow: 5px 5px 8px -3px #33333380;
+	}
+	#owlCarousel-index video {
+		height: 555px;
 	}
 }
 /*@media (min-width: 993px)*/
@@ -1968,6 +2004,9 @@ div#ex-reviews {
 	}
 	.footer .item__block .footer__logo {
     	margin: 20px 0 25px 0;
+	}
+	#owlCarousel-index video {
+		height: 137px;
 	}
 }
 /*(max-width: 993px)*/
