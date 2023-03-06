@@ -1618,6 +1618,9 @@ div#ex-reviews {
 #information-information #ex-reviews p {
     max-height: 49px;
 }
+#ex-store-reviews .owl-stage .owl-item.cloned:not(.active) {
+	display: none;
+}
 /*Reviews отзывы*/
 
 /*Личный кабинет ЛК*/
@@ -2610,27 +2613,27 @@ div#ex-reviews {
 	background-color: #fff0!important;
 }
 
-#March_8 .breadcrumb-container {
+/*#March_8 .breadcrumb-container {
     background: url(/image/catalog/breadcrumb8march.jpg) no-repeat top;
     height: 185px;
     background-size: contain;
 }
 #March_8 .breadcrumb {
 	padding: initial;
-}
+}*/
 #March_8 .header-top .desktop-logo img,
 #March_8 .footer .item__block .footer__logo img {
 	height: 75px;
 }
 
 @media (max-width: 550px) {
-	#March_8 .breadcrumb-container {
+	/*#March_8 .breadcrumb-container {
 		background: url(/image/catalog/breadcrumb8marchmob.jpg) no-repeat top;
 	    background-size: contain;
 		height: 135px;
 	}
 	#March_8 .breadcrumb-container * {
 		color: transparent!important;
-	}
+	}*/
 }
 /*holidays styles */
