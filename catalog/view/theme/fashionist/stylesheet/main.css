@@ -2586,3 +2586,51 @@ div#ex-reviews {
 .breadcrumb a {
 	white-space:  normal;
 }
+
+/*holidays styles*/
+/*
+логотип, 
+беграунд общий + в каталоге
+Стикер у превью товаров sale_custom_icon.svg
+*/
+#March_8 {
+	background-image: url(/catalog/view/theme/fashionist/img/other/march8_body_bg.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+}	
+#product-category {
+	background-image: none;
+}
+
+#March_8 #header,
+#March_8 .ishibannerblock,
+#March_8 .ishiservices,
+#March_8 .smartblog_block,
+#March_8 #footer {
+	background-color: #fff0!important;
+}
+
+#March_8 .breadcrumb-container {
+    background: url(/image/catalog/breadcrumb8march.jpg) no-repeat top;
+    height: 185px;
+    background-size: contain;
+}
+#March_8 .breadcrumb {
+	padding: initial;
+}
+#March_8 .header-top .desktop-logo img,
+#March_8 .footer .item__block .footer__logo img {
+	height: 75px;
+}
+
+@media (max-width: 550px) {
+	#March_8 .breadcrumb-container {
+		background: url(/image/catalog/breadcrumb8marchmob.jpg) no-repeat top;
+	    background-size: contain;
+		height: 135px;
+	}
+	#March_8 .breadcrumb-container * {
+		color: transparent!important;
+	}
+}
+/*holidays styles */
