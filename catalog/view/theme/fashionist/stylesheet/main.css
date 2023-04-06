@@ -1833,6 +1833,10 @@ div#ex-reviews {
 .footer .collapse {
 	display: initial!important;
 }
+.header-top .desktop-logo img,
+.footer .item__block .footer__logo img {
+	height: 75px;
+}
 /*footer футер подвал сайта*/
 
 /*slider*/
@@ -2596,7 +2600,7 @@ div#ex-reviews {
 беграунд общий + в каталоге
 Стикер у превью товаров sale_custom_icon.svg
 */
-#March_8 {
+/*#March_8 {
 	background-image: url(/catalog/view/theme/fashionist/img/other/march8_body_bg.jpg);
 	background-attachment: fixed;
 	background-size: cover;
@@ -2611,8 +2615,9 @@ div#ex-reviews {
 #March_8 .smartblog_block,
 #March_8 #footer {
 	background-color: #fff0!important;
-}
+}*/
 
+/*баннер в хлебных крошках*/
 /*#March_8 .breadcrumb-container {
     background: url(/image/catalog/breadcrumb8march.jpg) no-repeat top;
     height: 185px;
@@ -2621,12 +2626,9 @@ div#ex-reviews {
 #March_8 .breadcrumb {
 	padding: initial;
 }*/
-#March_8 .header-top .desktop-logo img,
-#March_8 .footer .item__block .footer__logo img {
-	height: 75px;
-}
 
 @media (max-width: 550px) {
+	/*баннер в хлебных крошках*/
 	/*#March_8 .breadcrumb-container {
 		background: url(/image/catalog/breadcrumb8marchmob.jpg) no-repeat top;
 	    background-size: contain;
