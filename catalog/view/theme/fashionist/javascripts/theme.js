@@ -280,16 +280,16 @@ $(function() {
     $('.user__cabinet .a-link-list ul').append('<li><a href="https://cessa-shoes.ru/index.php?route=account/discounts_total">Накопительная скидка</a></li>')
 
     //owl carousel slader слайдер на главной
-    $(function() {
-      // Owl Carousel
-      var owl = $("#owlCarousel-index");
-      owl.owlCarousel({
-        items: 1,
-        margin: 0,
-        loop: true,
-        nav: false
-      });
-    });
+    // $(function() {
+    //   // Owl Carousel
+    //   var owl = $("#owlCarousel-index");
+    //   owl.owlCarousel({
+    //     items: 1,
+    //     margin: 0,
+    //     loop: true,
+    //     nav: false
+    //   });
+    // });
 });
 
 $(function() {

@@ -1618,9 +1618,9 @@ div#ex-reviews {
 #information-information #ex-reviews p {
     max-height: 49px;
 }
-#ex-store-reviews .owl-stage .owl-item.cloned:not(.active) {
+/*#ex-store-reviews .owl-stage .owl-item.cloned:not(.active) {
 	display: none;
-}
+}*/
 /*Reviews отзывы*/
 
 /*Личный кабинет ЛК*/
