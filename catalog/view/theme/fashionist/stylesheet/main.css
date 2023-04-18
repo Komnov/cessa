@@ -1223,10 +1223,6 @@ body {
 #product-category  #column-left .ishibannerblock {
 	display: none;
 }
-#product-category {
-	background-image: url(../img/bg-img.jpg);
-	background-size: contain;
-}
 #product-category .category_description {
 	display: none;
 }
@@ -1926,6 +1922,10 @@ div#ex-reviews {
 	}
 	#owlCarousel-index video {
 		height: 555px;
+	}
+	body {
+		background-image: url(../img/bg-img.jpg);
+		background-size: contain;
 	}
 }
 /*@media (min-width: 993px)*/
