@@ -1868,6 +1868,61 @@ div#ex-reviews {
 }
 /*slider*/
 
+/*Подписка на новости subscribe*/
+
+#subscribe_block {
+	width: 100%;
+	background-color: #F8F9FA;
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 0 30px 0;
+}
+.subscribe_container {
+	position: relative;
+}
+.subscribe_container::before {
+	content: '';
+	display: inline-block;
+	background-image: url(/catalog/view/theme/fashionist/img/icons/subscribe_icon.png);
+	height: 90px;
+	width: 90px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+    left: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#subscribe_block h3 {
+	text-align: center;
+	width: 100%;
+    font-size: 16px;
+    line-height: 22px;
+    margin: 0 0;
+}
+#subscribe_block .newsletter_module {
+	width: 100%;
+	margin: 15px 0 0 0;
+}
+#subscribe_block .newsletter_module .input-group {
+	display: flex;
+    width: 100%;
+}
+#subscribe_block input {
+	height: initial;
+    border-radius: 15px 0 0 15px;
+    border: 1px solid #000;
+    width: 60%;
+}
+#subscribe_block #button-subscribe{
+	height: initial;
+	width: 40%;
+    border-radius: 0 15px 15px 0;
+}
+
+/*Подписка на новости subscribe*/
+
 
 @media (min-width: 1200px) {
 	.container {
@@ -2014,6 +2069,16 @@ div#ex-reviews {
 	}
 	#owlCarousel-index video {
 		height: 137px;
+	}
+	#ex-reviews {
+		padding: 0 0;
+	}
+	#ex-reviews .col-rl {
+    	padding: 0 0;
+	}
+	#ex-reviews .owl-carousel .owl-dots {
+		bottom: 0px;
+		position: relative;
 	}
 }
 /*(max-width: 993px)*/
@@ -2639,3 +2704,8 @@ div#ex-reviews {
 	}*/
 }
 /*holidays styles */
+
+/*баг с отзывами*/
+#review-extended .review-container .review-media-container {
+	display: none;
+}
