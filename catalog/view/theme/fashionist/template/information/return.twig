@@ -1,0 +1,203 @@
+{{ header }}
+<div class="breadcrumb-container">
+  <h1 class="page-title">Возврат товара</h1>
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<div id="information-sitemap" class="container">
+  <div class="wrapper_container row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      
+      <div class="container__form">
+        <h1>Заявление на возврат</h1>
+          <div class="sub__title">Все поля обязательны к заполнению</div>
+        <form action="/catalog/controller/information/mailer.php" method="POST" data-callback="onSubmit" enctype="multipart/form-data" id="return-form">
+          <div class="form_elements">
+            <h3>Информация о заказе</h3>
+            <input type="text" name="order_number" placeholder="Номер заказа" required>
+            <input type="text" name="product_name" placeholder="Наименование товара" required>
+            <input type="text" name="product_sku" placeholder="Артикул" >
+            <input type="text" name="product_size" placeholder="Размер" required>
+            <input type="text" name="product_price" placeholder="Цена" >
+            <input type="text" name="order_received_date" placeholder="Дата заказа" >
+            <select name="return_reason" required>
+              <option value="">Выберите причину возврата</option>
+              <option value="не подошла модель">Не подошла модель</option>
+              <option value="не подошел размер">Не подошел размер</option>
+              <option value="не соответствует описанию">Не соответствует описанию</option>
+              <option value="поврежден товар">Поврежден товар</option>
+              <option value="другая причина">Другая причина</option>
+            </select>
+            <textarea name="comment" placeholder="Комментарий" ></textarea>
+            <div class="input__photo">
+            <label for="attachment">Приложите фотографии товара*</label>
+            <input type="file" id="attachment" name="attachment" accept="image/*">
+            </div>
+          </div>
+        
+          <div class="form_elements contacts">
+            <h3>Контактная информация</h3>
+            <input type="text" name="full_name" placeholder="ФИО" required>
+            <input type="tel" name="phone" placeholder="Телефон" required>
+            <input type="email" name="email" placeholder="Email" required>
+          </div>
+        
+          <div class="form_elements">
+            <h3>Адрес доставки</h3>
+            <input type="text" name="city" placeholder="Город" required>
+            <input type="text" name="street" placeholder="Улица" required>
+            <input type="text" name="house" placeholder="Дом" required>
+            <input type="text" name="apartment" placeholder="Квартира" required>
+            <input type="text" name="postcode" placeholder="Индекс" required>
+          </div>
+        
+          <div class="form_elements">
+            <h3>Банковские реквизиты</h3>
+            <input type="text" name="bank_name" placeholder="Наименование банка" required>
+            <input type="text" name="bank_bic" placeholder="БИК банка" required>
+            <input type="text" name="bank_correspondent_account" placeholder="Корреспондентский счёт" required>
+            <input type="text" name="bank_account" placeholder="Расчетный счёт" required>
+            </div>
+            <div class="post__btn">
+          <button type="submit">Отправить</button>
+            </div>
+            </form>
+      </div>    
+
+      {{ content_middle }}{{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}
+
+
+<style>
+  .container__form .sub__title {
+    position: relative;
+    top: -5px;
+    margin: 0 0 15px 0;
+  }
+  .container__form .form_elements {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 20px 20px 0;
+    width: 100%;
+    justify-content: space-between;
+    box-shadow: 2px 2px 6px 0 #00000094;
+    border-radius: 10px;
+    padding: 0 20px;
+  }
+  .container__form .form_elements.contacts {
+    justify-content: initial;
+  }
+  .container__form .form_elements.contacts input {
+    margin: 0 20px 20px 0 
+  }
+  .container__form .form_elements h3 {
+    width: 100%;
+    display: block;
+    margin: 20px 0 15px 0;
+  }
+  .container__form .form_elements input {
+    margin: 0 0 20px 0;
+    width: 23%;
+    height: 30px;
+    padding: 0 0 0 10px;
+  }
+  .container__form .form_elements textarea,
+  .container__form .form_elements select {
+    width: 23%;
+    height: 30px;
+  }
+  .container__form form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .container__form .post__btn {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container__form button {
+    width: 35%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 0px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .container__form button:hover {
+    transition: 0.3s;
+    background-color: #c96;
+    top: -1px;
+    position: relative;
+    box-shadow: 0 1px 6px 0 #0000006b;
+  }
+
+  .input__photo input {
+    display: none;
+  }
+  .input__photo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Стилизация метки */
+  .input__photo label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #eaeaea;
+    color: #333;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin: 0 0 20px 0;
+  }
+
+  /* Имитация кнопки выбора файла */
+  .input__photo label::after {
+    content: '';
+    display: inline-block;
+  }
+
+  /* Изменение текста метки при выборе файла */
+  .input__photo input[type="file"]:valid + label::after {
+    content: 'Файл выбран';
+  }
+
+  /* Дополнительные стили при наведении на метку */
+  .input__photo label:hover {
+    background-color: #ccc;
+  }
+
+  @media (max-width: 992px) {
+    .container__form .form_elements {
+      flex-direction: column;
+    }
+    .container__form .form_elements input,
+    .container__form .form_elements textarea, 
+    .container__form .form_elements select {
+      width: 100%;
+    }
+    .container__form .form_elements textarea, 
+    .container__form .form_elements select {
+      margin: 0 0 20px 0;
+    }
+    .container__form button {
+      width: 100%;
+      margin: 0 0 40px 0;
+    }
+  }
+</style>
