@@ -366,7 +366,7 @@
                           </div>
                         {% endif %}
                         {% if option.type == 'checkbox' %}
-                          <div class="product_option col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                          <div class="product_option col-lg-6 col-md-12 col-sm-12 col-xs-12 delivery__price">
                             <div class="form-group{% if option.required %} required {% endif %}">
                               <label class="control-label checkbox-text">{{ option.name }}</label>
                               <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
